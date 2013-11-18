@@ -125,7 +125,9 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
                                                               closeButtonStyle:style
                                                                jsEventEmitter:[[MPInstanceProvider sharedProvider] buildMRJavaScriptEventEmitterWithWebView:_webView]];
 
-        [_closeButton addTarget:_displayController action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [_closeButton addTarget:_displayController
+                         action:@selector(closeButtonPressed)
+               forControlEvents:UIControlEventTouchUpInside];
 
         _destinationDisplayAgent = [[[MPInstanceProvider sharedProvider]
                                     buildMPAdDestinationDisplayAgentWithDelegate:self] retain];

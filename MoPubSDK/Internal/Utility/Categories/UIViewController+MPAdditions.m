@@ -43,11 +43,10 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
         [self presentViewController:modalViewController animated:animated completion:nil];
-        return;
     }
-#endif
-
+#else
     [self presentModalViewController:modalViewController animated:animated];
+#endif
 }
 
 - (void)mp_dismissModalViewControllerAnimated:(BOOL)animated
@@ -57,9 +56,9 @@
         [self dismissViewControllerAnimated:animated completion:nil];
         return;
     }
-#endif
-
+#else
     [self dismissModalViewControllerAnimated:animated];
+#endif
 }
 
 @end
