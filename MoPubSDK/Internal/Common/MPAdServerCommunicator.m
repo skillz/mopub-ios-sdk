@@ -121,8 +121,8 @@ const NSTimeInterval kRequestTimeoutInterval = 10.0;
 
 - (NSError *)errorForStatusCode:(NSInteger)statusCode
 {
-    NSString *errorMessage = [NSString stringWithFormat:@"MoPub returned status code %d.",
-                              statusCode];
+    NSString *errorMessage = [NSString stringWithFormat:@"MoPub returned status code %ld.",
+                              (long)statusCode];
     NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:errorMessage
                                                           forKey:NSLocalizedDescriptionKey];
     return [NSError errorWithDomain:@"mopub.com" code:statusCode userInfo:errorInfo];
