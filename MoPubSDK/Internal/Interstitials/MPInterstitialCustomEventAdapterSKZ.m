@@ -11,7 +11,7 @@
 #import "MPLogging.h"
 #import "MPInstanceProviderSKZ.h"
 #import "MPInterstitialCustomEventSKZ.h"
-#import "MPInterstitialAdController.h"
+#import "MPInterstitialAdControllerSKZ.h"
 
 @interface MPInterstitialCustomEventAdapterSKZ ()
 

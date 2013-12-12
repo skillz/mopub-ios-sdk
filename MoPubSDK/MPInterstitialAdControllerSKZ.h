@@ -15,7 +15,7 @@
  * displayed during natural transition points in your application.
  */
 
-@interface MPInterstitialAdController : UIViewController
+@interface MPInterstitialAdControllerSKZ : UIViewController
 
 /** @name Obtaining an Interstitial Ad */
 
@@ -31,7 +31,7 @@
  *
  * @param adUnitId A string representing a MoPub ad unit ID.
  */
-+ (MPInterstitialAdController *)interstitialAdControllerForAdUnitId:(NSString *)adUnitId;
++ (MPInterstitialAdControllerSKZ *)interstitialAdControllerForAdUnitId:(NSString *)adUnitId;
 
 /** @name Setting and Getting the Delegate */
 
@@ -138,7 +138,7 @@
  *
  * @param controller The interstitial ad object that should be disposed.
  */
-+ (void)removeSharedInterstitialAdController:(MPInterstitialAdController *)controller;
++ (void)removeSharedInterstitialAdController:(MPInterstitialAdControllerSKZ *)controller;
 
 /*
  * Returns the shared pool of interstitial objects for your application.
@@ -197,14 +197,14 @@
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialDidLoadAd:(MPInterstitialAdController *)interstitial;
+- (void)interstitialDidLoadAd:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /**
  * Sent when an interstitial ad object fails to load an ad.
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialDidFailToLoadAd:(MPInterstitialAdController *)interstitial;
+- (void)interstitialDidFailToLoadAd:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /** @name Detecting When an Interstitial Ad is Presented */
 
@@ -216,14 +216,14 @@
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialWillAppear:(MPInterstitialAdController *)interstitial;
+- (void)interstitialWillAppear:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /**
  * Sent after an interstitial ad object has been presented on the screen.
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialDidAppear:(MPInterstitialAdController *)interstitial;
+- (void)interstitialDidAppear:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /** @name Detecting When an Interstitial Ad is Dismissed */
 
@@ -232,7 +232,7 @@
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialWillDisappear:(MPInterstitialAdController *)interstitial;
+- (void)interstitialWillDisappear:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /**
  * Sent after an interstitial ad object has been dismissed from the screen, returning control
@@ -243,7 +243,7 @@
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialDidDisappear:(MPInterstitialAdController *)interstitial;
+- (void)interstitialDidDisappear:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /** @name Detecting When an Interstitial Ad Expires */
 
@@ -261,7 +261,7 @@
  *
  * @param interstitial The interstitial ad object sending the message.
  */
-- (void)interstitialDidExpire:(MPInterstitialAdController *)interstitial;
+- (void)interstitialDidExpire:(MPInterstitialAdControllerSKZ *)interstitial;
 
 /*
  * DEPRECATED: This callback notifies you to dismiss the interstitial, and allows you to implement
@@ -272,6 +272,6 @@
  * Any pre-dismissal behavior should be implemented using -interstitialWillDisappear: or
  * -interstitialDidDisappear: instead.
  */
-- (void)dismissInterstitial:(MPInterstitialAdController *)interstitial __attribute__((deprecated));
+- (void)dismissInterstitial:(MPInterstitialAdControllerSKZ *)interstitial __attribute__((deprecated));
 
 @end

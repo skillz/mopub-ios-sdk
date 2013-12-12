@@ -5,14 +5,14 @@
 //  Copyright (c) 2012 MoPub, Inc. All rights reserved.
 //
 
-#import "MPInterstitialAdController.h"
+#import "MPInterstitialAdControllerSKZ.h"
 
 #import "MPLogging.h"
 #import "MPInstanceProviderSKZ.h"
 #import "MPInterstitialAdManagerSKZ.h"
 #import "MPInterstitialAdManagerDelegate.h"
 
-@interface MPInterstitialAdController () <MPInterstitialAdManagerDelegateSKZ>
+@interface MPInterstitialAdControllerSKZ () <MPInterstitialAdManagerDelegateSKZ>
 
 @property (nonatomic, retain) MPInterstitialAdManagerSKZ *manager;
 
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation MPInterstitialAdController
+@implementation MPInterstitialAdControllerSKZ
 
 @synthesize manager = _manager;
 @synthesize delegate = _delegate;
@@ -55,14 +55,14 @@
 
 #pragma mark - Public
 
-+ (MPInterstitialAdController *)interstitialAdControllerForAdUnitId:(NSString *)adUnitId
++ (MPInterstitialAdControllerSKZ *)interstitialAdControllerForAdUnitId:(NSString *)adUnitId
 {
     NSMutableArray *interstitials = [[self class] sharedInterstitials];
 
     @synchronized(self) {
         // Find the correct ad controller based on the ad unit ID.
-        MPInterstitialAdController *interstitial = nil;
-        for (MPInterstitialAdController *currentInterstitial in interstitials) {
+        MPInterstitialAdControllerSKZ *interstitial = nil;
+        for (MPInterstitialAdControllerSKZ *currentInterstitial in interstitials) {
             if ([currentInterstitial.adUnitId isEqualToString:adUnitId]) {
                 interstitial = currentInterstitial;
                 break;
@@ -120,7 +120,7 @@
 
 #pragma mark - MPInterstitialAdManagerDelegate
 
-- (MPInterstitialAdController *)interstitialAdController
+- (MPInterstitialAdControllerSKZ *)interstitialAdController
 {
     return self;
 }
@@ -187,7 +187,7 @@
     return [[self class] sharedInterstitials];
 }
 
-+ (void)removeSharedInterstitialAdController:(MPInterstitialAdController *)controller
++ (void)removeSharedInterstitialAdController:(MPInterstitialAdControllerSKZ *)controller
 {
     [[[self class] sharedInterstitials] removeObject:controller];
 }

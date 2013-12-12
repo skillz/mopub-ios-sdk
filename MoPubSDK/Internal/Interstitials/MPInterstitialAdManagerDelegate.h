@@ -8,12 +8,12 @@
 #import <Foundation/Foundation.h>
 
 @class MPInterstitialAdManagerSKZ;
-@class MPInterstitialAdController;
+@class MPInterstitialAdControllerSKZ;
 @class CLLocation;
 
 @protocol MPInterstitialAdManagerDelegateSKZ <NSObject>
 
-- (MPInterstitialAdController *)interstitialAdController;
+- (MPInterstitialAdControllerSKZ *)interstitialAdController;
 - (CLLocation *)location;
 - (id)interstitialDelegate;
 - (void)managerDidLoadInterstitial:(MPInterstitialAdManagerSKZ *)manager;

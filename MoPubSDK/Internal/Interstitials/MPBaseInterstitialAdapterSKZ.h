@@ -48,11 +48,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@class MPInterstitialAdController;
+@class MPInterstitialAdControllerSKZ;
 
 @protocol MPInterstitialAdapterDelegateSKZ
 
-- (MPInterstitialAdController *)interstitialAdController;
+- (MPInterstitialAdControllerSKZ *)interstitialAdController;
 - (id)interstitialDelegate;
 - (CLLocation *)location;
 

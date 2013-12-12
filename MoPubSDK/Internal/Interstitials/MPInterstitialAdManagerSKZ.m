@@ -10,7 +10,7 @@
 #import "MPInterstitialAdManagerSKZ.h"
 
 #import "MPAdServerURLBuilderSKZ.h"
-#import "MPInterstitialAdController.h"
+#import "MPInterstitialAdControllerSKZ.h"
 #import "MPInterstitialCustomEventAdapterSKZ.h"
 #import "MPInstanceProviderSKZ.h"
 #import "MPInterstitialAdManagerDelegate.h"
@@ -112,7 +112,7 @@
     return [self.delegate location];
 }
 
-- (MPInterstitialAdController *)interstitialAdController
+- (MPInterstitialAdControllerSKZ *)interstitialAdController
 {
     return [self.delegate interstitialAdController];
 }
