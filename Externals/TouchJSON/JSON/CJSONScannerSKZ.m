@@ -27,7 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "CJSONScanner.h"
+#import "CJSONScannerSKZ.h"
 
 #import "CDataScanner_Extensions.h"
 
@@ -46,13 +46,13 @@ inline static int HexToInt(char inCharacter)
         return(-1);
     }
 
-@interface CJSONScanner ()
+@interface CJSONScannerSKZ ()
 - (BOOL)scanNotQuoteCharactersIntoString:(NSString **)outValue;
 @end
 
 #pragma mark -
 
-@implementation CJSONScanner
+@implementation CJSONScannerSKZ
 
 @synthesize strictEscapeCodes;
 @synthesize nullObject;

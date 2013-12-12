@@ -6,14 +6,14 @@
 //  Copyright 2010 toxicsoftware.com. All rights reserved.
 //
 
-#import "CJSONSerializedData.h"
+#import "CJSONSerializedDataSKZ.h"
 
-@interface CJSONSerializedData ()
+@interface CJSONSerializedDataSKZ ()
 @end
 
 #pragma mark -
 
-@implementation CJSONSerializedData
+@implementation CJSONSerializedDataSKZ
 
 @synthesize data;
 

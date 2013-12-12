@@ -29,10 +29,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CJSONSerializer : NSObject {
+@interface CJSONSerializerSKZ : NSObject {
 }
 
-+ (CJSONSerializer *)serializer;
++ (CJSONSerializerSKZ *)serializer;
 
 - (BOOL)isValidJSONObject:(id)inObject;
 

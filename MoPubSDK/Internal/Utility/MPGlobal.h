@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "CJSONDeserializer.h"
+#import "CJSONDeserializerSKZ.h"
 
 #ifndef MP_ANIMATED
 #define MP_ANIMATED YES
@@ -62,9 +62,9 @@ typedef NSUInteger MPInterstitialOrientationType;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface CJSONDeserializer (MPAdditions)
+@interface CJSONDeserializerSKZ (MPAdditions)
 
-+ (CJSONDeserializer *)deserializerWithNullObject:(id)obj;
++ (CJSONDeserializerSKZ *)deserializerWithNullObject:(id)obj;
 
 @end
 

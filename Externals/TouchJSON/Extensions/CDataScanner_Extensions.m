@@ -36,7 +36,7 @@
 #define LS 0x2028 // Line Separator
 #define PS 0x2029 // Paragraph Separator
 
-@implementation CDataScanner (CDataScanner_Extensions)
+@implementation CDataScannerSKZ (CDataScanner_Extensions)
 
 - (BOOL)scanCStyleComment:(NSString **)outComment
 {

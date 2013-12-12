@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol JSONRepresentation
+@protocol JSONRepresentationSKZ
 
 @optional
 - (id)initWithJSONDataRepresentation:(NSData *)inJSONData;

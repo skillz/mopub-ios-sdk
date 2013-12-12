@@ -14,7 +14,7 @@
 
 #pragma mark -
 
-@interface CJSONSerializedData : NSObject <CJSONSerializable> {
+@interface CJSONSerializedDataSKZ : NSObject <CJSONSerializable> {
     NSData *data;
 }
 

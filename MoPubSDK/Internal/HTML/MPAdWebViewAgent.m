@@ -9,7 +9,7 @@
 #import "MPAdConfiguration.h"
 #import "MPGlobal.h"
 #import "MPLogging.h"
-#import "CJSONDeserializer.h"
+#import "CJSONDeserializerSKZ.h"
 #import "MPAdDestinationDisplayAgent.h"
 #import "NSURL+MPAdditions.h"
 #import "UIWebView+MPAdditions.h"
@@ -214,7 +214,7 @@ NSString * const kMoPubCustomHost = @"custom";
     if ([self.customMethodDelegate respondsToSelector:zeroArgumentSelector]) {
         [self.customMethodDelegate performSelector:zeroArgumentSelector];
     } else if ([self.customMethodDelegate respondsToSelector:oneArgumentSelector]) {
-        CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
+        CJSONDeserializerSKZ *deserializer = [CJSONDeserializerSKZ deserializerWithNullObject:NULL];
         NSData *data = [[queryParameters objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dataDictionary = [deserializer deserializeAsDictionary:data error:NULL];
 

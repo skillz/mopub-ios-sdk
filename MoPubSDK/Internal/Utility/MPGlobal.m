@@ -146,11 +146,11 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation CJSONDeserializer (MPAdditions)
+@implementation CJSONDeserializerSKZ (MPAdditions)
 
-+ (CJSONDeserializer *)deserializerWithNullObject:(id)obj
++ (CJSONDeserializerSKZ *)deserializerWithNullObject:(id)obj
 {
-    CJSONDeserializer *deserializer = [CJSONDeserializer deserializer];
+    CJSONDeserializerSKZ *deserializer = [CJSONDeserializerSKZ deserializer];
     deserializer.nullObject = obj;
     return deserializer;
 }
