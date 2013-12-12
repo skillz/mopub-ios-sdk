@@ -8,13 +8,13 @@
 #import <Foundation/Foundation.h>
 #import "MPInterstitialCustomEventDelegate.h"
 
-@class MPAdConfiguration;
+@class MPAdConfigurationSKZ;
 @class CLLocation;
 
-@protocol MPPrivateInterstitialCustomEventDelegate <MPInterstitialCustomEventDelegate>
+@protocol MPPrivateInterstitialCustomEventDelegateSKZ <MPInterstitialCustomEventDelegateSKZ>
 
 - (NSString *)adUnitId;
-- (MPAdConfiguration *)configuration;
+- (MPAdConfigurationSKZ *)configuration;
 - (id)interstitialDelegate;
 
 @end

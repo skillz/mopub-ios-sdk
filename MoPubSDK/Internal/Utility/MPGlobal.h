@@ -75,7 +75,7 @@ typedef NSUInteger MPInterstitialOrientationType;
 /*
  * Returns string with reserved/unsafe characters encoded.
  */
-- (NSString *)URLEncodedString;
+- (NSString *)URLEncodedStringSKZ;
 
 @end
 
@@ -83,11 +83,11 @@ typedef NSUInteger MPInterstitialOrientationType;
 // Optional Class Forward Def Protocols
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@class MPAdConfiguration, CLLocation;
+@class MPAdConfigurationSKZ, CLLocation;
 
-@protocol MPAdAlertManagerProtocol <NSObject>
+@protocol MPAdAlertManagerProtocolSKZ <NSObject>
 
-@property (nonatomic, retain) MPAdConfiguration *adConfiguration;
+@property (nonatomic, retain) MPAdConfigurationSKZ *adConfiguration;
 @property (nonatomic, copy) NSString *adUnitId;
 @property (nonatomic, copy) CLLocation *location;
 @property (nonatomic, assign) UIView *targetAdView;

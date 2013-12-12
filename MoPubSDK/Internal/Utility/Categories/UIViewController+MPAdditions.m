@@ -11,7 +11,7 @@
 
 @implementation UIViewController (MPAdditions)
 
-- (UIViewController *)mp_presentedViewController
+- (UIViewController *)mp_presentedViewControllerSKZ
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(presentedViewController)]) {
@@ -23,7 +23,7 @@
     return self.parentViewController;
 }
 
-- (UIViewController *)mp_presentingViewController
+- (UIViewController *)mp_presentingViewControllerSKZ
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(presentingViewController)]) {
@@ -37,7 +37,7 @@
     return self.parentViewController;
 }
 
-- (void)mp_presentModalViewController:(UIViewController *)modalViewController
+- (void)mp_presentModalViewControllerSKZ:(UIViewController *)modalViewController
                              animated:(BOOL)animated
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
@@ -49,7 +49,7 @@
 #endif
 }
 
-- (void)mp_dismissModalViewControllerAnimated:(BOOL)animated
+- (void)mp_dismissModalViewControllerAnimatedSKZ:(BOOL)animated
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {

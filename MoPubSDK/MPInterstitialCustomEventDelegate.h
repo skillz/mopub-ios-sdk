@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class MPInterstitialCustomEvent;
+@class MPInterstitialCustomEventSKZ;
 
 /**
  * Instances of your custom subclass of `MPInterstitialCustomEvent` will have an `MPInterstitialCustomEventDelegate` delegate.
@@ -20,7 +20,7 @@
  * network's events and the callbacks defined on `MPInterstitialCustomEventDelegate`.
  */
 
-@protocol MPInterstitialCustomEventDelegate <NSObject>
+@protocol MPInterstitialCustomEventDelegateSKZ <NSObject>
 
 /**
  * The user's current location.
@@ -47,7 +47,7 @@
  * @warning **Important**: Your custom event subclass **must** call this method when it successfully loads an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
-- (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
+- (void)interstitialCustomEvent:(MPInterstitialCustomEventSKZ *)customEvent
                       didLoadAd:(id)ad;
 
 /**
@@ -61,7 +61,7 @@
  * @warning **Important**: Your custom event subclass **must** call this method when it fails to load an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
-- (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
+- (void)interstitialCustomEvent:(MPInterstitialCustomEventSKZ *)customEvent
        didFailToLoadAdWithError:(NSError *)error;
 
 /**
@@ -74,7 +74,7 @@
  * @param customEvent You should pass `self` to allow the MoPub SDK to associate this event with the correct
  * instance of your custom event.
  */
-- (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /** @name Interstitial Ad Event Callbacks - Presenting and Dismissing Ads */
 
@@ -88,7 +88,7 @@
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  *
  */
-- (void)interstitialCustomEventWillAppear:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventWillAppear:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /**
  * Call this method when an ad has finished appearing.
@@ -102,7 +102,7 @@
  * **Note**: if it is not possible to know when the interstitial *finished* appearing, you should call
  * this immediately after calling `-interstitialCustomEventWillAppear:`.
  */
-- (void)interstitialCustomEventDidAppear:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventDidAppear:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /**
  * Call this method when an ad is about to disappear.
@@ -114,7 +114,7 @@
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  *
  */
-- (void)interstitialCustomEventWillDisappear:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventWillDisappear:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /**
  * Call this method when an ad has finished disappearing.
@@ -128,7 +128,7 @@
  * **Note**: if it is not possible to know when the interstitial *finished* dismissing, you should call
  * this immediately after calling `-interstitialCustomEventDidDisappear:`.
  */
-- (void)interstitialCustomEventDidDisappear:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventDidDisappear:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /** @name Interstitial Ad Event Callbacks - User Interaction */
 
@@ -146,7 +146,7 @@
  * instance of your custom event.
  *
  */
-- (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /**
  * Call this method when the interstitial ad will cause the user to leave the application.
@@ -156,7 +156,7 @@
  * @param customEvent You should pass `self` to allow the MoPub SDK to associate this event with the correct
  * instance of your custom event.
  */
-- (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEventSKZ *)customEvent;
 
 /** @name Impression and Click Tracking */
 

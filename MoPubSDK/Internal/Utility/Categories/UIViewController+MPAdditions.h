@@ -12,22 +12,22 @@
 /*
  * Returns the view controller that is being presented by this view controller.
  */
-- (UIViewController *)mp_presentedViewController;
+- (UIViewController *)mp_presentedViewControllerSKZ;
 
 /*
  * Returns the view controller that presented this view controller.
  */
-- (UIViewController *)mp_presentingViewController;
+- (UIViewController *)mp_presentingViewControllerSKZ;
 
 /*
  * Presents a view controller.
  */
-- (void)mp_presentModalViewController:(UIViewController *)modalViewController
+- (void)mp_presentModalViewControllerSKZ:(UIViewController *)modalViewController
                              animated:(BOOL)animated;
 
 /*
  * Dismisses a view controller.
  */
-- (void)mp_dismissModalViewControllerAnimated:(BOOL)animated;
+- (void)mp_dismissModalViewControllerAnimatedSKZ:(BOOL)animated;
 
 @end

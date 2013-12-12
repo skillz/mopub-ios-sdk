@@ -15,7 +15,7 @@ NSString *const kJavaScriptDisableDialogSnippet = @"window.alert = function() { 
 /*
  * Find all subviews that are UIScrollViews or subclasses and set their scrolling and bounce.
  */
-- (void)mp_setScrollable:(BOOL)scrollable {
+- (void)mp_setScrollableSKZ:(BOOL)scrollable {
     #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 50000 // iOS 5.0+
     if ([self respondsToSelector:@selector(scrollView)])
     {
@@ -43,7 +43,7 @@ NSString *const kJavaScriptDisableDialogSnippet = @"window.alert = function() { 
 /*
  * Redefine alert, prompt, and confirm to do nothing
  */
-- (void)disableJavaScriptDialogs
+- (void)disableJavaScriptDialogsSKZ
 {
     [self stringByEvaluatingJavaScriptFromString:kJavaScriptDisableDialogSnippet];
 }

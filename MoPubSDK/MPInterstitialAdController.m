@@ -8,13 +8,13 @@
 #import "MPInterstitialAdController.h"
 
 #import "MPLogging.h"
-#import "MPInstanceProvider.h"
-#import "MPInterstitialAdManager.h"
+#import "MPInstanceProviderSKZ.h"
+#import "MPInterstitialAdManagerSKZ.h"
 #import "MPInterstitialAdManagerDelegate.h"
 
-@interface MPInterstitialAdController () <MPInterstitialAdManagerDelegate>
+@interface MPInterstitialAdController () <MPInterstitialAdManagerDelegateSKZ>
 
-@property (nonatomic, retain) MPInterstitialAdManager *manager;
+@property (nonatomic, retain) MPInterstitialAdManagerSKZ *manager;
 
 + (NSMutableArray *)sharedInterstitials;
 - (id)initWithAdUnitId:(NSString *)adUnitId;
@@ -33,7 +33,7 @@
 - (id)initWithAdUnitId:(NSString *)adUnitId
 {
     if (self = [super init]) {
-        self.manager = [[MPInstanceProvider sharedProvider] buildMPInterstitialAdManagerWithDelegate:self];
+        self.manager = [[MPInstanceProviderSKZ sharedProvider] buildMPInterstitialAdManagerWithDelegate:self];
         self.adUnitId = adUnitId;
     }
     return self;
@@ -130,14 +130,14 @@
     return self.delegate;
 }
 
-- (void)managerDidLoadInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerDidLoadInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialDidLoadAd:)]) {
         [self.delegate interstitialDidLoadAd:self];
     }
 }
 
-- (void)manager:(MPInterstitialAdManager *)manager
+- (void)manager:(MPInterstitialAdManagerSKZ *)manager
         didFailToLoadInterstitialWithError:(NSError *)error
 {
     if ([self.delegate respondsToSelector:@selector(interstitialDidFailToLoadAd:)]) {
@@ -145,35 +145,35 @@
     }
 }
 
-- (void)managerWillPresentInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerWillPresentInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialWillAppear:)]) {
         [self.delegate interstitialWillAppear:self];
     }
 }
 
-- (void)managerDidPresentInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerDidPresentInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialDidAppear:)]) {
         [self.delegate interstitialDidAppear:self];
     }
 }
 
-- (void)managerWillDismissInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerWillDismissInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialWillDisappear:)]) {
         [self.delegate interstitialWillDisappear:self];
     }
 }
 
-- (void)managerDidDismissInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerDidDismissInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialDidDisappear:)]) {
         [self.delegate interstitialDidDisappear:self];
     }
 }
 
-- (void)managerDidExpireInterstitial:(MPInterstitialAdManager *)manager
+- (void)managerDidExpireInterstitial:(MPInterstitialAdManagerSKZ *)manager
 {
     if ([self.delegate respondsToSelector:@selector(interstitialDidExpire:)]) {
         [self.delegate interstitialDidExpire:self];

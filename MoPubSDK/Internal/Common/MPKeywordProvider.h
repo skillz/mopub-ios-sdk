@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MPKeywordProvider <NSObject>
+@protocol MPKeywordProviderSKZ <NSObject>
 
 + (NSString *)keyword;
 

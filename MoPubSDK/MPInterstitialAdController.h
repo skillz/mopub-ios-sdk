@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@protocol MPInterstitialAdControllerDelegate;
+@protocol MPInterstitialAdControllerDelegateSKZ;
 
 /**
  * The `MPInterstitialAdController` class provides a full-screen advertisement that can be
@@ -38,7 +38,7 @@
 /**
  * The delegate (`MPInterstitialAdControllerDelegate`) of the interstitial ad object.
  */
-@property (nonatomic, assign) id<MPInterstitialAdControllerDelegate> delegate;
+@property (nonatomic, assign) id<MPInterstitialAdControllerDelegateSKZ> delegate;
 
 /** @name Setting Request Parameters */
 
@@ -186,7 +186,7 @@
  * screen, and when an ad has expired.
  */
 
-@protocol MPInterstitialAdControllerDelegate <NSObject>
+@protocol MPInterstitialAdControllerDelegateSKZ <NSObject>
 
 @optional
 

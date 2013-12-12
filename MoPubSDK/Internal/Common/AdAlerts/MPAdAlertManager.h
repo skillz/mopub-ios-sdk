@@ -12,9 +12,9 @@
 @class CLLocation;
 @protocol MPAdAlertManagerDelegate;
 
-@class MPAdConfiguration;
+@class MPAdConfigurationSKZ;
 
-@interface MPAdAlertManager : NSObject <MPAdAlertManagerProtocol>
+@interface MPAdAlertManager : NSObject <MPAdAlertManagerProtocolSKZ>
 
 @end
 

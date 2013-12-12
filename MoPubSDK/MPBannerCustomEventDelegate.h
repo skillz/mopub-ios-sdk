@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class MPBannerCustomEvent;
+@class MPBannerCustomEventSKZ;
 
 /**
  * Instances of your custom subclass of `MPBannerCustomEvent` will have an `MPBannerCustomEventDelegate` delegate.
@@ -20,7 +20,7 @@
  * network's events and the callbacks defined on `MPBannerCustomEventDelegate`.
  */
 
-@protocol MPBannerCustomEventDelegate <NSObject>
+@protocol MPBannerCustomEventDelegateSKZ <NSObject>
 
 /**
  * The view controller instance to use when presenting modals.
@@ -55,7 +55,7 @@
  * @warning **Important**: Your custom event subclass **must** call this method when it successfully loads an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
-- (void)bannerCustomEvent:(MPBannerCustomEvent *)event didLoadAd:(UIView *)ad;
+- (void)bannerCustomEvent:(MPBannerCustomEventSKZ *)event didLoadAd:(UIView *)ad;
 
 /**
  * Call this method immediately after an ad fails to load.
@@ -68,7 +68,7 @@
  * @warning **Important**: Your custom event subclass **must** call this method when it fails to load an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
-- (void)bannerCustomEvent:(MPBannerCustomEvent *)event didFailToLoadAdWithError:(NSError *)error;
+- (void)bannerCustomEvent:(MPBannerCustomEventSKZ *)event didFailToLoadAdWithError:(NSError *)error;
 
 /** @name Banner Ad Event Callbacks - User Interaction */
 
@@ -84,7 +84,7 @@
  * @warning **Important**: If you call `-bannerCustomEventWillBeginAction:`, you _**must**_ also call
  * `-bannerCustomEventDidFinishAction:` at a later point.
  */
-- (void)bannerCustomEventWillBeginAction:(MPBannerCustomEvent *)event;
+- (void)bannerCustomEventWillBeginAction:(MPBannerCustomEventSKZ *)event;
 
 /**
  * Call this method when the user finishes interacting with the banner ad.
@@ -97,7 +97,7 @@
  * @warning **Important**: If you call `-bannerCustomEventWillBeginAction:`, you _**must**_ also call
  * `-bannerCustomEventDidFinishAction:` at a later point.
  */
-- (void)bannerCustomEventDidFinishAction:(MPBannerCustomEvent *)event;
+- (void)bannerCustomEventDidFinishAction:(MPBannerCustomEventSKZ *)event;
 
 /**
  * Call this method when the banner ad will cause the user to leave the application.
@@ -108,7 +108,7 @@
  * instance of your custom event.
  *
  */
-- (void)bannerCustomEventWillLeaveApplication:(MPBannerCustomEvent *)event;
+- (void)bannerCustomEventWillLeaveApplication:(MPBannerCustomEventSKZ *)event;
 
 /** @name Impression and Click Tracking */
 

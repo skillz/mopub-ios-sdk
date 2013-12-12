@@ -161,7 +161,7 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
 
 @implementation NSString (MPAdditions)
 
-- (NSString *)URLEncodedString
+- (NSString *)URLEncodedStringSKZ
 {
     NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                            (CFStringRef)self,

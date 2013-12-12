@@ -7,22 +7,22 @@
 
 #import <Foundation/Foundation.h>
 
-@class MPInterstitialAdManager;
+@class MPInterstitialAdManagerSKZ;
 @class MPInterstitialAdController;
 @class CLLocation;
 
-@protocol MPInterstitialAdManagerDelegate <NSObject>
+@protocol MPInterstitialAdManagerDelegateSKZ <NSObject>
 
 - (MPInterstitialAdController *)interstitialAdController;
 - (CLLocation *)location;
 - (id)interstitialDelegate;
-- (void)managerDidLoadInterstitial:(MPInterstitialAdManager *)manager;
-- (void)manager:(MPInterstitialAdManager *)manager
+- (void)managerDidLoadInterstitial:(MPInterstitialAdManagerSKZ *)manager;
+- (void)manager:(MPInterstitialAdManagerSKZ *)manager
 didFailToLoadInterstitialWithError:(NSError *)error;
-- (void)managerWillPresentInterstitial:(MPInterstitialAdManager *)manager;
-- (void)managerDidPresentInterstitial:(MPInterstitialAdManager *)manager;
-- (void)managerWillDismissInterstitial:(MPInterstitialAdManager *)manager;
-- (void)managerDidDismissInterstitial:(MPInterstitialAdManager *)manager;
-- (void)managerDidExpireInterstitial:(MPInterstitialAdManager *)manager;
+- (void)managerWillPresentInterstitial:(MPInterstitialAdManagerSKZ *)manager;
+- (void)managerDidPresentInterstitial:(MPInterstitialAdManagerSKZ *)manager;
+- (void)managerWillDismissInterstitial:(MPInterstitialAdManagerSKZ *)manager;
+- (void)managerDidDismissInterstitial:(MPInterstitialAdManagerSKZ *)manager;
+- (void)managerDidExpireInterstitial:(MPInterstitialAdManagerSKZ *)manager;
 
 @end

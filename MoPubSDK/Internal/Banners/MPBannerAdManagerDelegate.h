@@ -7,15 +7,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class MPAdView;
-@protocol MPAdViewDelegate;
+@class MPAdViewSKZ;
+@protocol MPAdViewDelegateSKZ;
 
-@protocol MPBannerAdManagerDelegate <NSObject>
+@protocol MPBannerAdManagerDelegateSKZ <NSObject>
 
 - (NSString *)adUnitId;
 - (MPNativeAdOrientation)allowedNativeAdsOrientation;
-- (MPAdView *)banner;
-- (id<MPAdViewDelegate>)bannerDelegate;
+- (MPAdViewSKZ *)banner;
+- (id<MPAdViewDelegateSKZ>)bannerDelegate;
 - (CGSize)containerSize;
 - (BOOL)ignoresAutorefresh;
 - (NSString *)keywords;

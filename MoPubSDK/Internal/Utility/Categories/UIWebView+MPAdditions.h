@@ -13,7 +13,7 @@ extern NSString *const kJavaScriptDisableDialogSnippet;
 
 @interface UIWebView (MPAdditions)
 
-- (void)mp_setScrollable:(BOOL)scrollable;
-- (void)disableJavaScriptDialogs;
+- (void)mp_setScrollableSKZ:(BOOL)scrollable;
+- (void)disableJavaScriptDialogsSKZ;
 
 @end

@@ -9,6 +9,6 @@
 
 @interface NSURL (MPAdditions)
 
-- (NSDictionary *)mp_queryAsDictionary;
+- (NSDictionary *)mp_queryAsDictionarySKZ;
 
 @end

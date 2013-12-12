@@ -6,12 +6,12 @@
 //
 
 #import "MPAdAlertManager.h"
-#import "MPAdConfiguration.h"
+#import "MPAdConfigurationSKZ.h"
 #import "MPAdAlertGestureRecognizer.h"
 #import "MPLogging.h"
-#import "MPIdentityProvider.h"
-#import "MPInstanceProvider.h"
-#import "MPLastResortDelegate.h"
+#import "MPIdentityProviderSKZ.h"
+#import "MPInstanceProviderSKZ.h"
+#import "MPLastResortDelegateSKZ.h"
 
 #import "UIViewController+MPAdditions.h"
 
@@ -45,7 +45,7 @@
     self = [super init];
     if(self != nil)
     {
-        self.adAlertGestureRecognizer = [[MPInstanceProvider sharedProvider] buildMPAdAlertGestureRecognizerWithTarget:self
+        self.adAlertGestureRecognizer = [[MPInstanceProviderSKZ sharedProvider] buildMPAdAlertGestureRecognizerWithTarget:self
                                                                                                                 action:@selector(handleAdAlertGesture)];
         self.adAlertGestureRecognizer.delegate = self;
         self.processedAlert = NO;
@@ -62,7 +62,7 @@
     self.adAlertGestureRecognizer = nil;
     self.adUnitId = nil;
     self.location = nil;
-    self.currentOpenMailVC.mailComposeDelegate = [MPLastResortDelegate sharedDelegate];
+    self.currentOpenMailVC.mailComposeDelegate = [MPLastResortDelegateSKZ sharedDelegate];
     self.currentOpenMailVC = nil;
     
     [super dealloc];
@@ -102,7 +102,7 @@
             
             [params setValue:@"iOS" forKey:@"platform"];
             [params setValue:[UIDevice currentDevice].systemVersion forKey:@"platform_version"];
-            [params setValue:[MPIdentityProvider identifier] forKey:@"device_id"];
+            [params setValue:[MPIdentityProviderSKZ identifier] forKey:@"device_id"];
             [params setValue:[UIDevice currentDevice].model forKey:@"device_model"];
             [params setValue:[NSNumber numberWithInteger:self.adConfiguration.adType] forKey:@"ad_type"];
             [params setValue:self.adUnitId forKey:@"ad_unit_id"];
@@ -167,7 +167,7 @@
         [self.currentOpenMailVC addAttachmentData:markupData mimeType:@"text/html" fileName:@"mp_adalert_markup.html"];
     }
     
-    [[self.delegate viewControllerForPresentingMailVC] mp_presentModalViewController:self.currentOpenMailVC animated:MP_ANIMATED];
+    [[self.delegate viewControllerForPresentingMailVC] mp_presentModalViewControllerSKZ:self.currentOpenMailVC animated:MP_ANIMATED];
     
     if([self.delegate respondsToSelector:@selector(adAlertManagerDidProcessAlert:)])
     {
@@ -200,7 +200,7 @@
         self.processedAlert = NO;
     }
     
-    [[self.delegate viewControllerForPresentingMailVC] mp_dismissModalViewControllerAnimated:MP_ANIMATED];
+    [[self.delegate viewControllerForPresentingMailVC] mp_dismissModalViewControllerAnimatedSKZ:MP_ANIMATED];
 }
 
 #pragma mark - Public

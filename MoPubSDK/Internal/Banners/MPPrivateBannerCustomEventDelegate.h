@@ -8,12 +8,12 @@
 #import <Foundation/Foundation.h>
 #import "MPBannerCustomEventDelegate.h"
 
-@class MPAdConfiguration;
+@class MPAdConfigurationSKZ;
 
-@protocol MPPrivateBannerCustomEventDelegate <MPBannerCustomEventDelegate>
+@protocol MPPrivateBannerCustomEventDelegateSKZ <MPBannerCustomEventDelegateSKZ>
 
 - (NSString *)adUnitId;
-- (MPAdConfiguration *)configuration;
+- (MPAdConfigurationSKZ *)configuration;
 - (id)bannerDelegate;
 
 @end

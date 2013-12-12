@@ -9,7 +9,7 @@
 
 @implementation NSURL (MPAdditions)
 
-- (NSDictionary *)mp_queryAsDictionary
+- (NSDictionary *)mp_queryAsDictionarySKZ
 {
     NSMutableDictionary *queryDict = [NSMutableDictionary dictionary];
     NSArray *queryElements = [self.query componentsSeparatedByString:@"&"];

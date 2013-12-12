@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 MoPub, Inc. All rights reserved.
 //
 
-#import "MRAdView.h"
+#import "MRAdViewSKZ.h"
 
-@interface MRAdView (Controllers)
+@interface MRAdViewSKZ (Controllers)
 
 // Delegate callback methods wrapped with -respondsToSelector: checks.
 - (void)adDidLoad;
