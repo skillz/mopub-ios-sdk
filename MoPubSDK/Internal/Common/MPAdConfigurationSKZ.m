@@ -135,17 +135,17 @@ NSString * const kAdTypeClear = @"clear";
 
     NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
     if (self.adType == MPAdTypeBanner) {
-        [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
-        [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
-        [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
-        [convertedCustomEvents setObject:@"MPHTMLBannerCustomEvent" forKey:@"html"];
-        [convertedCustomEvents setObject:@"MPMRAIDBannerCustomEvent" forKey:@"mraid"];
+        [convertedCustomEvents setObject:@"MPiAdBannerCustomEventSKZ" forKey:@"iAd"];
+        [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEventSKZ" forKey:@"admob_native"];
+        [convertedCustomEvents setObject:@"MPMillennialBannerCustomEventSKZ" forKey:@"millennial_native"];
+        [convertedCustomEvents setObject:@"MPHTMLBannerCustomEventSKZ" forKey:@"html"];
+        [convertedCustomEvents setObject:@"MPMRAIDBannerCustomEventSKZ" forKey:@"mraid"];
     } else if (self.adType == MPAdTypeInterstitial) {
-        [convertedCustomEvents setObject:@"MPiAdInterstitialCustomEvent" forKey:@"iAd_full"];
-        [convertedCustomEvents setObject:@"MPGoogleAdMobInterstitialCustomEvent" forKey:@"admob_full"];
-        [convertedCustomEvents setObject:@"MPMillennialInterstitialCustomEvent" forKey:@"millennial_full"];
-        [convertedCustomEvents setObject:@"MPHTMLInterstitialCustomEvent" forKey:@"html"];
-        [convertedCustomEvents setObject:@"MPMRAIDInterstitialCustomEvent" forKey:@"mraid"];
+        [convertedCustomEvents setObject:@"MPiAdInterstitialCustomEventSKZ" forKey:@"iAd_full"];
+        [convertedCustomEvents setObject:@"MPGoogleAdMobInterstitialCustomEventSKZ" forKey:@"admob_full"];
+        [convertedCustomEvents setObject:@"MPMillennialInterstitialCustomEventSKZ" forKey:@"millennial_full"];
+        [convertedCustomEvents setObject:@"MPHTMLInterstitialCustomEventSKZ" forKey:@"html"];
+        [convertedCustomEvents setObject:@"MPMRAIDInterstitialCustomEventSKZ" forKey:@"mraid"];
     }
     if ([convertedCustomEvents objectForKey:self.networkType]) {
         customEventClassName = [convertedCustomEvents objectForKey:self.networkType];
