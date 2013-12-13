@@ -15,6 +15,7 @@
 #import "UIWebView+MPAdditions.h"
 #import "MPAdWebViewSKZ.h"
 #import "MPInstanceProviderSKZ.h"
+#import "Skillz_private.h"
 
 NSString * const kMoPubURLScheme = @"mopub";
 NSString * const kMoPubCloseHost = @"close";
@@ -164,11 +165,17 @@ NSString * const kMoPubCustomHost = @"custom";
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
+
+    //Inteject Skillz Check immediately, then carry on for tracking data, etc.
+    NSURL *URL = [request URL];
+    if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
+        [[Skillz skillzInstance] openDeepLinkingAction:URL.host];
+    }
+    
     if (!self.shouldHandleRequests) {
         return NO;
     }
-
-    NSURL *URL = [request URL];
+    
     if ([[URL scheme] isEqualToString:kMoPubURLScheme]) {
         [self performActionForMoPubSpecificURL:URL];
         return NO;

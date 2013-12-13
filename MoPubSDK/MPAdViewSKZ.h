@@ -23,7 +23,7 @@ typedef enum
  * The MPAdView class provides a view that can display banner advertisements.
  */
 
-@interface MPAdViewSKZ : UIView
+@interface MPAdViewSKZ : UIView 
 
 /** @name Initializing a Banner Ad */
 

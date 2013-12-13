@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 @class MPAdViewSKZ;
+
 @protocol MPAdViewDelegateSKZ;
 
 @protocol MPBannerAdManagerDelegateSKZ <NSObject>

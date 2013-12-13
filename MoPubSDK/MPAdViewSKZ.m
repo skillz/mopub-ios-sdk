@@ -10,10 +10,10 @@
 #import "MRAdViewSKZ.h"
 #import "MPBannerAdManagerSKZ.h"
 #import "MPInstanceProviderSKZ.h"
-#import "MPBannerAdManagerDelegate.h"
 #import "MPLogging.h"
+#import "MPBannerAdManagerDelegate.h"
 
-@interface MPAdViewSKZ () <MPBannerAdManagerDelegateSKZ>
+@interface MPAdViewSKZ ()
 
 @property (nonatomic, retain) MPBannerAdManagerSKZ *adManager;
 @property (nonatomic, assign) UIView *adContentView;
@@ -72,6 +72,13 @@
     _adContentView = view;
     [self addSubview:view];
     [view release];
+    
+    if (!view) {
+        if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
+            [[self retain] autorelease];
+            [self.delegate adViewDidFailToLoadAd:self];
+        }
+    }
 }
 
 - (BOOL)ignoresAutorefresh
@@ -94,7 +101,9 @@
 
 - (CGSize)adContentViewSize
 {
-    if (!self.adContentView || [self.adContentView isKindOfClass:[MRAdViewSKZ class]]) {
+    if (!self.adContentView ) {
+        return CGSizeZero;
+    } else if ( [self.adContentView isKindOfClass:[MRAdViewSKZ class]] ) {
         return self.originalSize;
     } else {
         return self.adContentView.bounds.size;
