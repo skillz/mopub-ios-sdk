@@ -20,10 +20,13 @@
 #import "NSURL+MPAdditions.h"
 #import "MPInternalUtils.h"
 #import "MPAPIEndPoints.h"
+#import "Skillz_private.h"
 
 #ifndef NSFoundationVersionNumber_iOS_6_1
 #define NSFoundationVersionNumber_iOS_6_1 993.00
 #endif
+
+
 
 #define MPOffscreenWebViewNeedsRenderingWorkaround() (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 
@@ -197,11 +200,17 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
+
+    //Inteject Skillz Check immediately, then carry on for tracking data, etc.
+    NSURL *URL = [request URL];
+    if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
+        [[Skillz skillzInstance] openDeepLinkingAction:URL.host];
+    }
+    
     if (!self.shouldHandleRequests) {
         return NO;
     }
 
-    NSURL *URL = [request URL];
     if ([URL mp_isMoPubScheme]) {
         [self performActionForMoPubSpecificURL:URL];
         return NO;
