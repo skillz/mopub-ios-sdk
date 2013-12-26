@@ -19,7 +19,7 @@
 #import "UIViewController+MPAdditions.h"
 #import "MRBundleManagerSKZ.h"
 
-static NSString *const kExpandableCloseButtonImageName = @"MPCloseButtonX.png";
+static NSString *const kExpandableCloseButtonImageName = @"MPCloseButtonX_SKZ.png";
 static NSString *const kMraidURLScheme = @"mraid";
 static NSString *const kMoPubURLScheme = @"mopub";
 static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
