@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#if DEBUG
 #define MP_DEBUG_MODE               1
+#else
+#define MP_DEBUG_MODE               0
+#endif
 
 #define HOSTNAME                    @"ads.mopub.com"
 #define HOSTNAME_FOR_TESTING        @"testing.ads.mopub.com"
