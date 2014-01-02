@@ -10,6 +10,7 @@
 #import "MPGlobal.h"
 #import "MPLogging.h"
 #import "UIViewController+MPAdditions.h"
+#import "Skillz_private.h"
 
 static const CGFloat kCloseButtonPadding = 6.0;
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
@@ -30,13 +31,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation MPInterstitialViewControllerSKZ
-
-@synthesize closeButton = _closeButton;
-@synthesize closeButtonStyle = _closeButtonStyle;
-@synthesize orientationType = _orientationType;
-@synthesize applicationHasStatusBar = _applicationHasStatusBar;
-@synthesize isOnViewControllerStack = _isOnViewControllerStack;
-@synthesize delegate = _delegate;
 
 - (void)dealloc
 {
@@ -85,7 +79,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
     }
 
     [self willPresentInterstitial];
-
     self.applicationHasStatusBar = !([UIApplication sharedApplication].isStatusBarHidden);
     [self setApplicationStatusBarHidden:YES];
 
@@ -186,7 +179,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
-    [self setApplicationStatusBarHidden:!self.applicationHasStatusBar];
+    //If Skillz is shown, always reshow status bar. If not, base upon publisher's game.
+    [self setApplicationStatusBarHidden:[[Skillz skillzInstance] sidepanelController] ? YES : self.applicationHasStatusBar];
 
     [self willDismissInterstitial];
 
@@ -203,18 +197,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 
 - (void)setApplicationStatusBarHidden:(BOOL)hidden
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_3_2
-    if ([UIApplication instancesRespondToSelector:@selector(setStatusBarHidden:withAnimation:)]) {
-        // Hiding the status bar should use a fade effect.
-        // Displaying the status bar should use no animation.
-        UIStatusBarAnimation animation = hidden ?
-        UIStatusBarAnimationFade : UIStatusBarAnimationNone;
-        [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:animation];
-        return;
-    }
-#endif
-
-    [[UIApplication sharedApplication] setStatusBarHidden:hidden];
+    [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:UIStatusBarAnimationFade];
 }
 
 #pragma mark - Hidding status bar (iOS 7 and above)
