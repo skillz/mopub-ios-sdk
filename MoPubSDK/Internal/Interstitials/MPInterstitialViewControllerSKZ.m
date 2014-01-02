@@ -180,7 +180,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
     //If Skillz is shown, always reshow status bar. If not, base upon publisher's game.
-    [self setApplicationStatusBarHidden:[[Skillz skillzInstance] sidepanelController] ? YES : self.applicationHasStatusBar];
+    [self setApplicationStatusBarHidden:[[Skillz skillzInstance] sidepanelController] ? NO : self.applicationHasStatusBar];
 
     [self willDismissInterstitial];
 
