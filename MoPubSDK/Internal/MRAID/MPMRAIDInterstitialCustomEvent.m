@@ -40,6 +40,11 @@
     [self.interstitial dismissInterstitialAnimated:animated];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.interstitial dismissInterstitialAnimated:animated];
+}
+
 #pragma mark - MPMRAIDInterstitialViewControllerDelegate
 
 - (CLLocation *)location
