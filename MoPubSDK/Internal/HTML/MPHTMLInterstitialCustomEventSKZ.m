@@ -45,6 +45,11 @@
     [self.interstitial presentInterstitialFromViewController:rootViewController];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.interstitial dismissInterstitialAnimated:animated];
+}
+
 #pragma mark - MPInterstitialViewControllerDelegate
 
 - (CLLocation *)location

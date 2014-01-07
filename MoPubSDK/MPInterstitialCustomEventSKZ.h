@@ -56,6 +56,11 @@
  */
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController;
 
+/**
+ * Called when the interstitial should be forced to dismiss.
+ */
+- (void)dismissInterstitialAnimated:(BOOL)animated;
+
 /** @name Impression and Click Tracking */
 
 /**
