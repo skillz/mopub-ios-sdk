@@ -47,7 +47,7 @@
         self.originalSize = size;
         self.allowedNativeAdOrientation = MPNativeAdOrientationAny;
         self.adUnitId = (adUnitId) ? adUnitId : DEFAULT_PUB_ID;
-        self.adManager = [[MPInstanceProviderSKZ sharedProvider] buildMPBannerAdManagerWithDelegate:self];
+        self.adManager = (id<MPBannerAdManagerDelegateSKZ>)[[MPInstanceProviderSKZ sharedProvider] buildMPBannerAdManagerWithDelegate:self];
     }
     return self;
 }
