@@ -98,6 +98,11 @@
     [self.manager presentInterstitialFromViewController:controller];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.manager dismissInterstitialAnimated:animated];
+}
+
 #pragma mark - Internal
 
 + (NSMutableArray *)sharedInterstitials

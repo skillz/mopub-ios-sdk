@@ -61,6 +61,11 @@
     [self.interstitialCustomEvent showInterstitialFromRootViewController:controller];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.interstitialCustomEvent dismissInterstitialAnimated:animated];
+}
+
 #pragma mark - MPInterstitialCustomEventDelegate
 
 - (NSString *)adUnitId

@@ -103,6 +103,11 @@
     }
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.adapter dismissInterstitialAnimated:animated];
+}
+
 - (CLLocation *)location
 {
     return [self.delegate location];

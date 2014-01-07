@@ -37,6 +37,11 @@
  */
 - (void)showInterstitialFromViewController:(UIViewController *)controller;
 
+/*
+ * Dismiss the interstitial
+ */
+- (void)dismissInterstitialAnimated:(BOOL)animated;
+
 @end
 
 @interface MPBaseInterstitialAdapter (ProtectedMethods)
