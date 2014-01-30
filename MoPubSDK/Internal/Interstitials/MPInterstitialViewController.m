@@ -194,7 +194,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_9_0
