@@ -14,7 +14,7 @@
 @interface MPInterstitialAdManagerSKZ : NSObject <MPAdServerCommunicatorDelegateSKZ,
     MPInterstitialAdapterDelegateSKZ>
 
-@property (nonatomic, assign) id<MPInterstitialAdManagerDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPInterstitialAdManagerDelegateSKZ> delegate;
 @property (nonatomic, assign, readonly) BOOL ready;
 
 - (id)initWithDelegate:(id<MPInterstitialAdManagerDelegateSKZ>)delegate;

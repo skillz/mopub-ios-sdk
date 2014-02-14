@@ -14,9 +14,9 @@ static NSString * const kMoPubSafariNavigateHost = @"navigate";
 
 @interface MPURLResolverSKZ ()
 
-@property (nonatomic, retain) NSURL *URL;
-@property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, strong) NSURL *URL;
+@property (nonatomic, strong) NSURLConnection *connection;
+@property (nonatomic, strong) NSMutableData *responseData;
 
 - (BOOL)handleURL:(NSURL *)URL;
 - (NSString *)storeItemIdentifierForURL:(NSURL *)URL;
@@ -35,17 +35,9 @@ static NSString * const kMoPubSafariNavigateHost = @"navigate";
 
 + (MPURLResolverSKZ *)resolver
 {
-    return [[[MPURLResolverSKZ alloc] init] autorelease];
+    return [[MPURLResolverSKZ alloc] init];
 }
 
-- (void)dealloc
-{
-    self.URL = nil;
-    self.connection = nil;
-    self.responseData = nil;
-
-    [super dealloc];
-}
 
 - (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegateSKZ>)delegate
 {
@@ -171,7 +163,7 @@ static NSString * const kMoPubSafariNavigateHost = @"navigate";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSString *HTMLString = [[[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding] autorelease];
+    NSString *HTMLString = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     [self.delegate showWebViewWithHTMLString:HTMLString
                                      baseURL:self.URL];
 }

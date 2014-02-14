@@ -15,8 +15,8 @@
 
 @interface MPAdViewSKZ ()
 
-@property (nonatomic, retain) MPBannerAdManagerSKZ *adManager;
-@property (nonatomic, assign) UIView *adContentView;
+@property (nonatomic, strong) MPBannerAdManagerSKZ *adManager;
+@property (nonatomic, weak) UIView *adContentView;
 @property (nonatomic, assign) CGSize originalSize;
 @property (nonatomic, assign) MPNativeAdOrientation allowedNativeAdOrientation;
 
@@ -47,7 +47,7 @@
         self.originalSize = size;
         self.allowedNativeAdOrientation = MPNativeAdOrientationAny;
         self.adUnitId = (adUnitId) ? adUnitId : DEFAULT_PUB_ID;
-        self.adManager = (id<MPBannerAdManagerDelegateSKZ>)[[MPInstanceProviderSKZ sharedProvider] buildMPBannerAdManagerWithDelegate:self];
+        self.adManager = (MPBannerAdManagerSKZ *)[[MPInstanceProviderSKZ sharedProvider] buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegateSKZ>)self];
     }
     return self;
 }
@@ -55,27 +55,19 @@
 - (void)dealloc
 {
     self.delegate = nil;
-    self.adUnitId = nil;
-    self.location = nil;
-    self.keywords = nil;
     self.adManager.delegate = nil;
-    self.adManager = nil;
-    [super dealloc];
 }
 
 #pragma mark -
 
 - (void)setAdContentView:(UIView *)view
 {
-    [view retain];
     [self.adContentView removeFromSuperview];
     _adContentView = view;
     [self addSubview:view];
-    [view release];
     
     if (!view) {
         if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
-            [[self retain] autorelease];
             [self.delegate adViewDidFailToLoadAd:self];
         }
     }
@@ -185,9 +177,6 @@
 - (void)managerDidFailToLoadAd
 {
     if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
-        // Make sure we're not deallocated immediately as a result of a delegate
-        // action in reponse to this callback.
-        [[self retain] autorelease];
 
         [self.delegate adViewDidFailToLoadAd:self];
     }

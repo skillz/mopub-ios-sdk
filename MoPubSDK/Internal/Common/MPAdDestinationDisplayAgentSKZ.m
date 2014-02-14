@@ -12,15 +12,15 @@
 
 @interface MPAdDestinationDisplayAgentSKZ ()
 
-@property (nonatomic, retain) MPURLResolverSKZ *resolver;
-@property (nonatomic, retain) MPProgressOverlayViewSKZ *overlayView;
+@property (nonatomic, strong) MPURLResolverSKZ *resolver;
+@property (nonatomic, strong) MPProgressOverlayViewSKZ *overlayView;
 @property (nonatomic, assign) BOOL isLoadingDestination;
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
-@property (nonatomic, retain) SKStoreProductViewController *storeKitController;
+@property (nonatomic, strong) SKStoreProductViewController *storeKitController;
 #endif
 
-@property (nonatomic, retain) MPAdBrowserControllerSKZ *browserController;
+@property (nonatomic, strong) MPAdBrowserControllerSKZ *browserController;
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL;
 - (void)hideOverlay;
@@ -39,10 +39,10 @@
 
 + (MPAdDestinationDisplayAgentSKZ *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegateSKZ>)delegate
 {
-    MPAdDestinationDisplayAgentSKZ *agent = [[[MPAdDestinationDisplayAgentSKZ alloc] init] autorelease];
+    MPAdDestinationDisplayAgentSKZ *agent = [[MPAdDestinationDisplayAgentSKZ alloc] init];
     agent.delegate = delegate;
     agent.resolver = [[MPInstanceProviderSKZ sharedProvider] buildMPURLResolver];
-    agent.overlayView = [[[MPProgressOverlayViewSKZ alloc] initWithDelegate:agent] autorelease];
+    agent.overlayView = [[MPProgressOverlayViewSKZ alloc] initWithDelegate:agent];
     return agent;
 }
 
@@ -51,21 +51,16 @@
     [self dismissAllModalContent];
 
     self.overlayView.delegate = nil;
-    self.overlayView = nil;
     self.resolver.delegate = nil;
-    self.resolver = nil;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
     // XXX: If this display agent is deallocated while a StoreKit controller is still on-screen,
     // nil-ing out the controller's delegate would leave us with no way to dismiss the controller
     // in the future. Therefore, we change the controller's delegate to a singleton object which
     // implements SKStoreProductViewControllerDelegate and is always around.
     self.storeKitController.delegate = [MPLastResortDelegateSKZ sharedDelegate];
-    self.storeKitController = nil;
 #endif
     self.browserController.delegate = nil;
-    self.browserController = nil;
 
-    [super dealloc];
 }
 
 - (void)dismissAllModalContent
@@ -100,9 +95,9 @@
 {
     [self hideOverlay];
 
-    self.browserController = [[[MPAdBrowserControllerSKZ alloc] initWithURL:URL
+    self.browserController = [[MPAdBrowserControllerSKZ alloc] initWithURL:URL
                                                               HTMLString:HTMLString
-                                                                delegate:self] autorelease];
+                                                                delegate:self];
     self.browserController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewControllerSKZ:self.browserController
                                                                                animated:MP_ANIMATED];

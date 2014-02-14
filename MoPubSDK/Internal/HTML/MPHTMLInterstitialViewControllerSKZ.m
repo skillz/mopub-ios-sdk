@@ -12,7 +12,7 @@
 
 @interface MPHTMLInterstitialViewControllerSKZ ()
 
-@property (nonatomic, retain) MPAdWebViewSKZ *backingView;
+@property (nonatomic, strong) MPAdWebViewSKZ *backingView;
 
 @end
 
@@ -29,11 +29,8 @@
 {
     self.backingViewAgent.delegate = nil;
     self.backingViewAgent.customMethodDelegate = nil;
-    self.backingViewAgent = nil;
 
     self.backingView.delegate = nil;
-    self.backingView = nil;
-    [super dealloc];
 }
 
 - (void)viewDidLoad

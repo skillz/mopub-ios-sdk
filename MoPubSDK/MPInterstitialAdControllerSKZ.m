@@ -14,7 +14,7 @@
 
 @interface MPInterstitialAdControllerSKZ () <MPInterstitialAdManagerDelegateSKZ>
 
-@property (nonatomic, retain) MPInterstitialAdManagerSKZ *manager;
+@property (nonatomic, strong) MPInterstitialAdManagerSKZ *manager;
 
 + (NSMutableArray *)sharedInterstitials;
 - (id)initWithAdUnitId:(NSString *)adUnitId;
@@ -44,13 +44,8 @@
     self.delegate = nil;
 
     [self.manager setDelegate:nil];
-    self.manager = nil;
 
-    self.adUnitId = nil;
-    self.keywords = nil;
-    self.location = nil;
 
-    [super dealloc];
 }
 
 #pragma mark - Public
@@ -71,7 +66,7 @@
 
         // Create a new ad controller for this ad unit ID if one doesn't already exist.
         if (!interstitial) {
-            interstitial = [[[[self class] alloc] initWithAdUnitId:adUnitId] autorelease];
+            interstitial = [[[self class] alloc] initWithAdUnitId:adUnitId];
             [interstitials addObject:interstitial];
         }
 
@@ -116,7 +111,7 @@
 
     @synchronized(self) {
         if (!sharedInterstitials) {
-            sharedInterstitials = [[NSMutableArray array] retain];
+            sharedInterstitials = [NSMutableArray array];
         }
     }
 

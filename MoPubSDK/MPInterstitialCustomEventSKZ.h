@@ -86,6 +86,6 @@
  *
  */
 
-@property (nonatomic, assign) id<MPInterstitialCustomEventDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPInterstitialCustomEventDelegateSKZ> delegate;
 
 @end

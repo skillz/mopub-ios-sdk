@@ -9,7 +9,7 @@
 
 @interface MRPictureManagerSKZ : NSObject <UIAlertViewDelegate, MRImageDownloaderDelegateSKZ>
 
-@property (nonatomic, assign) id<MRPictureManagerDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MRPictureManagerDelegateSKZ> delegate;
 
 - (id)initWithDelegate:(id<MRPictureManagerDelegateSKZ>)delegate;
 - (void)storePicture:(NSDictionary *)parameters;

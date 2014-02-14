@@ -44,8 +44,8 @@
 @interface MPInstanceProviderSKZ ()
 
 @property (nonatomic, copy) NSString *userAgent;
-@property (nonatomic, retain) NSMutableDictionary *singletons;
-@property (nonatomic, retain) NSMutableDictionary *carrierInfo;
+@property (nonatomic, strong) NSMutableDictionary *singletons;
+@property (nonatomic, strong) NSMutableDictionary *carrierInfo;
 
 @end
 
@@ -78,12 +78,6 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
     return self;
 }
 
-- (void)dealloc
-{
-    self.singletons = nil;
-    self.carrierInfo = nil;
-    [super dealloc];
-}
 
 - (id)singletonForClass:(Class)klass provider:(MPSingletonProviderBlock)provider
 {
@@ -109,7 +103,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
     // now asynchronously load a fresh copy
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CTTelephonyNetworkInfo *networkInfo = [[[CTTelephonyNetworkInfo alloc] init] autorelease];
+        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
         [self performSelectorOnMainThread:@selector(updateCarrierInfoForCTCarrier:) withObject:networkInfo.subscriberCellularProvider waitUntilDone:NO];
     });
 }
@@ -138,7 +132,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 - (NSString *)userAgent
 {
     if (!_userAgent) {
-        self.userAgent = [[[[UIWebView alloc] init] autorelease] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        self.userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     }
 
     return _userAgent;
@@ -146,23 +140,23 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
 - (MPAdServerCommunicatorSKZ *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegateSKZ>)delegate
 {
-    return [[(MPAdServerCommunicatorSKZ *)[MPAdServerCommunicatorSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [(MPAdServerCommunicatorSKZ *)[MPAdServerCommunicatorSKZ alloc] initWithDelegate:delegate];
 }
 
 #pragma mark - Banners
 
 - (MPBannerAdManagerSKZ *)buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegateSKZ>)delegate
 {
-    return [[(MPBannerAdManagerSKZ *)[MPBannerAdManagerSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [(MPBannerAdManagerSKZ *)[MPBannerAdManagerSKZ alloc] initWithDelegate:delegate];
 }
 
 - (MPBaseBannerAdapterSKZ *)buildBannerAdapterForConfiguration:(MPAdConfigurationSKZ *)configuration
                                                    delegate:(id<MPBannerAdapterDelegateSKZ>)delegate
 {
     if (configuration.customEventClass) {
-        return [[(MPBannerCustomEventAdapterSKZ *)[MPBannerCustomEventAdapterSKZ alloc] initWithDelegate:delegate] autorelease];
+        return [(MPBannerCustomEventAdapterSKZ *)[MPBannerCustomEventAdapterSKZ alloc] initWithDelegate:delegate];
     } else if (configuration.customSelectorName) {
-        return [[(MPLegacyBannerCustomEventAdapterSKZ *)[MPLegacyBannerCustomEventAdapterSKZ alloc] initWithDelegate:delegate] autorelease];
+        return [(MPLegacyBannerCustomEventAdapterSKZ *)[MPLegacyBannerCustomEventAdapterSKZ alloc] initWithDelegate:delegate];
     }
 
     return nil;
@@ -171,7 +165,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 - (MPBannerCustomEventSKZ *)buildBannerCustomEventFromCustomClass:(Class)customClass
                                                       delegate:(id<MPBannerCustomEventDelegateSKZ>)delegate
 {
-    MPBannerCustomEventSKZ *customEvent = [[[customClass alloc] init] autorelease];
+    MPBannerCustomEventSKZ *customEvent = [[customClass alloc] init];
     if (![customEvent isKindOfClass:[MPBannerCustomEventSKZ class]]) {
         MPLogError(@"**** Custom Event Class: %@ does not extend MPBannerCustomEvent ****", NSStringFromClass(customClass));
         return nil;
@@ -184,7 +178,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
 - (MPInterstitialAdManagerSKZ *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegateSKZ>)delegate
 {
-    return [[(MPInterstitialAdManagerSKZ *)[MPInterstitialAdManagerSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [(MPInterstitialAdManagerSKZ *)[MPInterstitialAdManagerSKZ alloc] initWithDelegate:delegate];
 }
 
 
@@ -192,9 +186,9 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
                                                                delegate:(id<MPInterstitialAdapterDelegateSKZ>)delegate
 {
     if (configuration.customEventClass) {
-        return [[(MPInterstitialCustomEventAdapterSKZ *)[MPInterstitialCustomEventAdapterSKZ alloc] initWithDelegate:delegate] autorelease];
+        return [(MPInterstitialCustomEventAdapterSKZ *)[MPInterstitialCustomEventAdapterSKZ alloc] initWithDelegate:delegate];
     } else if (configuration.customSelectorName) {
-        return [[(MPLegacyInterstitialCustomEventAdapterSKZ *)[MPLegacyInterstitialCustomEventAdapterSKZ alloc] initWithDelegate:delegate] autorelease];
+        return [(MPLegacyInterstitialCustomEventAdapterSKZ *)[MPLegacyInterstitialCustomEventAdapterSKZ alloc] initWithDelegate:delegate];
     }
 
     return nil;
@@ -203,7 +197,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 - (MPInterstitialCustomEventSKZ *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegateSKZ>)delegate
 {
-    MPInterstitialCustomEventSKZ *customEvent = [[[customClass alloc] init] autorelease];
+    MPInterstitialCustomEventSKZ *customEvent = [[customClass alloc] init];
     if (![customEvent isKindOfClass:[MPInterstitialCustomEventSKZ class]]) {
         MPLogError(@"**** Custom Event Class: %@ does not extend MPInterstitialCustomEvent ****", NSStringFromClass(customClass));
         return nil;
@@ -216,7 +210,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
                                                                         orientationType:(MPInterstitialOrientationType)type
                                                                    customMethodDelegate:(id)customMethodDelegate
 {
-    MPHTMLInterstitialViewControllerSKZ *controller = [[[MPHTMLInterstitialViewControllerSKZ alloc] init] autorelease];
+    MPHTMLInterstitialViewControllerSKZ *controller = [[MPHTMLInterstitialViewControllerSKZ alloc] init];
     controller.delegate = delegate;
     controller.orientationType = type;
     controller.customMethodDelegate = customMethodDelegate;
@@ -226,7 +220,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 - (MPMRAIDInterstitialViewControllerSKZ *)buildMPMRAIDInterstitialViewControllerWithDelegate:(id<MPInterstitialViewControllerDelegateSKZ>)delegate
                                                                             configuration:(MPAdConfigurationSKZ *)configuration
 {
-    MPMRAIDInterstitialViewControllerSKZ *controller = [[[MPMRAIDInterstitialViewControllerSKZ alloc] initWithAdConfiguration:configuration] autorelease];
+    MPMRAIDInterstitialViewControllerSKZ *controller = [[MPMRAIDInterstitialViewControllerSKZ alloc] initWithAdConfiguration:configuration];
     controller.delegate = delegate;
     return controller;
 }
@@ -235,14 +229,14 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
 - (MPAdWebViewSKZ *)buildMPAdWebViewWithFrame:(CGRect)frame delegate:(id<UIWebViewDelegate>)delegate
 {
-    MPAdWebViewSKZ *webView = [[[MPAdWebViewSKZ alloc] initWithFrame:frame] autorelease];
+    MPAdWebViewSKZ *webView = [[MPAdWebViewSKZ alloc] initWithFrame:frame];
     webView.delegate = delegate;
     return webView;
 }
 
 - (MPAdWebViewAgentSKZ *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegateSKZ>)delegate customMethodDelegate:(id)customMethodDelegate
 {
-    return [[[MPAdWebViewAgentSKZ alloc] initWithAdWebViewFrame:frame delegate:delegate customMethodDelegate:customMethodDelegate] autorelease];
+    return [[MPAdWebViewAgentSKZ alloc] initWithAdWebViewFrame:frame delegate:delegate customMethodDelegate:customMethodDelegate];
 }
 
 #pragma mark - URL Handling
@@ -266,22 +260,22 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
 - (UIWebView *)buildUIWebViewWithFrame:(CGRect)frame
 {
-    return [[[UIWebView alloc] initWithFrame:frame] autorelease];
+    return [[UIWebView alloc] initWithFrame:frame];
 }
 
 - (MRJavaScriptEventEmitterSKZ *)buildMRJavaScriptEventEmitterWithWebView:(UIWebView *)webView
 {
-    return [[[MRJavaScriptEventEmitterSKZ alloc] initWithWebView:webView] autorelease];
+    return [[MRJavaScriptEventEmitterSKZ alloc] initWithWebView:webView];
 }
 
 - (MRCalendarManagerSKZ *)buildMRCalendarManagerWithDelegate:(id<MRCalendarManagerDelegateSKZ>)delegate
 {
-    return [[[MRCalendarManagerSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [[MRCalendarManagerSKZ alloc] initWithDelegate:delegate];
 }
 
 - (EKEventEditViewController *)buildEKEventEditViewControllerWithEditViewDelegate:(id<EKEventEditViewDelegate>)editViewDelegate
 {
-    EKEventEditViewController *controller = [[[EKEventEditViewController alloc] init] autorelease];
+    EKEventEditViewController *controller = [[EKEventEditViewController alloc] init];
     controller.editViewDelegate = editViewDelegate;
     controller.eventStore = [self buildEKEventStore];
     return controller;
@@ -289,22 +283,22 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
 
 - (EKEventStore *)buildEKEventStore
 {
-    return [[[EKEventStore alloc] init] autorelease];
+    return [[EKEventStore alloc] init];
 }
 
 - (MRPictureManagerSKZ *)buildMRPictureManagerWithDelegate:(id<MRPictureManagerDelegateSKZ>)delegate
 {
-    return [[[MRPictureManagerSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [[MRPictureManagerSKZ alloc] initWithDelegate:delegate];
 }
 
 - (MRImageDownloaderSKZ *)buildMRImageDownloaderWithDelegate:(id<MRImageDownloaderDelegateSKZ>)delegate
 {
-    return [[[MRImageDownloaderSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [[MRImageDownloaderSKZ alloc] initWithDelegate:delegate];
 }
 
 - (MRVideoPlayerManagerSKZ *)buildMRVideoPlayerManagerWithDelegate:(id<MRVideoPlayerManagerDelegateSKZ>)delegate
 {
-    return [[[MRVideoPlayerManagerSKZ alloc] initWithDelegate:delegate] autorelease];
+    return [[MRVideoPlayerManagerSKZ alloc] initWithDelegate:delegate];
 }
 
 - (MPMoviePlayerViewController *)buildMPMoviePlayerViewControllerWithURL:(NSURL *)URL
@@ -312,7 +306,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
     // ImageContext used to avoid CGErrors
     // http://stackoverflow.com/questions/13203336/iphone-mpmovieplayerviewcontroller-cgcontext-errors/14669166#14669166
     UIGraphicsBeginImageContext(CGSizeMake(1,1));
-    MPMoviePlayerViewController *playerViewController = [[[MPMoviePlayerViewController alloc] initWithContentURL:URL] autorelease];
+    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:URL];
     UIGraphicsEndImageContext();
 
     return playerViewController;
@@ -327,7 +321,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
     Class adAlertManagerClass = NSClassFromString(@"MPAdAlertManagerSKZ");
     if(adAlertManagerClass != nil)
     {
-        adAlertManager = [[[adAlertManagerClass alloc] init] autorelease];
+        adAlertManager = [[adAlertManagerClass alloc] init];
         [adAlertManager performSelector:@selector(setDelegate:) withObject:delegate];
     }
 
@@ -341,7 +335,7 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
     Class gestureRecognizerClass = NSClassFromString(@"MPAdAlertGestureRecognizerSKZ");
     if(gestureRecognizerClass != nil)
     {
-        gestureRecognizer = [[[gestureRecognizerClass alloc] initWithTarget:target action:action] autorelease];
+        gestureRecognizer = [[gestureRecognizerClass alloc] initWithTarget:target action:action];
     }
 
     return gestureRecognizer;

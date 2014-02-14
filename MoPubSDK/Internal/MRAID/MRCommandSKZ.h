@@ -28,13 +28,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MRCommandSKZ : NSObject {
-    MRAdViewSKZ *_view;
+    MRAdViewSKZ *__weak _view;
     NSDictionary *_parameters;
 }
 
-@property (nonatomic, assign) id<MRCommandDelegateSKZ> delegate;
-@property (nonatomic, assign) MRAdViewSKZ *view;
-@property (nonatomic, retain) NSDictionary *parameters;
+@property (nonatomic, weak) id<MRCommandDelegateSKZ> delegate;
+@property (nonatomic, weak) MRAdViewSKZ *view;
+@property (nonatomic, strong) NSDictionary *parameters;
 
 + (NSMutableDictionary *)sharedCommandClassMap;
 + (void)registerCommand:(Class)commandClass;

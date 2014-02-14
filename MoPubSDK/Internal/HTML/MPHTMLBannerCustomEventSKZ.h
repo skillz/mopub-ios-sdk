@@ -11,6 +11,6 @@
 
 @interface MPHTMLBannerCustomEventSKZ : MPBannerCustomEventSKZ <MPAdWebViewAgentDelegateSKZ>
 
-@property (nonatomic, assign) id<MPPrivateBannerCustomEventDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPPrivateBannerCustomEventDelegateSKZ> delegate;
 
 @end

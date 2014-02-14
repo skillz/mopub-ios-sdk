@@ -14,8 +14,8 @@
 
 @interface MPHTMLInterstitialViewControllerSKZ : MPInterstitialViewControllerSKZ <MPAdWebViewAgentDelegateSKZ>
 
-@property (nonatomic, retain) MPAdWebViewAgentSKZ *backingViewAgent;
-@property (nonatomic, assign) id customMethodDelegate;
+@property (nonatomic, strong) MPAdWebViewAgentSKZ *backingViewAgent;
+@property (nonatomic, weak) id customMethodDelegate;
 
 - (void)loadConfiguration:(MPAdConfigurationSKZ *)configuration;
 

@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPInterstitialAdController.h"
+#import "MPInterstitialAdControllerSKZ.h"
 
 @class MPAdInfo;
 

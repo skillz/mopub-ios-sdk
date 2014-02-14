@@ -15,7 +15,7 @@
 
 @interface MPBaseInterstitialAdapterSKZ : NSObject
 
-@property (nonatomic, assign) id<MPInterstitialAdapterDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPInterstitialAdapterDelegateSKZ> delegate;
 
 /*
  * Creates an adapter with a reference to an MPInterstitialAdManager.

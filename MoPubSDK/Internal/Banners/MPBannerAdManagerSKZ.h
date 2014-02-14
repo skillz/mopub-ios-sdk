@@ -13,7 +13,7 @@
 
 @interface MPBannerAdManagerSKZ : NSObject <MPAdServerCommunicatorDelegateSKZ, MPBannerAdapterDelegateSKZ>
 
-@property (nonatomic, assign) id<MPBannerAdManagerDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPBannerAdManagerDelegateSKZ> delegate;
 
 - (id)initWithDelegate:(id<MPBannerAdManagerDelegateSKZ>)delegate;
 

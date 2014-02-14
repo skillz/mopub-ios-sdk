@@ -11,6 +11,6 @@
 
 @interface MPMRAIDBannerCustomEventSKZ : MPBannerCustomEventSKZ <MRAdViewDelegateSKZ>
 
-@property (nonatomic, assign) id<MPPrivateBannerCustomEventDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPPrivateBannerCustomEventDelegateSKZ> delegate;
 
 @end

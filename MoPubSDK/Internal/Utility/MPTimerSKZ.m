@@ -11,7 +11,7 @@
 
 @interface MPTimerSKZ ()
 @property (nonatomic, assign) NSTimeInterval timeInterval;
-@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, copy) NSDate *pauseDate;
 @property (nonatomic, assign) BOOL isPaused;
 @property (nonatomic, assign) NSTimeInterval secondsLeft;
@@ -19,7 +19,7 @@
 
 @interface MPTimerSKZ ()
 
-@property (nonatomic, assign) id target;
+@property (nonatomic, weak) id target;
 @property (nonatomic, assign) SEL selector;
 
 @end
@@ -48,21 +48,21 @@
                                     userInfo:nil
                                      repeats:repeats];
     timer.timeInterval = seconds;
-    return [timer autorelease];
+    return timer;
 }
 
 - (void)dealloc
 {
     [self.timer invalidate];
-    self.timer = nil;
-    self.pauseDate = nil;
 
-    [super dealloc];
 }
 
 - (void)timerDidFire
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self.target performSelector:self.selector];
+#pragma clang diagnostic pop
 }
 
 - (BOOL)isValid
@@ -84,7 +84,7 @@
         return NO;
     }
     CFRunLoopRef runLoopRef = [[NSRunLoop currentRunLoop] getCFRunLoop];
-    return CFRunLoopContainsTimer(runLoopRef, (CFRunLoopTimerRef)self.timer, kCFRunLoopDefaultMode);
+    return CFRunLoopContainsTimer(runLoopRef, (__bridge CFRunLoopTimerRef)self.timer, kCFRunLoopDefaultMode);
 }
 
 - (BOOL)scheduleNow

@@ -22,9 +22,9 @@ typedef NSUInteger MPAdWebViewEvent;
 
 @interface MPAdWebViewAgentSKZ : NSObject <UIWebViewDelegate, MPAdDestinationDisplayAgentDelegateSKZ>
 
-@property (nonatomic, assign) id customMethodDelegate;
-@property (nonatomic, retain) MPAdWebViewSKZ *view;
-@property (nonatomic, assign) id<MPAdWebViewAgentDelegateSKZ> delegate;
+@property (nonatomic, weak) id customMethodDelegate;
+@property (nonatomic, strong) MPAdWebViewSKZ *view;
+@property (nonatomic, weak) id<MPAdWebViewAgentDelegateSKZ> delegate;
 
 - (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegateSKZ>)delegate customMethodDelegate:(id)customMethodDelegate;
 - (void)loadConfiguration:(MPAdConfigurationSKZ *)configuration;

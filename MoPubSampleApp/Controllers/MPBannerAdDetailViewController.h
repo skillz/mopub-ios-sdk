@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPAdView.h"
+#import "MPAdViewSKZ.h"
 
 @class MPAdInfo;
 

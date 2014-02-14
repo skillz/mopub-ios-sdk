@@ -8,8 +8,8 @@
 #import "MPLastResortDelegateSKZ.h"
 #import "MPGlobal.h"
 #import "UIViewController+MPAdditions.h"
+#import <MessageUI/MessageUI.h>
 
-@class MFMailComposeViewController;
 
 @implementation MPLastResortDelegateSKZ
 

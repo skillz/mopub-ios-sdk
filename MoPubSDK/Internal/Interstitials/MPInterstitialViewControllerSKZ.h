@@ -18,8 +18,8 @@
 
 @property (nonatomic, assign) MPInterstitialCloseButtonStyle closeButtonStyle;
 @property (nonatomic, assign) MPInterstitialOrientationType orientationType;
-@property (nonatomic, retain) UIButton *closeButton;
-@property (nonatomic, assign) id<MPInterstitialViewControllerDelegateSKZ> delegate;
+@property (nonatomic, strong) UIButton *closeButton;
+@property (nonatomic, weak) id<MPInterstitialViewControllerDelegateSKZ> delegate;
 
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
 - (void)dismissInterstitialAnimated:(BOOL)animated;

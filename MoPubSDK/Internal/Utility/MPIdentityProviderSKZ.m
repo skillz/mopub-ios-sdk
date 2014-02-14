@@ -66,9 +66,9 @@
     NSString *identifier = [[NSUserDefaults standardUserDefaults] objectForKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];
     if (!identifier) {
         CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
-        NSString *uuidStr = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
+        NSString *uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, uuidObject));
         CFRelease(uuidObject);
-        [uuidStr autorelease];
+
 
         identifier = [NSString stringWithFormat:@"mopub:%@", [uuidStr uppercaseString]];
         [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];

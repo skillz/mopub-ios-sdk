@@ -13,7 +13,7 @@
 
 @interface MPHTMLBannerCustomEventSKZ ()
 
-@property (nonatomic, retain) MPAdWebViewAgentSKZ *bannerAgent;
+@property (nonatomic, strong) MPAdWebViewAgentSKZ *bannerAgent;
 
 @end
 
@@ -42,9 +42,7 @@
 {
     self.bannerAgent.delegate = nil;
     self.bannerAgent.customMethodDelegate = nil;
-    self.bannerAgent = nil;
 
-    [super dealloc];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation

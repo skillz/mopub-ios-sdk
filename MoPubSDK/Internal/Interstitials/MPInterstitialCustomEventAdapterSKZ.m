@@ -15,8 +15,8 @@
 
 @interface MPInterstitialCustomEventAdapterSKZ ()
 
-@property (nonatomic, retain) MPInterstitialCustomEventSKZ *interstitialCustomEvent;
-@property (nonatomic, retain) MPAdConfigurationSKZ *configuration;
+@property (nonatomic, strong) MPInterstitialCustomEventSKZ *interstitialCustomEvent;
+@property (nonatomic, strong) MPAdConfigurationSKZ *configuration;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
 @property (nonatomic, assign) BOOL hasTrackedClick;
 
@@ -36,11 +36,7 @@
         [self.interstitialCustomEvent performSelector:@selector(invalidate)];
     }
     self.interstitialCustomEvent.delegate = nil;
-    [[_interstitialCustomEvent retain] autorelease];
-    self.interstitialCustomEvent = nil;
-    self.configuration = nil;
 
-    [super dealloc];
 }
 
 - (void)getAdWithConfiguration:(MPAdConfigurationSKZ *)configuration

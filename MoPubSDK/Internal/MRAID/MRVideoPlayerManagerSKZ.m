@@ -26,7 +26,6 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:nil];
 
-    [super dealloc];
 }
 
 - (void)playVideo:(NSDictionary *)parameters

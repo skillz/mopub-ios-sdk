@@ -17,8 +17,8 @@
 
 @interface MPBaseBannerAdapterSKZ ()
 
-@property (nonatomic, retain) MPAdConfigurationSKZ *configuration;
-@property (nonatomic, retain) MPTimerSKZ *timeoutTimer;
+@property (nonatomic, strong) MPAdConfigurationSKZ *configuration;
+@property (nonatomic, strong) MPTimerSKZ *timeoutTimer;
 
 - (void)startTimeoutTimer;
 
@@ -43,12 +43,9 @@
 - (void)dealloc
 {
     [self unregisterDelegate];
-    self.configuration = nil;
 
     [self.timeoutTimer invalidate];
-    self.timeoutTimer = nil;
 
-    [super dealloc];
 }
 
 - (void)unregisterDelegate
@@ -70,9 +67,7 @@
 
     [self startTimeoutTimer];
 
-    [self retain];
     [self getAdWithConfiguration:configuration containerSize:size];
-    [self release];
 }
 
 - (void)didStopLoading

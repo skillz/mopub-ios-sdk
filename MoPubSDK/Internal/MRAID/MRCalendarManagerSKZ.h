@@ -9,7 +9,7 @@
 
 @interface MRCalendarManagerSKZ : NSObject <EKEventEditViewDelegate>
 
-@property (nonatomic, assign) NSObject<MRCalendarManagerDelegateSKZ> *delegate;
+@property (nonatomic, weak) NSObject<MRCalendarManagerDelegateSKZ> *delegate;
 
 - (id)initWithDelegate:(NSObject<MRCalendarManagerDelegateSKZ> *)delegate;
 - (void)createCalendarEventWithParameters:(NSDictionary *)parameters;

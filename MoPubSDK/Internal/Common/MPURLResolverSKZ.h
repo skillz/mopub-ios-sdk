@@ -16,7 +16,7 @@
 @interface MPURLResolver : NSObject
 #endif
 
-@property (nonatomic, assign) id<MPURLResolverDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPURLResolverDelegateSKZ> delegate;
 
 + (MPURLResolverSKZ *)resolver;
 - (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegateSKZ>)delegate;

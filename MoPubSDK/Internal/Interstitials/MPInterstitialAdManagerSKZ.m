@@ -20,9 +20,9 @@
 
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, assign, readwrite) BOOL ready;
-@property (nonatomic, retain) MPBaseInterstitialAdapterSKZ *adapter;
-@property (nonatomic, retain) MPAdServerCommunicatorSKZ *communicator;
-@property (nonatomic, retain) MPAdConfigurationSKZ *configuration;
+@property (nonatomic, strong) MPBaseInterstitialAdapterSKZ *adapter;
+@property (nonatomic, strong) MPAdServerCommunicatorSKZ *communicator;
+@property (nonatomic, strong) MPAdConfigurationSKZ *configuration;
 
 - (void)setUpAdapterWithConfiguration:(MPAdConfigurationSKZ *)configuration;
 
@@ -53,21 +53,17 @@
 {
     [self.communicator cancel];
     [self.communicator setDelegate:nil];
-    self.communicator = nil;
 
     self.adapter = nil;
 
-    self.configuration = nil;
 
-    [super dealloc];
 }
 
 - (void)setAdapter:(MPBaseInterstitialAdapterSKZ *)adapter
 {
     if (self.adapter != adapter) {
         [self.adapter unregisterDelegate];
-        [_adapter release];
-        _adapter = [adapter retain];
+        _adapter = adapter;
     }
 }
 

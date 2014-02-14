@@ -38,7 +38,7 @@
 /**
  * The delegate (`MPInterstitialAdControllerDelegate`) of the interstitial ad object.
  */
-@property (nonatomic, assign) id<MPInterstitialAdControllerDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPInterstitialAdControllerDelegateSKZ> delegate;
 
 /** @name Setting Request Parameters */
 

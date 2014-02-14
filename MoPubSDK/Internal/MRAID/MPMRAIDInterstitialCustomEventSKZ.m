@@ -11,7 +11,7 @@
 
 @interface MPMRAIDInterstitialCustomEventSKZ ()
 
-@property (nonatomic, retain) MPMRAIDInterstitialViewControllerSKZ *interstitial;
+@property (nonatomic, strong) MPMRAIDInterstitialViewControllerSKZ *interstitial;
 
 @end
 
@@ -31,9 +31,7 @@
 - (void)dealloc
 {
     self.interstitial.delegate = nil;
-    self.interstitial = nil;
 
-    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)controller

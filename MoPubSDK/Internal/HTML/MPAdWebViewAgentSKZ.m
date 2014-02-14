@@ -15,6 +15,7 @@
 #import "UIWebView+MPAdditions.h"
 #import "MPAdWebViewSKZ.h"
 #import "MPInstanceProviderSKZ.h"
+
 #import "Skillz_private.h"
 
 NSString * const kMoPubURLScheme = @"mopub";
@@ -25,10 +26,10 @@ NSString * const kMoPubCustomHost = @"custom";
 
 @interface MPAdWebViewAgentSKZ ()
 
-@property (nonatomic, retain) MPAdConfigurationSKZ *configuration;
-@property (nonatomic, retain) MPAdDestinationDisplayAgentSKZ *destinationDisplayAgent;
+@property (nonatomic, strong) MPAdConfigurationSKZ *configuration;
+@property (nonatomic, strong) MPAdDestinationDisplayAgentSKZ *destinationDisplayAgent;
 @property (nonatomic, assign) BOOL shouldHandleRequests;
-@property (nonatomic, retain) id<MPAdAlertManagerProtocolSKZ> adAlertManager;
+@property (nonatomic, strong) id<MPAdAlertManagerProtocolSKZ> adAlertManager;
 
 - (void)performActionForMoPubSpecificURL:(NSURL *)URL;
 - (BOOL)shouldIntercept:(NSURL *)URL navigationType:(UIWebViewNavigationType)navigationType;
@@ -65,14 +66,9 @@ NSString * const kMoPubCustomHost = @"custom";
 {
     self.adAlertManager.targetAdView = nil;
     self.adAlertManager.delegate = nil;
-    self.adAlertManager = nil;
-    self.configuration = nil;
     [self.destinationDisplayAgent cancel];
     [self.destinationDisplayAgent setDelegate:nil];
-    self.destinationDisplayAgent = nil;
     self.view.delegate = nil;
-    self.view = nil;
-    [super dealloc];
 }
 
 #pragma mark - <MPAdAlertManagerDelegate>
@@ -168,6 +164,7 @@ NSString * const kMoPubCustomHost = @"custom";
 
     //Inteject Skillz Check immediately, then carry on for tracking data, etc.
     NSURL *URL = [request URL];
+
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
         [[Skillz skillzInstance] openDeepLinkingAction:URL.host];
     }
@@ -217,7 +214,8 @@ NSString * const kMoPubCustomHost = @"custom";
     NSString *oneArgumentSelectorName = [selectorName stringByAppendingString:@":"];
     SEL zeroArgumentSelector = NSSelectorFromString(selectorName);
     SEL oneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if ([self.customMethodDelegate respondsToSelector:zeroArgumentSelector]) {
         [self.customMethodDelegate performSelector:zeroArgumentSelector];
     } else if ([self.customMethodDelegate respondsToSelector:oneArgumentSelector]) {
@@ -231,6 +229,7 @@ NSString * const kMoPubCustomHost = @"custom";
         MPLogError(@"Custom method delegate does not implement custom selectors %@ or %@.",
                    selectorName, oneArgumentSelectorName);
     }
+#pragma clang diagnostic pop
 }
 
 #pragma mark - URL Interception

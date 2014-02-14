@@ -33,7 +33,7 @@ static NSString *const kMovieWillExitNotification42 =
 
 @interface MRAdViewDisplayControllerSKZ ()
 
-@property (nonatomic, retain) MRAdViewSKZ *twoPartExpansionView;
+@property (nonatomic, strong) MRAdViewSKZ *twoPartExpansionView;
 
 - (CGRect)defaultPosition;
 - (void)checkViewability;
@@ -76,7 +76,7 @@ static NSString *const kMovieWillExitNotification42 =
 {
     self = [super init];
     if (self) {
-        _jsEventEmitter = [jsEventEmitter retain];
+        _jsEventEmitter = jsEventEmitter;
         _view = adView;
         _allowsExpansion = allowsExpansion;
         _closeButtonStyle = closeButtonStyle;
@@ -85,10 +85,10 @@ static NSString *const kMovieWillExitNotification42 =
         _defaultFrame = _view.frame;
         _maxSize = _view.frame.size;
 
-        _viewabilityTimer = [[[MPInstanceProviderSKZ sharedProvider] buildMPTimerWithTimeInterval:kViewabilityTimerInterval
+        _viewabilityTimer = [[MPInstanceProviderSKZ sharedProvider] buildMPTimerWithTimeInterval:kViewabilityTimerInterval
                                                                                         target:self
                                                                                       selector:@selector(checkViewability)
-                                                                                       repeats:YES] retain];
+                                                                                       repeats:YES];
         [_viewabilityTimer scheduleNow];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -119,13 +119,8 @@ static NSString *const kMovieWillExitNotification42 =
 }
 
 - (void)dealloc {
-    [_twoPartExpansionView release];
     [_viewabilityTimer invalidate];
-    [_viewabilityTimer release];
-    [_dimmingView release];
-    [_jsEventEmitter release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 #pragma mark - Public
@@ -233,10 +228,10 @@ shouldLockOrientation:(BOOL)shouldLockOrientation {
     [MPKeyWindow() addSubview:_dimmingView];
 
     if (url) {
-        self.twoPartExpansionView = [[[MRAdViewSKZ alloc] initWithFrame:self.view.frame
+        self.twoPartExpansionView = [[MRAdViewSKZ alloc] initWithFrame:self.view.frame
                                                      allowsExpansion:NO
                                                     closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
-                                                       placementType:MRAdViewPlacementTypeInline] autorelease];
+                                                       placementType:MRAdViewPlacementTypeInline];
         self.twoPartExpansionView.delegate = self;
         [self.twoPartExpansionView loadCreativeFromURL:url];
 

@@ -28,7 +28,7 @@
 @synthesize placementType = _placementType;
 
 + (MRPlacementTypePropertySKZ *)propertyWithType:(MRAdViewPlacementType)type {
-    MRPlacementTypePropertySKZ *property = [[[self alloc] init] autorelease];
+    MRPlacementTypePropertySKZ *property = [[self alloc] init];
     property.placementType = type;
     return property;
 }
@@ -53,7 +53,7 @@
 @synthesize state = _state;
 
 + (MRStatePropertySKZ *)propertyWithState:(MRAdViewState)state {
-    MRStatePropertySKZ *property = [[[self alloc] init] autorelease];
+    MRStatePropertySKZ *property = [[self alloc] init];
     property.state = state;
     return property;
 }
@@ -78,7 +78,7 @@
 @synthesize screenSize = _screenSize;
 
 + (MRScreenSizePropertySKZ *)propertyWithSize:(CGSize)size {
-    MRScreenSizePropertySKZ *property = [[[self alloc] init] autorelease];
+    MRScreenSizePropertySKZ *property = [[self alloc] init];
     property.screenSize = size;
     return property;
 }
@@ -124,7 +124,7 @@
 
 + (MRSupportsPropertySKZ *)propertyWithSupportedFeaturesDictionary:(NSDictionary *)dictionary
 {
-    MRSupportsPropertySKZ *property = [[[self alloc] init] autorelease];
+    MRSupportsPropertySKZ *property = [[self alloc] init];
     property.supportsSms = [[dictionary objectForKey:@"sms"] boolValue];
     property.supportsTel = [[dictionary objectForKey:@"tel"] boolValue];
     property.supportsCalendar = [[dictionary objectForKey:@"calendar"] boolValue];
@@ -157,7 +157,7 @@
 @synthesize isViewable = _isViewable;
 
 + (MRViewablePropertySKZ *)propertyWithViewable:(BOOL)viewable {
-    MRViewablePropertySKZ *property = [[[self alloc] init] autorelease];
+    MRViewablePropertySKZ *property = [[self alloc] init];
     property.isViewable = viewable;
     return property;
 }

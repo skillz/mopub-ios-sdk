@@ -8,9 +8,9 @@
 
 @interface MRImageDownloaderSKZ : NSObject
 
-@property (nonatomic, assign) id<MRImageDownloaderDelegateSKZ> delegate;
-@property (nonatomic, retain) NSOperationQueue *queue;
-@property (nonatomic, retain) NSMutableDictionary *pendingOperations;
+@property (nonatomic, weak) id<MRImageDownloaderDelegateSKZ> delegate;
+@property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSMutableDictionary *pendingOperations;
 
 - (id)initWithDelegate:(id<MRImageDownloaderDelegateSKZ>)delegate;
 - (void)downloadImageWithURL:(NSURL *)URL;

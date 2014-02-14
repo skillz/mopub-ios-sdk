@@ -44,7 +44,7 @@ typedef enum
  * @warning **Important**: Before releasing an instance of `MPAdView`, you must set its delegate
  * property to `nil`.
  */
-@property (nonatomic, assign) id<MPAdViewDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPAdViewDelegateSKZ> delegate;
 
 /** @name Setting Request Parameters */
 
@@ -67,7 +67,7 @@ typedef enum
  * On the MoPub website, keyword targeting options can be found under the "Advanced Targeting"
  * section when managing campaigns.
  */
-@property (nonatomic, retain) NSString *keywords;
+@property (nonatomic, strong) NSString *keywords;
 
 /**
  * A `CLLocation` object representing a user's location that should be passed to the MoPub ad server

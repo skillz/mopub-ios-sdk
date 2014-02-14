@@ -163,12 +163,12 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
 
 - (NSString *)URLEncodedStringSKZ
 {
-    NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+    NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                            (CFStringRef)self,
                                                                            NULL,
                                                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]<>",
-                                                                           kCFStringEncodingUTF8);
-    return [result autorelease];
+                                                                           kCFStringEncodingUTF8));
+    return result;
 }
 
 @end

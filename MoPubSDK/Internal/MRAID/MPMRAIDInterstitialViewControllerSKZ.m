@@ -32,7 +32,7 @@
                                               placementType:MRAdViewPlacementTypeInterstitial];
         _interstitialView.delegate = self;
         _interstitialView.adType = configuration.precacheRequired ? MRAdViewAdTypePreCached : MRAdViewAdTypeDefault;
-        _configuration = [configuration retain];
+        _configuration = configuration;
         self.orientationType = [_configuration orientationType];
         _advertisementHasCustomCloseButton = NO;
     }
@@ -42,9 +42,6 @@
 - (void)dealloc
 {
     _interstitialView.delegate = nil;
-    [_interstitialView release];
-    [_configuration release];
-    [super dealloc];
 }
 
 - (void)viewDidLoad

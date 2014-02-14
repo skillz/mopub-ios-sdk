@@ -26,13 +26,13 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 
 @interface MRAdViewSKZ ()
 
-@property (nonatomic, retain) NSMutableData *data;
-@property (nonatomic, retain) MPAdDestinationDisplayAgentSKZ *destinationDisplayAgent;
-@property (nonatomic, retain) MRCalendarManagerSKZ *calendarManager;
-@property (nonatomic, retain) MRPictureManagerSKZ *pictureManager;
-@property (nonatomic, retain) MRVideoPlayerManagerSKZ *videoPlayerManager;
-@property (nonatomic, retain) MRJavaScriptEventEmitterSKZ *jsEventEmitter;
-@property (nonatomic, retain) id<MPAdAlertManagerProtocolSKZ> adAlertManager;
+@property (nonatomic, strong) NSMutableData *data;
+@property (nonatomic, strong) MPAdDestinationDisplayAgentSKZ *destinationDisplayAgent;
+@property (nonatomic, strong) MRCalendarManagerSKZ *calendarManager;
+@property (nonatomic, strong) MRPictureManagerSKZ *pictureManager;
+@property (nonatomic, strong) MRVideoPlayerManagerSKZ *videoPlayerManager;
+@property (nonatomic, strong) MRJavaScriptEventEmitterSKZ *jsEventEmitter;
+@property (nonatomic, strong) id<MPAdAlertManagerProtocolSKZ> adAlertManager;
 
 - (void)loadRequest:(NSURLRequest *)request;
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
@@ -92,7 +92,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
 
-        _webView = [[[MPInstanceProviderSKZ sharedProvider] buildUIWebViewWithFrame:frame] retain];
+        _webView = [[MPInstanceProviderSKZ sharedProvider] buildUIWebViewWithFrame:frame];
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
                 UIViewAutoresizingFlexibleHeight;
         _webView.backgroundColor = [UIColor clearColor];
@@ -111,7 +111,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 
         [self addSubview:_webView];
 
-        _closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeButton.frame = CGRectMake(0, 0, 50, 50);
         UIImage *image = [UIImage imageNamed:kExpandableCloseButtonImageName];
         [_closeButton setImage:image forState:UIControlStateNormal];
@@ -129,16 +129,16 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
                          action:@selector(closeButtonPressed)
                forControlEvents:UIControlEventTouchUpInside];
 
-        _destinationDisplayAgent = [[[MPInstanceProviderSKZ sharedProvider]
-                                    buildMPAdDestinationDisplayAgentWithDelegate:self] retain];
-        _calendarManager = [[[MPInstanceProviderSKZ sharedProvider]
-                             buildMRCalendarManagerWithDelegate:self] retain];
-        _pictureManager = [[[MPInstanceProviderSKZ sharedProvider]
-                             buildMRPictureManagerWithDelegate:self] retain];
-        _videoPlayerManager = [[[MPInstanceProviderSKZ sharedProvider]
-                                buildMRVideoPlayerManagerWithDelegate:self] retain];
-        _jsEventEmitter = [[[MPInstanceProviderSKZ sharedProvider]
-                             buildMRJavaScriptEventEmitterWithWebView:_webView] retain];
+        _destinationDisplayAgent = [[MPInstanceProviderSKZ sharedProvider]
+                                    buildMPAdDestinationDisplayAgentWithDelegate:self];
+        _calendarManager = [[MPInstanceProviderSKZ sharedProvider]
+                             buildMRCalendarManagerWithDelegate:self];
+        _pictureManager = [[MPInstanceProviderSKZ sharedProvider]
+                             buildMRPictureManagerWithDelegate:self];
+        _videoPlayerManager = [[MPInstanceProviderSKZ sharedProvider]
+                                buildMRVideoPlayerManagerWithDelegate:self];
+        _jsEventEmitter = [[MPInstanceProviderSKZ sharedProvider]
+                             buildMRJavaScriptEventEmitterWithWebView:_webView];
 
         self.adAlertManager = [[MPInstanceProviderSKZ sharedProvider] buildMPAdAlertManagerWithDelegate:self];
 
@@ -150,23 +150,12 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 - (void)dealloc
 {
     _webView.delegate = nil;
-    [_webView release];
-    [_closeButton release];
-    [_data release];
-    [_displayController release];
     [_destinationDisplayAgent setDelegate:nil];
-    [_destinationDisplayAgent release];
     [_calendarManager setDelegate:nil];
-    [_calendarManager release];
     [_pictureManager setDelegate:nil];
-    [_pictureManager release];
     [_videoPlayerManager setDelegate:nil];
-    [_videoPlayerManager release];
-    [_jsEventEmitter release];
     self.adAlertManager.targetAdView = nil;
     self.adAlertManager.delegate = nil;
-    self.adAlertManager = nil;
-    [super dealloc];
 }
 
 #pragma mark - <MPAdAlertManagerDelegate>
@@ -289,7 +278,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 
 - (NSMutableString *)HTMLWithJavaScriptBridge:(NSString *)HTML
 {
-    NSMutableString *resultHTML = [[HTML mutableCopy] autorelease];
+    NSMutableString *resultHTML = [HTML mutableCopy];
 
     if ([self HTMLStringIsMRAIDFragment:HTML]) {
         MPLogDebug(@"Fragment detected: converting to full payload.");
@@ -323,7 +312,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
     [result insertString:prepend atIndex:0];
     [result appendString:@"</body></html>"];
 
-    return [result autorelease];
+    return result;
 }
 
 - (NSString *)MRAIDScriptPath
@@ -415,7 +404,6 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 {
     NSString *str = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
     [self loadHTMLString:str baseURL:nil];
-    [str release];
 }
 
 #pragma mark - UIWebViewDelegate

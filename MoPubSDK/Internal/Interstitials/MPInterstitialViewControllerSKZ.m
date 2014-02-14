@@ -10,6 +10,7 @@
 #import "MPGlobal.h"
 #import "MPLogging.h"
 #import "UIViewController+MPAdditions.h"
+
 #import "Skillz_private.h"
 
 static const CGFloat kCloseButtonPadding = 6.0;
@@ -32,11 +33,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 
 @implementation MPInterstitialViewControllerSKZ
 
-- (void)dealloc
-{
-    self.closeButton = nil;
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -116,7 +112,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 - (UIButton *)closeButton
 {
     if (!_closeButton) {
-        _closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
         UIViewAutoresizingFlexibleBottomMargin;
 
@@ -179,6 +175,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
+
     //If Skillz is shown, always reshow status bar. If not, base upon publisher's game.
     [self setApplicationStatusBarHidden:[[Skillz skillzInstance] sidepanelController] ? NO : self.applicationHasStatusBar];
 

@@ -14,8 +14,8 @@
 
 @interface MPBannerCustomEventAdapterSKZ ()
 
-@property (nonatomic, retain) MPBannerCustomEventSKZ *bannerCustomEvent;
-@property (nonatomic, retain) MPAdConfigurationSKZ *configuration;
+@property (nonatomic, strong) MPBannerCustomEventSKZ *bannerCustomEvent;
+@property (nonatomic, strong) MPAdConfigurationSKZ *configuration;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
 @property (nonatomic, assign) BOOL hasTrackedClick;
 
@@ -35,16 +35,11 @@
         [self.bannerCustomEvent performSelector:@selector(invalidate)];
     }
     self.bannerCustomEvent.delegate = nil;
-    [[_bannerCustomEvent retain] autorelease]; //make sure the custom event isn't released immediately
     self.bannerCustomEvent = nil;
 
     [super unregisterDelegate];
 }
 
-- (void)dealloc {
-    self.configuration = nil;
-    [super dealloc];
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

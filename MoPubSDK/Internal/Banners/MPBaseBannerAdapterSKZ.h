@@ -15,10 +15,10 @@
 
 @interface MPBaseBannerAdapterSKZ : NSObject
 {
-    id<MPBannerAdapterDelegateSKZ> _delegate;
+    id<MPBannerAdapterDelegateSKZ> __weak _delegate;
 }
 
-@property (nonatomic, assign) id<MPBannerAdapterDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPBannerAdapterDelegateSKZ> delegate;
 @property (nonatomic, copy) NSURL *impressionTrackingURL;
 @property (nonatomic, copy) NSURL *clickTrackingURL;
 

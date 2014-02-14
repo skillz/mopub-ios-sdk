@@ -8,7 +8,7 @@
 
 @interface MRVideoPlayerManagerSKZ : NSObject
 
-@property (nonatomic, assign) id<MRVideoPlayerManagerDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MRVideoPlayerManagerDelegateSKZ> delegate;
 
 - (id)initWithDelegate:(id<MRVideoPlayerManagerDelegateSKZ>)delegate;
 - (void)playVideo:(NSDictionary *)parameters;

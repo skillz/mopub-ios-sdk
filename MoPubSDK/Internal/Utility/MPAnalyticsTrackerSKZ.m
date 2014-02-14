@@ -20,7 +20,7 @@
 
 + (MPAnalyticsTrackerSKZ *)tracker
 {
-    return [[[MPAnalyticsTrackerSKZ alloc] init] autorelease];
+    return [[MPAnalyticsTrackerSKZ alloc] init];
 }
 
 - (void)trackImpressionForConfiguration:(MPAdConfigurationSKZ *)configuration

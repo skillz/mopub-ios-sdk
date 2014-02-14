@@ -12,7 +12,7 @@
 
 @interface MPMRAIDBannerCustomEventSKZ ()
 
-@property (nonatomic, retain) MRAdViewSKZ *banner;
+@property (nonatomic, strong) MRAdViewSKZ *banner;
 
 @end
 
@@ -31,10 +31,10 @@
                                  configuration.preferredSize.height);
     }
 
-    self.banner = [[[MRAdViewSKZ alloc] initWithFrame:adViewFrame
+    self.banner = [[MRAdViewSKZ alloc] initWithFrame:adViewFrame
                                    allowsExpansion:YES
                                   closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
-                                     placementType:MRAdViewPlacementTypeInline] autorelease];
+                                     placementType:MRAdViewPlacementTypeInline];
     self.banner.delegate = self;
     [self.banner loadCreativeWithHTMLString:[configuration adResponseHTMLString]
                                     baseURL:nil];
@@ -43,9 +43,7 @@
 - (void)dealloc
 {
     self.banner.delegate = nil;
-    self.banner = nil;
 
-    [super dealloc];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation

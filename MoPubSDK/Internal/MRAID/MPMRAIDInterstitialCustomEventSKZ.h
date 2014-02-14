@@ -11,6 +11,6 @@
 
 @interface MPMRAIDInterstitialCustomEventSKZ : MPInterstitialCustomEventSKZ <MPInterstitialViewControllerDelegateSKZ>
 
-@property (nonatomic, assign) id<MPPrivateInterstitialCustomEventDelegateSKZ> delegate;
+@property (nonatomic, weak) id<MPPrivateInterstitialCustomEventDelegateSKZ> delegate;
 
 @end

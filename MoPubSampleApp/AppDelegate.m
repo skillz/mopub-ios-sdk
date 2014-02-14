@@ -6,10 +6,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MPAdTableViewController.h"
-#import "MPAdSection.h"
-#import "MPIdentityProvider.h"
-#import "MPAdConversionTracker.h"
 
 #if RUN_KIF_TESTS
 #import "MPKIFTestController.h"
@@ -19,22 +15,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"This device's advertisingIdentifier: %@", [MPIdentityProvider identifier]);
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[MPAdTableViewController alloc] initWithAdSections:[MPAdSection adSections]]];
-    self.window.rootViewController = navController;
+
     [self.window makeKeyAndVisible];
 
-    [[MPAdConversionTracker sharedConversionTracker] reportApplicationOpenForApplicationID:@"112358"];
 
     [[UITableViewHeaderFooterView appearance] setTintColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1]];
-    navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    navController.navigationBar.tintColor = [UIColor colorWithRed:0.86 green:0.86 blue:0.86 alpha:1];
-    navController.navigationBar.tintColor = [UIColor colorWithRed:0.21 green:0.21 blue:0.21 alpha:1];
-    navController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor: [UIColor colorWithRed:0.86 green:0.86 blue:0.86 alpha:1]};
-
 #if RUN_KIF_TESTS
     [[MPKIFTestController sharedInstance] startTestingWithCompletionBlock:^{
         // Exit after the tests complete so that CI knows we're done

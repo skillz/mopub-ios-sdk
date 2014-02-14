@@ -6,8 +6,8 @@
 //
 
 #import "MPSampleAppInstanceProvider.h"
-#import "MPAdView.h"
-#import "MPInterstitialAdController.h"
+#import "MPAdViewSKZ.h"
+#import "MPInterstitialAdControllerSKZ.h"
 
 static MPSampleAppInstanceProvider *sharedProvider = nil;
 

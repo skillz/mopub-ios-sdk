@@ -12,7 +12,7 @@
 @class MRAdViewSKZ, MPTimerSKZ, MRDimmingViewSKZ, MRJavaScriptEventEmitterSKZ;
 
 @interface MRAdViewDisplayControllerSKZ : NSObject <MRAdViewDelegateSKZ> {
-    MRAdViewSKZ *_view;
+    MRAdViewSKZ *__weak _view;
     MRAdViewSKZ *_expansionContentView;
     MRAdViewSKZ *_twoPartExpansionView;
 
@@ -40,9 +40,9 @@
     CGAffineTransform _originalTransform;
 }
 
-@property (nonatomic, assign) MRAdViewSKZ *view;
+@property (nonatomic, weak) MRAdViewSKZ *view;
 @property (nonatomic, readonly) MRAdViewState currentState;
-@property (nonatomic, retain) MRJavaScriptEventEmitterSKZ *jsEventEmitter;
+@property (nonatomic, strong) MRJavaScriptEventEmitterSKZ *jsEventEmitter;
 
 - (id)initWithAdView:(MRAdViewSKZ *)adView
      allowsExpansion:(BOOL)allowsExpansion

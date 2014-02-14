@@ -24,8 +24,8 @@
 @interface MPAdAlertManager () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, assign) BOOL processedAlert;
-@property (nonatomic, retain) MPAdAlertGestureRecognizer *adAlertGestureRecognizer;
-@property (nonatomic, retain) MFMailComposeViewController *currentOpenMailVC;
+@property (nonatomic, strong) MPAdAlertGestureRecognizer *adAlertGestureRecognizer;
+@property (nonatomic, strong) MFMailComposeViewController *currentOpenMailVC;
 
 @end
 
@@ -56,16 +56,10 @@
 
 - (void)dealloc
 {
-    self.adConfiguration = nil;
     [self.adAlertGestureRecognizer removeTarget:self action:nil];
     self.adAlertGestureRecognizer.delegate = nil;
-    self.adAlertGestureRecognizer = nil;
-    self.adUnitId = nil;
-    self.location = nil;
     self.currentOpenMailVC.mailComposeDelegate = [MPLastResortDelegateSKZ sharedDelegate];
-    self.currentOpenMailVC = nil;
     
-    [super dealloc];
 }
 
 - (void)processAdAlert
@@ -145,7 +139,7 @@
     NSData *paramData =[[self stringFromDictionary:params] dataUsingEncoding:NSUTF8StringEncoding];
     NSData *markupData = self.adConfiguration.adResponseData;
     
-    self.currentOpenMailVC = [[[MFMailComposeViewController alloc] init] autorelease];
+    self.currentOpenMailVC = [[MFMailComposeViewController alloc] init];
     self.currentOpenMailVC.mailComposeDelegate = self;
     
     [self.currentOpenMailVC setToRecipients:[NSArray arrayWithObject:@"creative-review@mopub.com"]];

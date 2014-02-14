@@ -13,6 +13,8 @@
 
 - (void)getAdWithConfiguration:(MPAdConfigurationSKZ *)configuration containerSize:(CGSize)size
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     MPLogInfo(@"Looking for custom event selector named %@.", configuration.customSelectorName);
 
     SEL customEventSelector = NSSelectorFromString(configuration.customSelectorName);
@@ -32,7 +34,7 @@
                                            withObject:self.delegate.banner];
         return;
     }
-
+#pragma clang diagnostic pop
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 

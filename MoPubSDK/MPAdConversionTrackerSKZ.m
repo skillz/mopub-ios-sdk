@@ -17,7 +17,7 @@
 
 @interface MPAdConversionTrackerSKZ ()
 
-@property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, assign) int statusCode;
 
 - (NSURL *)URLForAppID:(NSString *)appID;
@@ -41,11 +41,6 @@
     }
 }
 
-- (void)dealloc
-{
-    self.responseData = nil;
-    [super dealloc];
-}
 
 - (void)reportApplicationOpenForApplicationID:(NSString *)appID
 {
