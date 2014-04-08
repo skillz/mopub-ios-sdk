@@ -58,7 +58,7 @@ typedef NSUInteger EJSONScannerOptions;
 
 @end
 
-extern NSString *const kJSONScannerErrorDomain /* = @"kJSONScannerErrorDomain" */;
+extern NSString *const kJSONScannerErrorDomainSKZ /* = @"kJSONScannerErrorDomain" */;
 
 typedef enum {
     
