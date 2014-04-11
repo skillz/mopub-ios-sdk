@@ -56,7 +56,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    self.statusCode = [(NSHTTPURLResponse *)response statusCode];
+    self.statusCode = (int)[(NSHTTPURLResponse *)response statusCode];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
