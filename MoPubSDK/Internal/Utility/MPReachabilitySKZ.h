@@ -49,14 +49,22 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
+typedef enum {
+    MPReachabilityNotReachable = 0,
+    MPReachabilityReachableViaWiFi,
+    MPReachabilityReachableViaWWAN
+} MPReachabilityNetworkStatus;
+
 @interface MPReachabilitySKZ: NSObject
 {
     BOOL localWiFiRef;
     SCNetworkReachabilityRef reachabilityRef;
 }
 
+
 + (MPReachabilitySKZ *) reachabilityForLocalWiFi;
 - (BOOL)hasWifi;
+- (MPReachabilityNetworkStatus) currentReachabilityStatus;
 
 @end
 

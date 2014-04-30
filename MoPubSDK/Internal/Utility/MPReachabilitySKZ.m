@@ -56,12 +56,6 @@
 
 #import "MPReachabilitySKZ.h"
 
-typedef enum {
-    MPReachabilityNotReachable = 0,
-    MPReachabilityReachableViaWiFi,
-    MPReachabilityReachableViaWWAN
-} MPReachabilityNetworkStatus;
-
 @implementation MPReachabilitySKZ
 
 - (void) dealloc
