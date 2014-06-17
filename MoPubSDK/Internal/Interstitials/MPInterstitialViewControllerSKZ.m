@@ -79,7 +79,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
     [self setApplicationStatusBarHidden:YES];
 
     [self layoutCloseButton];
-    [controller mp_presentModalViewControllerSKZ:self animated:MP_ANIMATED];
+    [controller mp_presentModalViewControllerSKZ:self animated:NO];
 }
 
 - (void)willPresentInterstitial
