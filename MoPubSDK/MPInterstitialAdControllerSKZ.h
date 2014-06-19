@@ -17,6 +17,7 @@
 
 @interface MPInterstitialAdControllerSKZ : UIViewController
 
+- (void)cleanupForDealloc;
 /** @name Obtaining an Interstitial Ad */
 
 /**
