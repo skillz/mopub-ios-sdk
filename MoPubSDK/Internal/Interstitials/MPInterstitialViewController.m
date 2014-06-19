@@ -269,4 +269,9 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     }
 }
 
+- (void)dealloc
+{
+    SKZLog(@"dealloc %@", self);
+}
+
 @end

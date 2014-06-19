@@ -26,6 +26,7 @@
 
 - (void)dealloc
 {
+    SKZLog(@"dealloc %@", self);
     self.backingViewAgent.delegate = nil;
 
     self.backingView.delegate = nil;

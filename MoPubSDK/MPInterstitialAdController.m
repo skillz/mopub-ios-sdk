@@ -23,13 +23,6 @@
 
 @implementation MPInterstitialAdController
 
-@synthesize manager = _manager;
-@synthesize delegate = _delegate;
-@synthesize adUnitId = _adUnitId;
-@synthesize keywords = _keywords;
-@synthesize location = _location;
-@synthesize testing = _testing;
-
 - (id)initWithAdUnitId:(NSString *)adUnitId
 {
     if (self = [super init]) {
@@ -41,7 +34,10 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
     [self.manager setDelegate:nil];
+
+    SKZLog(@"dealloc %@", self);
 }
 
 #pragma mark - Public
