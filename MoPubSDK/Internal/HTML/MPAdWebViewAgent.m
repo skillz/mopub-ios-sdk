@@ -204,7 +204,7 @@
     //Inteject Skillz Check immediately, then carry on for tracking data, etc.
     NSURL *URL = [request URL];
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
-        [[Skillz skillzInstance] openDeepLinkingAction:URL.host];
+        [[Skillz skillzInstance] openDeepLinkingURL:URL];
     }
     
     if (!self.shouldHandleRequests) {
