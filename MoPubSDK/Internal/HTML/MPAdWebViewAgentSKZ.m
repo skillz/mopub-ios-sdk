@@ -166,7 +166,7 @@ NSString * const kMoPubCustomHost = @"custom";
     NSURL *URL = [request URL];
 
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
-        [[Skillz skillzInstance] openDeepLinkingAction:URL.host];
+        [[Skillz skillzInstance] openDeepLinkingURL:URL];
     }
     
     if (!self.shouldHandleRequests) {
