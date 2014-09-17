@@ -43,7 +43,7 @@
 
 - (id)initWithURL:(NSURL *)URL HTMLString:(NSString *)HTMLString delegate:(id<MPAdBrowserControllerDelegate>)delegate
 {
-    if (self = [super initWithNibName:@"MPAdBrowserControllerSKZ" bundle:nil])
+    if (self = [super initWithNibName:@"MPAdBrowserControllerSKZ" bundle:[NSBundle skillzBundle]])
     {
         self.delegate = delegate;
         self.URL = URL;

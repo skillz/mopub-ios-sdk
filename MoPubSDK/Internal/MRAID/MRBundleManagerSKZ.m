@@ -21,7 +21,7 @@ static MRBundleManagerSKZ *sharedManager = nil;
 
 - (NSString *)mraidPath
 {
-    NSString *mraidBundlePath = [[NSBundle mainBundle] pathForResource:@"MRAID" ofType:@"bundle"];
+    NSString *mraidBundlePath = [[NSBundle skillzBundle] pathForResource:@"MRAID" ofType:@"bundle"];
     NSBundle *mraidBundle = [NSBundle bundleWithPath:mraidBundlePath];
     return [mraidBundle pathForResource:@"mraid" ofType:@"js"];
 }
