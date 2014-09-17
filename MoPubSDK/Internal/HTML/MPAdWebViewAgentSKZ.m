@@ -17,6 +17,7 @@
 #import "MPInstanceProviderSKZ.h"
 
 #import "Skillz_private.h"
+#import "Skillz+DeepLinking.h"
 
 NSString * const kMoPubURLScheme = @"mopub";
 NSString * const kMoPubCloseHost = @"close";
