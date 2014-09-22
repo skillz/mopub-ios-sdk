@@ -113,7 +113,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
 
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeButton.frame = CGRectMake(0, 0, 50, 50);
-        UIImage *image = [UIImage imageNamed:kExpandableCloseButtonImageName];
+        UIImage *image = [UIImage imageFromResource:kExpandableCloseButtonImageName];
         [_closeButton setImage:image forState:UIControlStateNormal];
 
         _allowsExpansion = expansion;

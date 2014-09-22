@@ -116,7 +116,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
         _closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
         UIViewAutoresizingFlexibleBottomMargin;
 
-        UIImage *closeButtonImage = [UIImage imageNamed:kCloseButtonXImageName];
+        UIImage *closeButtonImage = [UIImage imageFromResource:kCloseButtonXImageName];
         [_closeButton setImage:closeButtonImage forState:UIControlStateNormal];
         [_closeButton sizeToFit];
 
@@ -144,7 +144,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
 
 - (void)setCloseButtonImageWithImageNamed:(NSString *)imageName
 {
-    UIImage *image = [UIImage imageNamed:imageName];
+    UIImage *image = [UIImage imageFromResource:imageName];
     [self.closeButton setImage:image forState:UIControlStateNormal];
     [self.closeButton sizeToFit];
 }
