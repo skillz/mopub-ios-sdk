@@ -14,7 +14,7 @@
 #import "Skillz_private.h"
 
 static const CGFloat kCloseButtonPadding = 6.0;
-static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ.png";
+static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 
 @interface MPInterstitialViewControllerSKZ ()
 
