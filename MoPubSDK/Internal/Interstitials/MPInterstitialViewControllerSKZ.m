@@ -214,8 +214,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    NSUInteger applicationSupportedOrientations =
-    [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:MPKeyWindow()];
+    NSUInteger applicationSupportedOrientations = [[[UIApplication sharedApplication] delegate] application:[UIApplication sharedApplication]
+                                                                    supportedInterfaceOrientationsForWindow:MPKeyWindow()];
     NSUInteger interstitialSupportedOrientations = applicationSupportedOrientations;
     NSString *orientationDescription = @"any";
 
