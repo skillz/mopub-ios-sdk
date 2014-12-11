@@ -11,8 +11,10 @@
 #import "MPLogging.h"
 #import "UIButton+MPAdditions.h"
 
-static const CGFloat kCloseButtonPadding = 5.0;
-static const CGFloat kCloseButtonEdgeInset = 5.0;
+static const CGFloat kCloseButtonPadding = 6.0;
+static const CGFloat kCloseButtonEdgeInset = 6.0;
+static const CGFloat kCloseButtonPaddingForPad = 12.0;
+
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 @interface MPInterstitialViewController ()
@@ -115,10 +117,11 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (void)layoutCloseButton
 {
-    CGFloat originX = self.view.bounds.size.width - kCloseButtonPadding -
+    NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
+    CGFloat originX = self.view.bounds.size.width - padding -
     self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,
-                                        kCloseButtonPadding,
+                                        padding,
                                         self.closeButton.bounds.size.width,
                                         self.closeButton.bounds.size.height);
     self.closeButton.mp_TouchAreaInsets = UIEdgeInsetsMake(kCloseButtonEdgeInset, kCloseButtonEdgeInset, kCloseButtonEdgeInset, kCloseButtonEdgeInset);
