@@ -12,8 +12,10 @@
 #import "UIViewController+MPAdditions.h"
 
 #import "Skillz_private.h"
+#import "UIView+Skillz.h"
 
 static const CGFloat kCloseButtonPadding = 6.0;
+static const CGFloat kCloseButtonPaddingForPad = 6.0;
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 
 @interface MPInterstitialViewControllerSKZ ()
@@ -79,7 +81,14 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
     [self setApplicationStatusBarHidden:YES];
 
     [self layoutCloseButton];
-    [controller mp_presentModalViewControllerSKZ:self animated:NO];
+    if (!isPad()) {
+         [controller mp_presentModalViewControllerSKZ:self animated:NO];
+    } else {
+        [[[UIApplication sharedApplication] keyWindow] addSubview:self.view];
+        [controller addChildViewController:self];
+        [self.view rotateAccordingToStatusBarOrientationAndSupportedOrientations];
+    }
+    
 }
 
 - (void)willPresentInterstitial
@@ -131,10 +140,11 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 
 - (void)layoutCloseButton
 {
-    CGFloat originX = self.view.bounds.size.width - kCloseButtonPadding -
+    NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
+    CGFloat originX = self.view.bounds.size.width - padding -
     self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,
-                                        kCloseButtonPadding,
+                                        padding,
                                         self.closeButton.bounds.size.width,
                                         self.closeButton.bounds.size.height);
     [self setCloseButtonStyle:self.closeButtonStyle];
@@ -185,6 +195,13 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
     // TODO: Is this check necessary?
     if ([presentingViewController mp_presentedViewControllerSKZ] == self) {
         [presentingViewController mp_dismissModalViewControllerAnimatedSKZ:MP_ANIMATED];
+    } else {
+        [UIView animateWithDuration:.3 animations:^{
+            [self.view setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self.view removeFromSuperview];
+            [self removeFromParentViewController];
+        }];
     }
 
     [self didDismissInterstitial];
