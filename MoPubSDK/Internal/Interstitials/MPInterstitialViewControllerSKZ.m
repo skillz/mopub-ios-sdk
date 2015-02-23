@@ -15,7 +15,7 @@
 #import "UIView+Skillz.h"
 
 static const CGFloat kCloseButtonPadding = 6.0;
-static const CGFloat kCloseButtonPaddingForPad = 6.0;
+static const CGFloat kCloseButtonPaddingForPad = 12.0;
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 
 @interface MPInterstitialViewControllerSKZ ()
@@ -141,8 +141,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
 - (void)layoutCloseButton
 {
     NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
-    CGFloat originX = self.view.bounds.size.width - padding -
-    self.closeButton.bounds.size.width;
+    CGFloat originX = self.view.bounds.size.width - padding - self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,
                                         padding,
                                         self.closeButton.bounds.size.width,
