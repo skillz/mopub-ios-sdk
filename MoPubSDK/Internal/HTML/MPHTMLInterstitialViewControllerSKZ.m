@@ -142,6 +142,7 @@
 - (void)adActionDidFinish:(MPAdWebViewSKZ *)ad
 {
     //NOOP: the landing page is going away, but not the interstitial.
+    [self dismissInterstitialAnimated:NO];
 }
 
 - (void)adDidClose:(MPAdWebViewSKZ *)ad
