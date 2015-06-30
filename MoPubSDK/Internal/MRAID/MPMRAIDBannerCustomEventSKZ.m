@@ -18,7 +18,7 @@
 
 @implementation MPMRAIDBannerCustomEventSKZ
 
-@synthesize banner = _banner;
+@dynamic delegate;
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {

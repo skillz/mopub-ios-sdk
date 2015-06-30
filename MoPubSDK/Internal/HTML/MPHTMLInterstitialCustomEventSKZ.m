@@ -18,7 +18,7 @@
 
 @implementation MPHTMLInterstitialCustomEventSKZ
 
-@synthesize interstitial = _interstitial;
+@dynamic delegate;
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {

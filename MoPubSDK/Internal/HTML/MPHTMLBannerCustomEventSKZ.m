@@ -19,7 +19,7 @@
 
 @implementation MPHTMLBannerCustomEventSKZ
 
-@synthesize bannerAgent = _bannerAgent;
+@dynamic delegate;
 
 - (BOOL)enableAutomaticImpressionAndClickTracking
 {
