@@ -16,7 +16,7 @@ typedef enum
     MPAdAlertGestureRecognizerState_Recognized
 } MPAdAlertGestureRecognizerState;
 
-@interface MPAdAlertGestureRecognizer : UIGestureRecognizer
+@interface MPAdAlertGestureRecognizerSKZ : UIGestureRecognizer
 
 // default is 4
 @property (nonatomic, assign) NSInteger numZigZagsForRecognition;

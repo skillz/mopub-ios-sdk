@@ -5,7 +5,7 @@
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPAdAlertGestureRecognizer.h"
+#import "MPAdAlertGestureRecognizerSKZ.h"
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
@@ -15,7 +15,7 @@
 
 NSInteger const kMPAdAlertGestureMaxAllowedYAxisMovement = 50;
 
-@interface MPAdAlertGestureRecognizer ()
+@interface MPAdAlertGestureRecognizerSKZ ()
 
 @property (nonatomic, assign) MPAdAlertGestureRecognizerState currentAlertGestureState;
 @property (nonatomic, assign) CGPoint inflectionPoint;
@@ -25,7 +25,7 @@ NSInteger const kMPAdAlertGestureMaxAllowedYAxisMovement = 50;
 
 @end
 
-@implementation MPAdAlertGestureRecognizer
+@implementation MPAdAlertGestureRecognizerSKZ
 
 @synthesize currentAlertGestureState = _currentAlertGestureState;
 @synthesize inflectionPoint = _inflectionPoint;

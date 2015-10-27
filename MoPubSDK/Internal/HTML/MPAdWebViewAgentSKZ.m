@@ -79,7 +79,7 @@ NSString * const kMoPubCustomHost = @"custom";
     return [self.delegate viewControllerForPresentingModalView];
 }
 
-- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManager *)manager
+- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManagerSKZ *)manager
 {
     [self.adAlertManager processAdAlertOnce];
 }

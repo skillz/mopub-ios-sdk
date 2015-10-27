@@ -165,7 +165,7 @@ static NSString *const kMoPubPrecacheCompleteHost = @"precacheComplete";
     return [self.delegate viewControllerForPresentingModalView];
 }
 
-- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManager *)manager
+- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManagerSKZ *)manager
 {
     [self.adAlertManager processAdAlertOnce];
 }

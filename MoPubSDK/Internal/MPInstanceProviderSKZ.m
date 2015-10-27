@@ -328,9 +328,9 @@ static MPInstanceProviderSKZ *sharedProvider = nil;
     return adAlertManager;
 }
 
-- (MPAdAlertGestureRecognizer *)buildMPAdAlertGestureRecognizerWithTarget:(id)target action:(SEL)action
+- (MPAdAlertGestureRecognizerSKZ *)buildMPAdAlertGestureRecognizerWithTarget:(id)target action:(SEL)action
 {
-    MPAdAlertGestureRecognizer *gestureRecognizer = nil;
+    MPAdAlertGestureRecognizerSKZ *gestureRecognizer = nil;
 
     Class gestureRecognizerClass = NSClassFromString(@"MPAdAlertGestureRecognizerSKZ");
     if(gestureRecognizerClass != nil)

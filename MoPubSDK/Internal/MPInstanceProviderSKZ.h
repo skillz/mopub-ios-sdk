@@ -60,7 +60,7 @@
 @protocol MRVideoPlayerManagerDelegateSKZ;
 
 // Utilities
-@class MPAdAlertManager, MPAdAlertGestureRecognizer;
+@class MPAdAlertManagerSKZ, MPAdAlertGestureRecognizerSKZ;
 @class MPAnalyticsTrackerSKZ;
 @class MPReachabilitySKZ;
 @class MPTimerSKZ;
@@ -121,7 +121,7 @@ typedef id(^MPSingletonProviderBlock)();
 
 #pragma mark - Utilities
 - (id<MPAdAlertManagerProtocolSKZ>)buildMPAdAlertManagerWithDelegate:(id)delegate;
-- (MPAdAlertGestureRecognizer *)buildMPAdAlertGestureRecognizerWithTarget:(id)target action:(SEL)action;
+- (MPAdAlertGestureRecognizerSKZ *)buildMPAdAlertGestureRecognizerWithTarget:(id)target action:(SEL)action;
 - (NSOperationQueue *)sharedOperationQueue;
 - (MPAnalyticsTrackerSKZ *)sharedMPAnalyticsTracker;
 - (MPReachabilitySKZ *)sharedMPReachability;

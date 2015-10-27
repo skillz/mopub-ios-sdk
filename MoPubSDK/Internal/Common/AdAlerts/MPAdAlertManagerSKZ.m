@@ -5,9 +5,9 @@
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPAdAlertManager.h"
+#import "MPAdAlertManagerSKZ.h"
 #import "MPAdConfigurationSKZ.h"
-#import "MPAdAlertGestureRecognizer.h"
+#import "MPAdAlertGestureRecognizerSKZ.h"
 #import "MPLogging.h"
 #import "MPIdentityProviderSKZ.h"
 #import "MPInstanceProviderSKZ.h"
@@ -21,15 +21,15 @@
 
 #define kTimestampParamKey @"timestamp"
 
-@interface MPAdAlertManager () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
+@interface MPAdAlertManagerSKZ () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, assign) BOOL processedAlert;
-@property (nonatomic, strong) MPAdAlertGestureRecognizer *adAlertGestureRecognizer;
+@property (nonatomic, strong) MPAdAlertGestureRecognizerSKZ *adAlertGestureRecognizer;
 @property (nonatomic, strong) MFMailComposeViewController *currentOpenMailVC;
 
 @end
 
-@implementation MPAdAlertManager
+@implementation MPAdAlertManagerSKZ
 
 @synthesize delegate = _delegate;
 @synthesize adConfiguration = _adConfiguration;

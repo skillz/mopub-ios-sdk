@@ -10,21 +10,21 @@
 #import "MPGlobal.h"
 
 @class CLLocation;
-@protocol MPAdAlertManagerDelegate;
+@protocol MPAdAlertManagerDelegateSKZ;
 
 @class MPAdConfigurationSKZ;
 
-@interface MPAdAlertManager : NSObject <MPAdAlertManagerProtocolSKZ>
+@interface MPAdAlertManagerSKZ : NSObject <MPAdAlertManagerProtocolSKZ>
 
 @end
 
-@protocol MPAdAlertManagerDelegate <NSObject>
+@protocol MPAdAlertManagerDelegateSKZ <NSObject>
 
 @required
 - (UIViewController *)viewControllerForPresentingMailVC;
-- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManager *)manager;
+- (void)adAlertManagerDidTriggerAlert:(MPAdAlertManagerSKZ *)manager;
 
 @optional
-- (void)adAlertManagerDidProcessAlert:(MPAdAlertManager *)manager;
+- (void)adAlertManagerDidProcessAlert:(MPAdAlertManagerSKZ *)manager;
 
 @end
