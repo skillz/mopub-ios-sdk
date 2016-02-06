@@ -36,7 +36,7 @@
 
 + (NSURL *)URL
 {
-    NSString *path = [NSString stringWithFormat:@"http://%@/m/open?v=%@&udid=%@&id=%@&av=%@&st=1",
+    NSString *path = [NSString stringWithFormat:@"https://%@/m/open?v=%@&udid=%@&id=%@&av=%@&st=1",
                       HOSTNAME,
                       MP_SERVER_VERSION,
                       [MPIdentityProviderSKZ identifier],
