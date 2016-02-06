@@ -50,7 +50,7 @@ static NSString * const kAdBrowserControllerNibName = @"MPAdBrowserController";
 #pragma mark Lifecycle
 
 - (id)initWithURL:(NSURL *)URL HTMLString:(NSString *)HTMLString delegate:(id<MPAdBrowserControllerDelegate>)delegate
-{>
+{
     if (self = [super initWithNibName:kAdBrowserControllerNibName bundle:MPResourceBundleForClass(self.class)])
     {
         self.delegate = delegate;

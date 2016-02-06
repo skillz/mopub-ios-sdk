@@ -90,13 +90,13 @@ static CGFloat const kStallSpinnerSize = 35.0f;
 
     self.daaButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.daaButton.frame = CGRectMake(0, 0, kDaaIconSize, kDaaIconSize);
-    [self.daaButton setImage:[UIImage imageNamed:MPResourcePathForResource(kDAAIconImageName)] forState:UIControlStateNormal];
+    [self.daaButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kDAAIconImageName)] forState:UIControlStateNormal];
     [self.daaButton addTarget:self action:@selector(daaButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     self.daaButton.mp_TouchAreaInsets = UIEdgeInsetsMake(kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets);
     [self.view addSubview:self.daaButton];
 
     self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.closeButton setImage:[UIImage imageNamed:MPResourcePathForResource(kCloseButtonImage)] forState:UIControlStateNormal];
+    [self.closeButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kCloseButtonImage)] forState:UIControlStateNormal];
     [self.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     self.closeButton.mp_TouchAreaInsets = UIEdgeInsetsMake(kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets);
     [self.closeButton sizeToFit];
