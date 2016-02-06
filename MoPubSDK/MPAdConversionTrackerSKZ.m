@@ -82,7 +82,7 @@
 
 - (NSURL *)URLForAppID:(NSString *)appID
 {
-    NSString *path = [NSString stringWithFormat:@"http://%@/m/open?v=%@&udid=%@&id=%@&av=%@",
+    NSString *path = [NSString stringWithFormat:@"https://%@/m/open?v=%@&udid=%@&id=%@&av=%@",
                       HOSTNAME,
                       MP_SERVER_VERSION,
                       [MPIdentityProviderSKZ identifier],
