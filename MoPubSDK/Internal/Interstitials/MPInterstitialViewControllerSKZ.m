@@ -81,14 +81,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX_SKZ";
     [self setApplicationStatusBarHidden:YES];
 
     [self layoutCloseButton];
-    if (!isPad()) {
-         [controller mp_presentModalViewControllerSKZ:self animated:NO];
-    } else {
-        [[[UIApplication sharedApplication] keyWindow] addSubview:self.view];
-        [controller addChildViewController:self];
-        [self.view rotateAccordingToStatusBarOrientationAndSupportedOrientations];
-    }
-    
+
+    [controller mp_presentModalViewControllerSKZ:self animated:NO];
 }
 
 - (void)willPresentInterstitial
