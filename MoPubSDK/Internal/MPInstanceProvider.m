@@ -20,17 +20,10 @@
 #import "MPLogging.h"
 #import "MRImageDownloader.h"
 #import "MRBundleManager.h"
-#import "MRCalendarManager.h"
-#import "MRPictureManager.h"
 #import "MRVideoPlayerManager.h"
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "MPNativeCustomEvent.h"
-#import "MPNativeAdSource.h"
-#import "MPNativePositionSource.h"
-#import "MPStreamAdPlacementData.h"
-#import "MPStreamAdPlacer.h"
 #import "MRNativeCommandHandler.h"
 #import "MRBridge.h"
 #import "MRController.h"
@@ -38,6 +31,14 @@
 #import "MPRewardedVideoAdManager.h"
 #import "MPRewardedVideoAdapter.h"
 #import "MPRewardedVideoCustomEvent.h"
+
+#if MP_HAS_NATIVE_PACKAGE
+#import "MPNativeCustomEvent.h"
+#import "MPNativeAdSource.h"
+#import "MPNativePositionSource.h"
+#import "MPStreamAdPlacementData.h"
+#import "MPStreamAdPlacer.h"
+#endif
 
 @interface MPInstanceProvider ()
 
@@ -270,11 +271,6 @@ static MPInstanceProvider *sharedAdProvider = nil;
     return [[UIWebView alloc] initWithFrame:frame];
 }
 
-- (MRCalendarManager *)buildMRCalendarManagerWithDelegate:(id<MRCalendarManagerDelegate>)delegate
-{
-    return [[MRCalendarManager alloc] initWithDelegate:delegate];
-}
-
 - (EKEventEditViewController *)buildEKEventEditViewControllerWithEditViewDelegate:(id<EKEventEditViewDelegate>)editViewDelegate
 {
     EKEventEditViewController *controller = [[EKEventEditViewController alloc] init];
@@ -286,11 +282,6 @@ static MPInstanceProvider *sharedAdProvider = nil;
 - (EKEventStore *)buildEKEventStore
 {
     return [[EKEventStore alloc] init];
-}
-
-- (MRPictureManager *)buildMRPictureManagerWithDelegate:(id<MRPictureManagerDelegate>)delegate
-{
-    return [[MRPictureManager alloc] initWithDelegate:delegate];
 }
 
 - (MRImageDownloader *)buildMRImageDownloaderWithDelegate:(id<MRImageDownloaderDelegate>)delegate
@@ -320,6 +311,8 @@ static MPInstanceProvider *sharedAdProvider = nil;
 }
 
 #pragma mark - Native
+
+#if MP_HAS_NATIVE_PACKAGE
 
 - (MPNativeCustomEvent *)buildNativeCustomEventFromCustomClass:(Class)customClass
                                                       delegate:(id<MPNativeCustomEventDelegate>)delegate
@@ -355,6 +348,8 @@ static MPInstanceProvider *sharedAdProvider = nil;
 {
     return [MPStreamAdPlacer placerWithViewController:controller adPositioning:positioning rendererConfigurations:rendererConfigurations];
 }
+
+#endif
 
 @end
 
