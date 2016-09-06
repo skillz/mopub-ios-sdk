@@ -20,6 +20,7 @@
 @property (nonatomic, assign) MPInterstitialOrientationType orientationType;
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, weak) id<MPInterstitialViewControllerDelegate> delegate;
+@property (nonatomic, copy) UIPresentationController*(^createPresentationController)(UIViewController *presented, UIViewController *presenting, UIViewController *source);
 
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
 - (void)dismissInterstitialAnimated:(BOOL)animated;

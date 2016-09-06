@@ -270,6 +270,17 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     }
 }
 
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
+                                                      presentingViewController:(UIViewController *)presenting
+                                                          sourceViewController:(UIViewController *)source
+{
+    if (self.createPresentationController) {
+        return self.createPresentationController(presented, presenting, source);
+    } else {
+        return nil;
+    }
+}
+
 - (void)dealloc
 {
     SKZLog(@"dealloc %@", self);
