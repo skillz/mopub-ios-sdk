@@ -1092,14 +1092,11 @@ static NSString *const kMRAIDCommandResize = @"resize";
 
 - (void)updateViewabilityWithBool:(BOOL)currentViewability
 {
-    if (self.isViewable != currentViewability)
-    {
-        MPLogDebug(@"Viewable changed to: %@", currentViewability ? @"YES" : @"NO");
-        self.isViewable = currentViewability;
+    MPLogDebug(@"Viewable changed to: %@", currentViewability ? @"YES" : @"NO");
+    self.isViewable = currentViewability;
 
-        // Both views in two-part expand need to report if they're viewable or not depending on the active one.
-        [self fireChangeEventToBothBridgesForProperty:[MRViewableProperty propertyWithViewable:self.isViewable]];
-    }
+    // Both views in two-part expand need to report if they're viewable or not depending on the active one.
+    [self fireChangeEventToBothBridgesForProperty:[MRViewableProperty propertyWithViewable:self.isViewable]];
 }
 
 #pragma mark - <MPAdAlertManagerDelegate>
