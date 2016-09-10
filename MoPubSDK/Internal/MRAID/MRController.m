@@ -716,11 +716,7 @@ static NSString *const kMRAIDCommandResize = @"resize";
 
 - (void)bridge:(MRBridge *)bridge handleNativeCommandSetOrientationPropertiesWithForceOrientationMask:(UIInterfaceOrientationMask)forceOrientationMask
 {
-    if (isLandscape() &&
-        !((forceOrientationMask & UIInterfaceOrientationMaskLandscapeLeft) ||
-          (forceOrientationMask & UIInterfaceOrientationMaskLandscape) ||
-          (forceOrientationMask & UIInterfaceOrientationMaskLandscapeRight)))
-    {
+    if (isLandscape() && !(forceOrientationMask & UIInterfaceOrientationMaskLandscape)) {
         return;
     }
 
