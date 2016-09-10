@@ -716,6 +716,21 @@ static NSString *const kMRAIDCommandResize = @"resize";
 
 - (void)bridge:(MRBridge *)bridge handleNativeCommandSetOrientationPropertiesWithForceOrientationMask:(UIInterfaceOrientationMask)forceOrientationMask
 {
+    if (isLandscape() &&
+        !((forceOrientationMask & UIInterfaceOrientationMaskLandscapeLeft) ||
+          (forceOrientationMask & UIInterfaceOrientationMaskLandscape) ||
+          (forceOrientationMask & UIInterfaceOrientationMaskLandscapeRight)))
+    {
+        return;
+    }
+
+    if (!isLandscape() &&
+        !((forceOrientationMask & UIInterfaceOrientationMaskPortrait) ||
+          (forceOrientationMask & UIInterfaceOrientationMaskPortraitUpsideDown)))
+    {
+        return;
+    }
+    
     // If the ad is trying to force an orientation that the app doesn't support, we shouldn't try to force the orientation.
     if (![[UIApplication sharedApplication] mp_supportsOrientationMask:forceOrientationMask]) {
         return;
