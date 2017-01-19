@@ -206,6 +206,7 @@
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
         [[[Skillz skillzInstance] navigationController] setNavigationBarHidden:NO];
         [[Skillz skillzInstance] openDeepLinkingURL:URL];
+        [self.delegate adActionWillLeaveApplication:self.view];
     }
     
     if (!self.shouldHandleRequests) {
