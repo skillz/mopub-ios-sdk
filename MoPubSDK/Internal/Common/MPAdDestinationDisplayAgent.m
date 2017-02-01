@@ -12,6 +12,7 @@
 #import "NSURL+MPAdditions.h"
 #import "MPCoreInstanceProvider.h"
 #import "MPAnalyticsTracker.h"
+#import "Skillz_private.h"
 
 static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
 
@@ -285,7 +286,9 @@ static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
     [self.storeKitController loadProductWithParameters:parameters completionBlock:nil];
 
     [self hideOverlay];
-    [[self.delegate viewControllerForPresentingModalView] presentViewController:self.storeKitController animated:MP_ANIMATED completion:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       [[[Skillz skillzInstance] homeViewController] presentViewController:self.storeKitController animated:MP_ANIMATED completion:nil];
+    });
 #endif
 }
 
