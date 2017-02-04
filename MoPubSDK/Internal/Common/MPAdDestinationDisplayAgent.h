@@ -20,6 +20,7 @@
                                                    MPActivityViewControllerHelperDelegate>
 
 @property (nonatomic, weak) id<MPAdDestinationDisplayAgentDelegate> delegate;
+@property (nonatomic, assign) BOOL isLoadingDestination;
 
 + (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate;
 - (void)displayDestinationForURL:(NSURL *)URL;

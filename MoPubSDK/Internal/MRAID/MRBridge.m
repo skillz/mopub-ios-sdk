@@ -16,6 +16,8 @@
 #import "MRError.h"
 #import "MRProperty.h"
 #import "MRNativeCommandHandler.h"
+#import "MRController.h"
+#import "MPAdDestinationDisplayAgent.h"
 
 static NSString * const kMraidURLScheme = @"mraid";
 
@@ -136,6 +138,16 @@ static NSString * const kMraidURLScheme = @"mraid";
         // Some native commands such as useCustomClose should be allowed to run even if we're not handling requests.
         // The command handler will make sure we don't execute native commands that aren't allowed to execute while we're not handling requests.
         MPLogDebug(@"Trying to process command: %@", urlString);
+        if ([url.host isEqualToString:@"close"]) {
+            // Some MRAID ads dismiss themselves here when clicked on, even though MoPub is presenting the ad's action on top of itself.
+            // This causes the action to also be immediately dismissed (Browser, App Store, etc.)
+            // This way we ignore this extra command and switch to non-custom close, which leads to gracefully dismissal on action end. 
+            if ([(MRController *)[self delegate] destinationDisplayAgent].isLoadingDestination == YES) {
+                [self handleMRAIDUseCustomClose:NO];
+                return NO;
+            }
+        }
+        
         NSString *command = url.host;
         NSDictionary *properties = MPDictionaryFromQueryString(url.query);
         [self.nativeCommandHandler handleNativeCommand:command withProperties:properties];

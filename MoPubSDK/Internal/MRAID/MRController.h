@@ -13,7 +13,7 @@
 @protocol MRControllerDelegate;
 @class MPAdConfiguration;
 @class CLLocation;
-
+@class MPAdDestinationDisplayAgent;
 /**
  * The `MRController` class is used to load and interact with MRAID ads.
  * It contains two MRAID ad views and uses a separate `MRBridge` to
@@ -23,6 +23,7 @@
 @interface MRController : NSObject
 
 @property (nonatomic, weak) id<MRControllerDelegate> delegate;
+@property (nonatomic, strong) MPAdDestinationDisplayAgent *destinationDisplayAgent;
 
 - (instancetype)initWithAdViewFrame:(CGRect)adViewFrame adPlacementType:(MRAdViewPlacementType)placementType;
 

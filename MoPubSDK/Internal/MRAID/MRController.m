@@ -63,7 +63,6 @@ static NSString *const kMRAIDCommandResize = @"resize";
 // Points to mraidAdView (one-part expand) or mraidAdViewTwoPart (two-part expand) while expanded.
 @property (nonatomic, strong) MPClosableView *expansionContentView;
 
-@property (nonatomic, strong) MPAdDestinationDisplayAgent *destinationDisplayAgent;
 @property (nonatomic, strong) id<MPAdAlertManagerProtocol> adAlertManager;
 @property (nonatomic, strong) id<MPAdAlertManagerProtocol> adAlertManagerTwoPart;
 

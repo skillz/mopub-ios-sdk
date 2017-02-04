@@ -13,6 +13,7 @@
 #import "MPCoreInstanceProvider.h"
 #import "MPAnalyticsTracker.h"
 #import "Skillz_private.h"
+#import "MPInterstitialViewController.h"
 
 static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
 
@@ -23,7 +24,6 @@ static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
 @property (nonatomic, strong) MPURLResolver *resolver;
 @property (nonatomic, strong) MPURLResolver *enhancedDeeplinkFallbackResolver;
 @property (nonatomic, strong) MPProgressOverlayView *overlayView;
-@property (nonatomic, assign) BOOL isLoadingDestination;
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
 @property (nonatomic, strong) SKStoreProductViewController *storeKitController;
@@ -206,7 +206,10 @@ static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
                                                               HTMLString:HTMLString
                                                                 delegate:self];
     self.browserController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [[self.delegate viewControllerForPresentingModalView] presentViewController:self.browserController animated:MP_ANIMATED completion:nil];
+    UIViewController *vc = [[[Skillz skillzInstance] navigationController] visibleViewController];
+    [vc presentViewController:self.browserController
+                     animated:MP_ANIMATED
+                   completion:nil];
 }
 
 - (void)showStoreKitProductWithParameter:(NSString *)parameter fallbackURL:(NSURL *)URL
@@ -286,9 +289,10 @@ static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
     [self.storeKitController loadProductWithParameters:parameters completionBlock:nil];
 
     [self hideOverlay];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-       [[[Skillz skillzInstance] homeViewController] presentViewController:self.storeKitController animated:MP_ANIMATED completion:nil];
-    });
+    UIViewController *vc = [[[Skillz skillzInstance] navigationController] visibleViewController];
+    [vc presentViewController:self.storeKitController
+                     animated:MP_ANIMATED
+                   completion:nil];
 #endif
 }
 
@@ -329,7 +333,10 @@ static NSString * const kDisplayAgentErrorDomain = @"com.mopub.displayagent";
 - (void)hideModalAndNotifyDelegate
 {
     [[self.delegate viewControllerForPresentingModalView] dismissViewControllerAnimated:MP_ANIMATED completion:^{
-        [self.delegate displayAgentDidDismissModal];
+        UIViewController *vc = [[[Skillz skillzInstance] navigationController] visibleViewController];
+        if ([vc isKindOfClass:[MPInterstitialViewController class]]) {
+            [(MPInterstitialViewController *)vc dismissInterstitialAnimated:YES];
+        }
     }];
 }
 
