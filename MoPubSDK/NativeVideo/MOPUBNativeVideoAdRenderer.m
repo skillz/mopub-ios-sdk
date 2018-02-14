@@ -118,7 +118,7 @@ static const CGFloat kAutoPlayTimerInterval = 0.25f;
             UIImageView *imageView = self.adView.nativePrivacyInformationIconImageView;
             imageView.hidden = NO;
 
-            UIImage *daaIconImage = [UIImage imageNamed:daaIconImageLoc];
+            UIImage *daaIconImage = [UIImage imageFromResource:daaIconImageLoc];
             imageView.image = daaIconImage;
 
             // Attach a gesture recognizer to handle loading the daa icon URL.

@@ -32,7 +32,7 @@ static CGFloat const kOverlayAlpha = 0.5f;
         }
 
         _replayVideoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_replayVideoButton setImage:[UIImage imageNamed:MPResourcePathForResource(kPlayButtonImage)] forState:UIControlStateNormal];
+        [_replayVideoButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kPlayButtonImage)] forState:UIControlStateNormal];
         [_replayVideoButton addTarget:self action:@selector(replayButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [_replayVideoButton sizeToFit];
         [self addSubview:_replayVideoButton];

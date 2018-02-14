@@ -63,7 +63,7 @@ static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFl
         [_closeButton addTarget:self
                          action:@selector(closeButtonPressed)
                forControlEvents:UIControlEventTouchUpInside];
-        UIImage *image = [UIImage imageNamed:MPResourcePathForResource(kCloseButtonXImageName)];
+        UIImage *image = [UIImage imageFromResource:MPResourcePathForResource(kCloseButtonXImageName)];
         [_closeButton setImage:image forState:UIControlStateNormal];
         [_closeButton sizeToFit];
 
