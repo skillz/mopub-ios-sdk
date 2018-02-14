@@ -99,6 +99,11 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self doesNotRecognizeSelector:_cmd];
+}
+
 #pragma mark - Metrics
 
 - (void)trackImpression

@@ -30,4 +30,11 @@
     // and implement code to display an interstitial here.
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    // The default implementation of this method does nothing. Subclasses must override this method
+    // and implement code to dismiss the interstitial here.
+}
+
+
 @end

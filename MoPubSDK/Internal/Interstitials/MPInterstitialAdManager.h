@@ -24,5 +24,5 @@
                             location:(CLLocation *)location
                              testing:(BOOL)testing;
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
-
+- (void)dismissInterstitialAnimated:(BOOL)animated;
 @end
