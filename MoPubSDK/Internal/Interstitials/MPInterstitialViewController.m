@@ -61,7 +61,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
     [self layoutCloseButton];
 
-    [controller presentViewController:self animated:MP_ANIMATED completion:^{
+    [controller presentViewController:self animated:NO completion:^{
         [self didPresentInterstitial];
     }];
 }
