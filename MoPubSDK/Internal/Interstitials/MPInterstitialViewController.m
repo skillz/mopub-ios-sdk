@@ -11,9 +11,11 @@
 #import "MPLogging.h"
 #import "UIButton+MPAdditions.h"
 #import "UIApplication+Skillz.h"
+#import "UIView+Skillz.h"
 
 static const CGFloat kCloseButtonPadding = 5.0;
 static const CGFloat kCloseButtonEdgeInset = 5.0;
+static const CGFloat kCloseButtonPaddingForPad = 12.0;
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 @interface MPInterstitialViewController ()
@@ -62,9 +64,16 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
     [self layoutCloseButton];
 
-    [controller presentViewController:self animated:NO completion:^{
+    if (!isPad()) {
+        [controller presentViewController:self animated:NO completion:^{
+            [self didPresentInterstitial];
+        }];
+    } else {
+        [[[UIApplication sharedApplication] keyWindow] addSubview:self.view];
+        [controller addChildViewController:self];
+        [self.view rotateAccordingToStatusBarOrientationAndSupportedOrientations];
         [self didPresentInterstitial];
-    }];
+    }
 }
 
 - (void)willPresentInterstitial
@@ -117,10 +126,11 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)layoutCloseButton
 {
     [self.view addSubview:self.closeButton];
-    CGFloat originX = self.view.bounds.size.width - kCloseButtonPadding -
-    self.closeButton.bounds.size.width;
+    - self.closeButton.bounds.size.width
+    NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
+    CGFloat originX = self.view.bounds.size.width - padding - self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,
-                                        kCloseButtonPadding,
+                                        padding,
                                         self.closeButton.bounds.size.width,
                                         self.closeButton.bounds.size.height);
     self.closeButton.mp_TouchAreaInsets = UIEdgeInsetsMake(kCloseButtonEdgeInset, kCloseButtonEdgeInset, kCloseButtonEdgeInset, kCloseButtonEdgeInset);
@@ -128,8 +138,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     if (@available(iOS 11.0, *)) {
         self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
         [NSLayoutConstraint activateConstraints:@[
-                                                  [self.closeButton.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:kCloseButtonPadding],
-                                                  [self.closeButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-kCloseButtonPadding],
+                                                  [self.closeButton.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:padding],
+                                                  [self.closeButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-padding],
                                                   ]];
     }
     [self.view bringSubviewToFront:self.closeButton];
@@ -179,7 +189,13 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
             [self didDismissInterstitial];
         }];
     } else {
-        [self didDismissInterstitial];
+        [UIView animateWithDuration:.3 animations:^{
+            [self.view setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self.view removeFromSuperview];
+            [self removeFromParentViewController];
+            [self didDismissInterstitial];
+        }];
     }
 }
 
