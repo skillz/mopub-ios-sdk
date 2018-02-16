@@ -126,7 +126,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)layoutCloseButton
 {
     [self.view addSubview:self.closeButton];
-    - self.closeButton.bounds.size.width
     NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
     CGFloat originX = self.view.bounds.size.width - padding - self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,

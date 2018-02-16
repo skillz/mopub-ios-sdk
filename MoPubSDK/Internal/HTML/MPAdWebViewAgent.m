@@ -23,6 +23,7 @@
 #import "MoPub.h"
 #import "MPViewabilityTracker.h"
 #import "NSString+MPAdditions.h"
+#import "Skillz+DeepLinking.h"
 
 #ifndef NSFoundationVersionNumber_iOS_6_1
 #define NSFoundationVersionNumber_iOS_6_1 993.00
@@ -223,7 +224,7 @@
 {
     NSURL *URL = [request URL];
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
-        [[Skillz skillzInstance] openDeepLinkingAction:URL];
+        [[Skillz skillzInstance] openDeepLinkingURL:URL];
     }
     
     if (!self.shouldHandleRequests) {

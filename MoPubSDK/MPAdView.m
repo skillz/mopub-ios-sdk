@@ -81,7 +81,7 @@
     // MPClosableView represents an MRAID ad.
     if (!self.adContentView ) {
         return CGSizeZero;
-    } else if ([self.adContentView isKindOfClass:[MRAdView class]]) {
+    } else if ([self.adContentView isKindOfClass:[MPAdView class]]) {
         return self.originalSize;
     } else if ([self.adContentView isKindOfClass:[MPClosableView class]]) {
         return self.originalSize;
