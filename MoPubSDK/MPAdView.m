@@ -68,12 +68,22 @@
     if (view != nil) {
         self.userInteractionEnabled = YES;
     }
+    
+    if (!view) {
+        if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
+            [self.delegate adViewDidFailToLoadAd:self];
+        }
+    }
 }
 
 - (CGSize)adContentViewSize
 {
     // MPClosableView represents an MRAID ad.
-    if (!self.adContentView || [self.adContentView isKindOfClass:[MPClosableView class]]) {
+    if (!self.adContentView ) {
+        return CGSizeZero;
+    } else if ([self.adContentView isKindOfClass:[MRAdView class]]) {
+        return self.originalSize;
+    } else if ([self.adContentView isKindOfClass:[MPClosableView class]]) {
         return self.originalSize;
     } else {
         return self.adContentView.bounds.size;

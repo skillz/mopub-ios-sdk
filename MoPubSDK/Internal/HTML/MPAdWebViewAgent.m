@@ -221,11 +221,16 @@
 - (BOOL)webView:(MPWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSURL *URL = [request URL];
+    if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
+        [[Skillz skillzInstance] openDeepLinkingAction:URL];
+    }
+    
     if (!self.shouldHandleRequests) {
         return NO;
     }
 
-    NSURL *URL = [request URL];
+
     if ([URL mp_isMoPubScheme]) {
         [self performActionForMoPubSpecificURL:URL];
         return NO;
