@@ -10,6 +10,7 @@
 #import "MPGlobal.h"
 #import "MPLogging.h"
 #import "UIButton+MPAdditions.h"
+#import "UIApplication+Skillz.h"
 
 static const CGFloat kCloseButtonPadding = 5.0;
 static const CGFloat kCloseButtonEdgeInset = 5.0;
@@ -200,77 +201,34 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
-}
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_9_0
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-#else
-- (NSUInteger)supportedInterfaceOrientations
-#endif
-{
-    NSUInteger applicationSupportedOrientations =
-    [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:MPKeyWindow()];
-    NSUInteger interstitialSupportedOrientations = applicationSupportedOrientations;
-    NSString *orientationDescription = @"any";
-
-    // Using the _orientationType, narrow down the supported interface orientations.
-
-    if (_orientationType == MPInterstitialOrientationTypePortrait) {
-        interstitialSupportedOrientations &=
-        (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
-        orientationDescription = @"portrait";
-    } else if (_orientationType == MPInterstitialOrientationTypeLandscape) {
-        interstitialSupportedOrientations &= UIInterfaceOrientationMaskLandscape;
-        orientationDescription = @"landscape";
-    }
-
-    // If the application does not support any of the orientations given by _orientationType,
-    // just return the application's supported orientations.
-
-    if (!interstitialSupportedOrientations) {
-        MPLogError(@"Your application does not support this interstitial's desired orientation "
-                   @"(%@).", orientationDescription);
-        return applicationSupportedOrientations;
-    } else {
-        return interstitialSupportedOrientations;
-    }
+    return NO;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-    NSUInteger supportedInterfaceOrientations = [self supportedInterfaceOrientations];
-    UIInterfaceOrientation currentInterfaceOrientation = MPInterfaceOrientation();
-    NSUInteger currentInterfaceOrientationMask = (1 << currentInterfaceOrientation);
-
-    // First, try to display the interstitial using the current interface orientation. If the
-    // current interface orientation is unsupported, just use any of the supported orientations.
-
-    if (supportedInterfaceOrientations & currentInterfaceOrientationMask) {
-        return currentInterfaceOrientation;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskPortrait) {
-        return UIInterfaceOrientationPortrait;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskPortraitUpsideDown) {
-        return UIInterfaceOrientationPortraitUpsideDown;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskLandscapeLeft) {
-        return UIInterfaceOrientationLandscapeLeft;
+    if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
+        return [[[[UIApplication sharedApplication] reliableKeyWindow] rootViewController] preferredInterfaceOrientationForPresentation];
     } else {
-        return UIInterfaceOrientationLandscapeRight;
+        return UIInterfaceOrientationPortrait;
     }
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
 #pragma mark - Autorotation (before iOS 6.0)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (_orientationType == MPInterstitialOrientationTypePortrait) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait ||
-                interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
-    } else if (_orientationType == MPInterstitialOrientationTypeLandscape) {
-        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     } else {
-        return YES;
+        return interfaceOrientation == UIInterfaceOrientationPortrait;
     }
 }
 
