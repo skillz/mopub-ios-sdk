@@ -173,27 +173,4 @@
     }
 }
 
-#pragma mark - Orientation Handling
-
-// supportedInterfaceOrientations and shouldAutorotate are for ios 6, 7, and 8.
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_9_0
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-#else
-- (NSUInteger)supportedInterfaceOrientations
-#endif
-{
-    return ([[UIApplication sharedApplication] mp_supportsOrientationMask:self.supportedOrientationMask]) ? self.supportedOrientationMask : UIInterfaceOrientationMaskAll;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-// shouldAutorotateToInterfaceOrientation is for ios 5.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return [[UIApplication sharedApplication] mp_doesOrientation:interfaceOrientation matchOrientationMask:self.supportedOrientationMask];
-}
-
 @end
