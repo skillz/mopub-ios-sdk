@@ -64,16 +64,9 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
     [self layoutCloseButton];
 
-    if (!isPad()) {
-        [controller presentViewController:self animated:NO completion:^{
-            [self didPresentInterstitial];
-        }];
-    } else {
-        [[[UIApplication sharedApplication] keyWindow] addSubview:self.view];
-        [controller addChildViewController:self];
-        [self.view rotateAccordingToStatusBarOrientationAndSupportedOrientations];
+    [controller presentViewController:self animated:NO completion:^{
         [self didPresentInterstitial];
-    }
+    }];
 }
 
 - (void)willPresentInterstitial
