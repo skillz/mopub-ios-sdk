@@ -9,6 +9,7 @@
 
 #import "MPGlobal.h"
 #import "MPLogging.h"
+#import "Skillz_private.h"
 #import "UIButton+MPAdditions.h"
 #import "UIApplication+Skillz.h"
 #import "UIView+Skillz.h"
@@ -170,6 +171,11 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
+    if (UIInterfaceOrientationIsLandscape([NSUserDefaults currentSDKOrientation]) && hasNotchedDisplay()) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[Skillz skillzInstance].navigationController updateControllerForPortraitOrientation];
+        });
+    }
     [self setApplicationStatusBarHidden:!self.applicationHasStatusBar];
 
     [self willDismissInterstitial];
