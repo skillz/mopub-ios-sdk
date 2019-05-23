@@ -229,16 +229,15 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
-        return UIInterfaceOrientationMaskLandscape;
-    } else {
-        return UIInterfaceOrientationMaskPortrait;
-    }
+    // Need to return a conversation of preferredInterfaceOrientationForPresentation from our rootViewController or all.
+    // Trying all for now.
+    return UIInterfaceOrientationMaskAll;
 }
 #pragma mark - Autorotation (before iOS 6.0)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    //Keeping this the same for the moment as it seems to work well.
     if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
         return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     } else {
