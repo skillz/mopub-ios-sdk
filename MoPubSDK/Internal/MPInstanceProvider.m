@@ -179,6 +179,7 @@ static MPInstanceProvider *sharedAdProvider = nil;
                                                                             configuration:(MPAdConfiguration *)configuration
 {
     MPMRAIDInterstitialViewController *controller = [[MPMRAIDInterstitialViewController alloc] initWithAdConfiguration:configuration];
+    [controller setModalPresentationStyle:UIModalPresentationFullScreen];
     controller.delegate = delegate;
     return controller;
 }
