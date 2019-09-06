@@ -33,6 +33,7 @@ const NSTimeInterval kDefaultCountdownTimerIntervalInSeconds = 30;
     if (_interstitial == nil) {
         _interstitial = [[MPMRAIDInterstitialViewController alloc] initWithAdConfiguration:self.delegate.configuration];
     }
+    [_interstitial setModalPresentationStyle:UIModalPresentationFullScreen];
 
     return _interstitial;
 }
