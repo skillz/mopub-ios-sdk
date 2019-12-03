@@ -54,7 +54,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
             [button addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
-            UIImage * image = [UIImage imageNamed:MPResourcePathForResource(kCloseButtonXImageName)];
+            UIImage * image = [UIImage imageFromResource:MPResourcePathForResource(kCloseButtonXImageName)];
             [button setImage:image forState:UIControlStateNormal];
 
             [button sizeToFit];

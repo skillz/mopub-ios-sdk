@@ -113,7 +113,7 @@ static CGFloat const kStallSpinnerSize = 35.0f;
     [self.view addSubview:self.privacyButton];
 
     self.closeButton = [MPExtendedHitBoxButton buttonWithType:UIButtonTypeCustom];
-    [self.closeButton setImage:[UIImage imageNamed:MPResourcePathForResource(kCloseButtonImage)] forState:UIControlStateNormal];
+    [self.closeButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kCloseButtonImage)] forState:UIControlStateNormal];
     [self.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     self.closeButton.touchAreaInsets = UIEdgeInsetsMake(kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets, kDefaultButtonTouchAreaInsets);
     [self.closeButton sizeToFit];
@@ -169,7 +169,7 @@ static CGFloat const kStallSpinnerSize = 35.0f;
     }
     // Default to built in MoPub privacy icon.
     else {
-        [button setImage:[UIImage imageNamed:MPResourcePathForResource(kPrivacyIconImageName)] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageFromResource:MPResourcePathForResource(kPrivacyIconImageName)] forState:UIControlStateNormal];
     }
 }
 

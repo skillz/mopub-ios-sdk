@@ -249,8 +249,8 @@ static const double kVideoFinishedBufferingAllowedError = 0.1;
 {
     if (!self.muteButton) {
         self.muteButton = [MPExtendedHitBoxButton buttonWithType:UIButtonTypeCustom];
-        [self.muteButton setImage:[UIImage imageNamed:MPResourcePathForResource(kMutedButtonImage)] forState:UIControlStateNormal];
-        [self.muteButton setImage:[UIImage imageNamed:MPResourcePathForResource(kUnmutedButtonImage)] forState:UIControlStateSelected];
+        [self.muteButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kMutedButtonImage)] forState:UIControlStateNormal];
+        [self.muteButton setImage:[UIImage imageFromResource:MPResourcePathForResource(kUnmutedButtonImage)] forState:UIControlStateSelected];
         [self.muteButton addTarget:self action:@selector(muteButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         self.muteButton.touchAreaInsets = UIEdgeInsetsMake(kMuteIconInlineModeTouchAreaInsets, kMuteIconInlineModeTouchAreaInsets, kMuteIconInlineModeTouchAreaInsets, kMuteIconInlineModeTouchAreaInsets);
         [self.muteButton sizeToFit];
