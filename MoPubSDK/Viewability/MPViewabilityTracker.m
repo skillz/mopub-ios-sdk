@@ -1,14 +1,16 @@
 //
 //  MPViewabilityTracker.m
-//  MoPubSDK
 //
-//  Copyright © 2016 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import "MoPub.h"
 #import "MPLogging.h"
 #import "MPViewabilityAdapter.h"
 #import "MPViewabilityTracker.h"
+#import "MPWebView+Viewability.h"
 
 /**
  * Macro that queries if a bitmask value is currently in the given bitmask
@@ -50,7 +52,7 @@ NSString *const kDisabledViewabilityTrackers = @"disableViewabilityTrackers";
             NSString * adapterClassName = sSupportedAdapters[@(index)];
             if (NSClassFromString(adapterClassName)) {
                 sEnabledViewabilityVendors |= index;
-                MPLogInfo(@"[Viewability] %@ was found.", adapterClassName);
+                MPLogInfo(@"%@ was found.", adapterClassName);
             }
         }
     }
@@ -67,7 +69,7 @@ NSString *const kDisabledViewabilityTrackers = @"disableViewabilityTrackers";
 
         // Invalid ad view
         if (view == nil) {
-            MPLogError(@"nil ad view passed into %s", __PRETTY_FUNCTION__);
+            MPLogInfo(@"nil ad view passed into %s", __PRETTY_FUNCTION__);
             return nil;
         }
 
@@ -78,7 +80,7 @@ NSString *const kDisabledViewabilityTrackers = @"disableViewabilityTrackers";
         NSMutableDictionary<NSNumber *, id<MPViewabilityAdapter>> * trackers = [NSMutableDictionary dictionary];
         for (NSInteger index = 1; index < MPViewabilityOptionAll; index = index << 1) {
             NSString * className = sSupportedAdapters[@(index)];
-            id<MPViewabilityAdapter> tracker = [self initializeTrackerWithClassName:className forViewabilityOption:index withAdView:webView isVideo:isVideo startTrackingImmediately:startTracking];
+            id<MPViewabilityAdapter> tracker = [self initializeTrackerWithClassName:className forViewabilityOption:index withAdView:view isVideo:isVideo startTrackingImmediately:startTracking];
             if (tracker != nil) {
                 trackers[@(index)] = tracker;
             }
@@ -92,7 +94,7 @@ NSString *const kDisabledViewabilityTrackers = @"disableViewabilityTrackers";
 
 - (id<MPViewabilityAdapter>)initializeTrackerWithClassName:(NSString *)className
                                       forViewabilityOption:(MPViewabilityOption)option
-                                                withAdView:(MPWebView *)webView
+                                                withAdView:(UIView *)webView
                                                    isVideo:(BOOL)isVideo
                                   startTrackingImmediately:(BOOL)startTracking {
     // Ignore invalid options and empty class name

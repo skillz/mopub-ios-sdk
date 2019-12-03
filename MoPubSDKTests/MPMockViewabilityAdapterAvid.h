@@ -1,8 +1,9 @@
 //
 //  MPMockViewabilityAdapterAvid.h
-//  MoPubSDK
 //
-//  Copyright © 2017 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <Foundation/Foundation.h>
@@ -15,7 +16,7 @@
 @interface MPViewabilityAdapterAvid : NSObject <MPViewabilityAdapter>
 @property (nonatomic, readonly) BOOL isTracking;
 
-- (instancetype)initWithAdView:(MPWebView *)webView isVideo:(BOOL)isVideo startTrackingImmediately:(BOOL)startTracking;
+- (instancetype)initWithAdView:(UIView *)webView isVideo:(BOOL)isVideo startTrackingImmediately:(BOOL)startTracking;
 - (void)startTracking;
 - (void)stopTracking;
 - (void)registerFriendlyObstructionView:(UIView *)view;

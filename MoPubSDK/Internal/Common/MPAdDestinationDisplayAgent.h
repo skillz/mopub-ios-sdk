@@ -1,34 +1,26 @@
 //
 //  MPAdDestinationDisplayAgent.h
-//  MoPub
 //
-//  Copyright (c) 2013 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <Foundation/Foundation.h>
 #import "MPActivityViewControllerHelper+TweetShare.h"
 #import "MPURLResolver.h"
 #import "MPProgressOverlayView.h"
-#import "MPAdBrowserController.h"
-#import "MPStoreKitProvider.h"
-
-typedef NS_ENUM(NSInteger, MOPUBDisplayAgentType) {
-    MOPUBDisplayAgentTypeInApp = 0,
-    MOPUBDisplayAgentTypeNativeSafari,
-    MOPUBDisplayAgentTypeSafariViewController
-};
+#import "MOPUBDisplayAgentType.h"
 
 @protocol MPAdDestinationDisplayAgentDelegate;
 
 @interface MPAdDestinationDisplayAgent : NSObject <MPProgressOverlayViewDelegate,
-                                                   MPAdBrowserControllerDelegate,
-                                                   MPSKStoreProductViewControllerDelegate,
                                                    MPActivityViewControllerHelperDelegate>
 
 @property (nonatomic, weak) id<MPAdDestinationDisplayAgentDelegate> delegate;
 
 + (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate;
-+ (BOOL)shouldUseSafariViewController;
++ (BOOL)shouldDisplayContentInApp;
 - (void)displayDestinationForURL:(NSURL *)URL;
 - (void)cancel;
 

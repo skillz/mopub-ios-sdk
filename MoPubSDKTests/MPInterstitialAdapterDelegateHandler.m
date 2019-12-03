@@ -1,8 +1,9 @@
 //
 //  MPInterstitialAdapterDelegateHandler.m
-//  MoPubSDK
 //
-//  Copyright © 2017 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import "MPInterstitialAdapterDelegateHandler.h"
@@ -18,5 +19,6 @@
 - (void)interstitialDidExpireForAdapter:(MPBaseInterstitialAdapter *)adapter { if (self.didExpire) self.didExpire(adapter); }
 - (void)interstitialDidReceiveTapEventForAdapter:(MPBaseInterstitialAdapter *)adapter { if (self.didReceiveTapEvent) self.didReceiveTapEvent(adapter); }
 - (void)interstitialWillLeaveApplicationForAdapter:(MPBaseInterstitialAdapter *)adapter { if (self.willLeaveApplication) self.willLeaveApplication(adapter); }
+- (void)interstitialDidReceiveImpressionEventForAdapter:(MPBaseInterstitialAdapter *)adapter { if (self.didReceiveTapEvent) self.didReceiveTapEvent(adapter); }
 
 @end

@@ -1,12 +1,16 @@
 //
 //  MPViewabilityAdapterAvid.m
-//  MoPubSDK
 //
-//  Copyright © 2017 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
+#if __has_include("MoPub.h")
 #import "MoPub.h"
 #import "MPLogging.h"
+#endif
+
 #import "MPViewabilityAdapterAvid.h"
 
 #if __has_include("MoPub_Avid.h")
@@ -24,10 +28,10 @@
 
 @implementation MPViewabilityAdapterAvid
 
-- (instancetype)initWithAdView:(MPWebView *)webView isVideo:(BOOL)isVideo startTrackingImmediately:(BOOL)startTracking {
+- (instancetype)initWithAdView:(UIView *)webView isVideo:(BOOL)isVideo startTrackingImmediately:(BOOL)startTracking {
     if (self = [super init]) {
         _isTracking = NO;
-        
+
 #ifdef __HAS_AVID_LIB_
         MoPub_ExternalAvidAdSessionContext * avidAdSessionContext = [MoPub_ExternalAvidAdSessionContext contextWithPartnerVersion:[[MoPub sharedInstance] version] isDeferred:!startTracking];
         if (isVideo) {
@@ -36,19 +40,16 @@
         else {
             _avidAdSession = [MoPub_AvidAdSessionManager startAvidDisplayAdSessionWithContext:avidAdSessionContext];
         }
-        
-        // While the viewability SDKs have features that allow the developer to pass in a container view, WKWebView is
-        // not always in MPWebView's view hierarchy. Pass in the contained web view to be safe, as we don't know for
-        // sure *how* or *when* MPWebView is traversed.
-        [_avidAdSession registerAdView:webView.containedWebView];
-        
+
+        [_avidAdSession registerAdView:webView];
+
         if (startTracking) {
             _isTracking = YES;
-            MPLogInfo(@"[Viewability] IAS tracking started");
+            MPLogInfo(@"IAS tracking started");
         }
 #endif
     }
-    
+
     return self;
 }
 
@@ -60,7 +61,7 @@
     if (!self.isTracking && self.avidAdSession != nil) {
         [self.avidAdSession.avidDeferredAdSessionListener recordReadyEvent];
         self.isTracking = YES;
-        MPLogInfo(@"[Viewability] IAS tracking started");
+        MPLogInfo(@"IAS tracking started");
     }
 #endif
 }
@@ -72,10 +73,10 @@
     if (self.isTracking) {
         [self.avidAdSession endSession];
         if (self.avidAdSession) {
-            MPLogInfo(@"[Viewability] IAS tracking stopped");
+            MPLogInfo(@"IAS tracking stopped");
         }
     }
-    
+
     // Mark IAS as not tracking
     self.isTracking = NO;
 #endif

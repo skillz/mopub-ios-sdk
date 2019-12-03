@@ -1,8 +1,9 @@
 //
 //  MPRewardedVideoCustomEvent.h
-//  MoPubSDK
 //
-//  Copyright (c) 2015 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <Foundation/Foundation.h>
@@ -23,32 +24,41 @@
  * natively support a wide variety of third-party ad networks.
  *
  * At runtime, the MoPub SDK will find and instantiate an `MPRewardedVideoCustomEvent` subclass as needed and
- * invoke its `-requestRewardedVideoWithCustomEventInfo:` method and `+initializeSdkWithParameters:` method.
+ * invoke its `-requestRewardedVideoWithCustomEventInfo:` method.
  */
 
 @interface MPRewardedVideoCustomEvent : NSObject
+
+/**
+ * An optional dictionary containing extra local data.
+ */
+@property (nonatomic, copy) NSDictionary * localExtras;
 
 @property (nonatomic, weak) id<MPRewardedVideoCustomEventDelegate> delegate;
 
 /** @name Requesting and Displaying a Rewarded Video Ad */
 
 /**
- * Called when the MoPub SDK requires the underlying network SDK to be initialized.
+ * @deprecated Use @c requestRewardedVideoWithCustomEventInfo:adMarkup: instead
  *
- * This method may be invoked either at rewarded video initialization or on-demand when
- * `requestRewardedVideoWithCustomEventInfo:` is invoked.
+ * Called when the MoPub SDK requires a new rewarded video ad.
  *
- * The default implementation of this method does nothing. Subclasses must override this method and implement
- * code to initialize the underlying SDK here.
+ * When the MoPub SDK receives a response indicating it should load a custom event, it will send
+ * this message to your custom event class. Your implementation of this method should load an
+ * rewarded video ad from a third-party ad network. It must also notify the
+ * `MPRewardedVideoCustomEventDelegate` of certain lifecycle events.
  *
- * This method may be called multiple times during the lifetime of the app. As such
- * it is recommended that the implementation is encapsulated by a `dispatch_once`
- * block.
+ * The default implementation of this method does nothing. Subclasses must override this method and implement code to load a rewarded video here.
  *
- * @param parameters A dictionary containing any SDK-specific information needed for initialization,
- * such as app IDs.
+ * **Important**: The application may provide a mediation settings object containing properties that you should use to configure how you use
+ * the ad network's APIs. Call `[-mediationSettingsForClass:]([MPRewardedVideoCustomEventDelegate mediationSettingsForClass:])`
+ * specifying a specific class that your custom event uses to retrieve the mediation settings object if it exists. You define
+ * the mediation settings class and the properties it supports for your custom event.
+ *
+ * @param info A dictionary containing additional custom data associated with a given custom event
+ * request. This data is configurable on the MoPub website, and may be used to pass dynamic information, such as publisher IDs.
  */
-- (void)initializeSdkWithParameters:(NSDictionary *)parameters;
+- (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary *)info __attribute((deprecated("Use requestRewardedVideoWithCustomEventInfo:adMarkup: instead.")));
 
 /**
  * Called when the MoPub SDK requires a new rewarded video ad.
@@ -67,8 +77,9 @@
  *
  * @param info A dictionary containing additional custom data associated with a given custom event
  * request. This data is configurable on the MoPub website, and may be used to pass dynamic information, such as publisher IDs.
+ * @param adMarkup An optional ad markup to use.
  */
-- (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary *)info;
+- (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup;
 
 /**
  * Called when the MoPubSDK wants to know if an ad is currently available for the ad network.
