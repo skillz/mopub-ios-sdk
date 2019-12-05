@@ -10,9 +10,13 @@
 
 #import "MPError.h"
 #import "MPLogging.h"
+#import "Skillz_private.h"
+#import "UIApplication+Skillz.h"
+#import "UIView+Skillz.h""
 
 static const CGFloat kCloseButtonPadding = 5.0;
 static const CGFloat kCloseButtonEdgeInset = 5.0;
+static const CGFloat kCloseButtonPaddingForPad = 12.0;
 static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 @interface MPInterstitialViewController ()
@@ -54,7 +58,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     [self willPresentInterstitial];
     [self layoutCloseButton];
 
-    [controller presentViewController:self animated:MP_ANIMATED completion:^{
+    [controller presentViewController:self animated:NO completion:^{
         [self didPresentInterstitial];
         if (complete != nil) {
             complete(nil);
@@ -112,8 +116,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)layoutCloseButton
 {
     [self.view addSubview:self.closeButton];
-    CGFloat originX = self.view.bounds.size.width - kCloseButtonPadding -
-    self.closeButton.bounds.size.width;
+    NSInteger padding = isPad() ? kCloseButtonPaddingForPad : kCloseButtonPadding;
+    CGFloat originX = self.view.bounds.size.width - padding - self.closeButton.bounds.size.width;
     self.closeButton.frame = CGRectMake(originX,
                                         kCloseButtonPadding,
                                         self.closeButton.bounds.size.width,
@@ -123,8 +127,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     if (@available(iOS 11, *)) {
         self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
         [NSLayoutConstraint activateConstraints:@[
-                                                  [self.closeButton.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:kCloseButtonPadding],
-                                                  [self.closeButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-kCloseButtonPadding],
+                                                  [self.closeButton.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:padding],
+                                                  [self.closeButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-padding],
                                                   ]];
     }
     [self.view bringSubviewToFront:self.closeButton];
@@ -163,6 +167,12 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
+    if (UIInterfaceOrientationIsLandscape([NSUserDefaults currentSDKOrientation]) && hasNotchedDisplay()) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[Skillz skillzInstance].navigationController updateControllerForPortraitOrientation];
+        });
+    }
+
     [self willDismissInterstitial];
 
     UIViewController *presentingViewController = self.presentingViewController;
@@ -172,7 +182,13 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
             [self didDismissInterstitial];
         }];
     } else {
-        [self didDismissInterstitial];
+        [UIView animateWithDuration:.3 animations:^{
+            [self.view setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self.view removeFromSuperview];
+            [self removeFromParentViewController];
+            [self didDismissInterstitial];
+        }];
     }
 }
 
@@ -183,53 +199,17 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    NSUInteger applicationSupportedOrientations =
-    [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:MPKeyWindow()];
-    NSUInteger interstitialSupportedOrientations = applicationSupportedOrientations;
-    NSString *orientationDescription = @"any";
-
-    // Using the _orientationType, narrow down the supported interface orientations.
-
-    if (_orientationType == MPInterstitialOrientationTypePortrait) {
-        interstitialSupportedOrientations &=
-        (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
-        orientationDescription = @"portrait";
-    } else if (_orientationType == MPInterstitialOrientationTypeLandscape) {
-        interstitialSupportedOrientations &= UIInterfaceOrientationMaskLandscape;
-        orientationDescription = @"landscape";
-    }
-
-    // If the application does not support any of the orientations given by _orientationType,
-    // just return the application's supported orientations.
-
-    if (!interstitialSupportedOrientations) {
-        MPLogInfo(@"Your application does not support this interstitial's desired orientation "
-                   @"(%@).", orientationDescription);
-        return applicationSupportedOrientations;
-    } else {
-        return interstitialSupportedOrientations;
-    }
+    // Need to return a conversation of preferredInterfaceOrientationForPresentation from our rootViewController or all.
+    // Trying all for now.
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-    NSUInteger supportedInterfaceOrientations = [self supportedInterfaceOrientations];
-    UIInterfaceOrientation currentInterfaceOrientation = MPInterfaceOrientation();
-    NSUInteger currentInterfaceOrientationMask = (1 << currentInterfaceOrientation);
-
-    // First, try to display the interstitial using the current interface orientation. If the
-    // current interface orientation is unsupported, just use any of the supported orientations.
-
-    if (supportedInterfaceOrientations & currentInterfaceOrientationMask) {
-        return currentInterfaceOrientation;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskPortrait) {
-        return UIInterfaceOrientationPortrait;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskPortraitUpsideDown) {
-        return UIInterfaceOrientationPortraitUpsideDown;
-    } else if (supportedInterfaceOrientations & UIInterfaceOrientationMaskLandscapeLeft) {
-        return UIInterfaceOrientationLandscapeLeft;
+    if ([[NSUserDefaults gameOrientation] isEqualToString:SKZ_LANDSCAPE_ORIENTATION]) {
+        return [[[[UIApplication sharedApplication] reliableKeyWindow] rootViewController] preferredInterfaceOrientationForPresentation];
     } else {
-        return UIInterfaceOrientationLandscapeRight;
+        return UIInterfaceOrientationPortrait;
     }
 }
 

@@ -93,12 +93,22 @@
     else {
         self.userInteractionEnabled = NO;
     }
+    
+    if (!view) {
+        if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
+            [self.delegate adViewDidFailToLoadAd:self];
+        }
+    }
 }
 
 - (CGSize)adContentViewSize
 {
     // MPClosableView represents an MRAID ad.
-    if (!self.adContentView || [self.adContentView isKindOfClass:[MPClosableView class]]) {
+    if (!self.adContentView ) {
+        return CGSizeZero;
+    } else if ([self.adContentView isKindOfClass:[MPAdView class]]) {
+        return [MPAdView sizeForContainer:self adSize:self.maxAdSize adUnitId:self.adUnitId];
+    } else if ([self.adContentView isKindOfClass:[MPClosableView class]]) {
         return [MPAdView sizeForContainer:self adSize:self.maxAdSize adUnitId:self.adUnitId];
     } else {
         return self.adContentView.bounds.size;

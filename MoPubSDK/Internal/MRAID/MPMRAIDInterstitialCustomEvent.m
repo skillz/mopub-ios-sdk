@@ -53,6 +53,11 @@
     }];
 }
 
+- (void)dismissInterstitialAnimated:(BOOL)animated
+{
+    [self.interstitial dismissInterstitialAnimated:animated];
+}
+
 @end
 
 #pragma mark - MPInterstitialViewControllerDelegate

@@ -40,7 +40,7 @@ extern CGFloat const kMPFlexibleAdSize;
 #define MINIMUM_REFRESH_INTERVAL            10.0
 #define DEFAULT_BANNER_REFRESH_INTERVAL     60    // seconds
 #define BANNER_TIMEOUT_INTERVAL             10    // seconds
-#define INTERSTITIAL_TIMEOUT_INTERVAL       30    // seconds
+#define INTERSTITIAL_TIMEOUT_INTERVAL       10    // seconds
 #define REWARDED_VIDEO_TIMEOUT_INTERVAL     30    // seconds
 #define NATIVE_TIMEOUT_INTERVAL             10    // seconds
 #define MOPUB_ADS_EXPIRATION_INTERVAL       14400 // 4 hours converted to seconds

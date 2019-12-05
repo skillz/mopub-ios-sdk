@@ -174,16 +174,4 @@
     }
 }
 
-#pragma mark - Orientation Handling
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return ([[UIApplication sharedApplication] mp_supportsOrientationMask:self.supportedOrientationMask]) ? self.supportedOrientationMask : [super supportedInterfaceOrientations];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
 @end
