@@ -1,8 +1,9 @@
 //
 //  MPMoPubRewardedPlayableCustomEventTests.m
-//  MoPubSDK
 //
-//  Copyright © 2016 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <XCTest/XCTest.h>
@@ -57,13 +58,13 @@ static NSString * const     kAdUnitId      = @"db27f95103794600b7a976ce7a503ced"
 // Tests that the mock MPMRAIDInterstitialViewController has been successfully integrated into
 // the custom event.
 - (void)testRequestAd {
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
 
     XCTAssertTrue(self.customEvent.hasAdAvailable);
 }
 
 - (void)testRewardOnCountdownExpiration {
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
     XCTAssertTrue(self.customEvent.hasAdAvailable);
 
     XCTestExpectation * expectation = [self expectationWithDescription:@"Wait for user to be rewarded at timer expiration."];
@@ -78,7 +79,7 @@ static NSString * const     kAdUnitId      = @"db27f95103794600b7a976ce7a503ced"
 }
 
 - (void)testRewardOnTap {
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
     XCTAssertTrue(self.customEvent.hasAdAvailable);
 
     XCTestExpectation * expectation = [self expectationWithDescription:@"Wait for user to be rewarded at tap event."];
@@ -111,7 +112,7 @@ static NSString * const     kAdUnitId      = @"db27f95103794600b7a976ce7a503ced"
 - (void)testNoRewardOnTap {
     self.adConfiguration.rewardedPlayableShouldRewardOnClick = NO;
 
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
     XCTAssertTrue(self.customEvent.hasAdAvailable);
 
     XCTestExpectation * expectation = [self expectationWithDescription:@"Wait for timer to elapse."];
@@ -145,13 +146,13 @@ static NSString * const     kAdUnitId      = @"db27f95103794600b7a976ce7a503ced"
     // is specified, the timer will use 30 seconds as a default.
     self.adConfiguration.rewardedPlayableDuration = -1;
 
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
     XCTAssertTrue(self.customEvent.hasAdAvailable);
     XCTAssertEqual(self.customEvent.countdownDuration, 30);
 }
 
 - (void)testDismissInterstitialStopsTimer {
-    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil];
+    [self.customEvent requestRewardedVideoWithCustomEventInfo:nil adMarkup:nil];
     XCTAssertTrue(self.customEvent.hasAdAvailable);
 
     XCTestExpectation * expectation = [self expectationWithDescription:@"Wait for interstitial to be dismissed."];

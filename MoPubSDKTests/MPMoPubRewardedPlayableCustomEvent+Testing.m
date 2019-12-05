@@ -1,10 +1,12 @@
 //
 //  MPMoPubRewardedPlayableCustomEvent+Testing.m
-//  MoPubSDK
 //
-//  Copyright © 2016 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
+#import "MPCountdownTimerView+Testing.h"
 #import "MPMoPubRewardedPlayableCustomEvent+Testing.h"
 
 @implementation MPMoPubRewardedPlayableCustomEvent (Testing)
@@ -20,7 +22,7 @@
 }
 
 - (BOOL)isCountdownActive {
-    return self.timerView.isActive;
+    return self.timerView.timer.isCountdownActive;
 }
 
 @end

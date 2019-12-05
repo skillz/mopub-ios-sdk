@@ -1,8 +1,9 @@
 //
 //  MPInterstitialAdapterDelegateHandler.h
-//  MoPubSDK
 //
-//  Copyright © 2017 MoPub. All rights reserved.
+//  Copyright 2018-2019 Twitter, Inc.
+//  Licensed under the MoPub SDK License Agreement
+//  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <Foundation/Foundation.h>
@@ -25,6 +26,7 @@ typedef void(^MPInterstitialAdapterDelegateHandlerErrorBlock)(MPBaseInterstitial
 @property (nonatomic, copy) MPInterstitialAdapterDelegateHandlerBlock didDisppear;
 @property (nonatomic, copy) MPInterstitialAdapterDelegateHandlerBlock didExpire;
 @property (nonatomic, copy) MPInterstitialAdapterDelegateHandlerBlock didReceiveTapEvent;
+@property (nonatomic, copy) MPInterstitialAdapterDelegateHandlerBlock didReceiveImpressionEvent;
 @property (nonatomic, copy) MPInterstitialAdapterDelegateHandlerBlock willLeaveApplication;
 
 @end
