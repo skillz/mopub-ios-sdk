@@ -12,7 +12,7 @@
 #import "MPLogging.h"
 #import "Skillz_private.h"
 #import "UIApplication+Skillz.h"
-#import "UIView+Skillz.h""
+#import "UIView+Skillz.h"
 
 static const CGFloat kCloseButtonPadding = 5.0;
 static const CGFloat kCloseButtonEdgeInset = 5.0;
