@@ -47,22 +47,6 @@
     XCTAssertFalse(adapter.hasTrackedImpression);
 }
 
-// When an AD is not in the imp tracking experiment, banner impressions are fired from SDK for base class.
-- (void)testImpFiredWhenAutoTrackingEnabledForBaseBannerAndExperimentDisabled {
-    MPAdConfiguration *config = [MPAdConfiguration new];
-
-    MPBannerCustomEventAdapter *adapter = [MPBannerCustomEventAdapter new];
-    adapter.configuration = config;
-
-    MPBannerCustomEvent *customEvent = [MPBannerCustomEvent new];
-    adapter.bannerCustomEvent = customEvent;
-    adapter.hasTrackedImpression = NO;
-
-    [adapter didDisplayAd];
-
-    XCTAssertTrue(adapter.hasTrackedImpression);
-}
-
 // When an AD is not in the imp tracking experiment, banner impressions are fired from JS directly. SDK doesn't fire impression.
 - (void)testImpFiredWhenAutoTrackingEnabledForHtmlAndExperimentDisabled {
     MPAdConfiguration *config = [MPAdConfiguration new];
@@ -77,22 +61,6 @@
     [adapter didDisplayAd];
 
     XCTAssertFalse(adapter.hasTrackedImpression);
-}
-
-// When an AD is not in the imp tracking experiment, MRAID banner impressions are fired from SDK.
-- (void)testImpFiredWhenAutoTrackingEnabledForMraidAndExperimentDisabled {
-    MPAdConfiguration *config = [MPAdConfiguration new];
-
-    MPBannerCustomEventAdapter *adapter = [MPBannerCustomEventAdapter new];
-    adapter.configuration = config;
-
-    MPBannerCustomEvent *customEvent = [MPMRAIDBannerCustomEvent new];
-    adapter.bannerCustomEvent = customEvent;
-    adapter.hasTrackedImpression = NO;
-
-    [adapter didDisplayAd];
-
-    XCTAssertTrue(adapter.hasTrackedImpression);
 }
 
 #pragma mark - Timeout
