@@ -215,7 +215,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     NSURL *URL = [request URL];
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
-        [[Skillz skillzInstance] openDeepLinkingURL:URL];
+        [[Skillz skillzInstance] openDeepLinkingURLFromMoPub:URL];
     }
     
     if (!self.shouldHandleRequests) {
