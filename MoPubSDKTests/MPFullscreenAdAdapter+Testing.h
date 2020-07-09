@@ -19,6 +19,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MPFullscreenAdAdapter (Testing) <MPVideoPlayerDelegate>
+
+- (void)provideRewardToUser:(MPReward *)reward
+ forRewardCountdownComplete:(BOOL)isForRewardCountdownComplete
+            forUserInteract:(BOOL)isForUserInteract;
 @end
 
 NS_ASSUME_NONNULL_END

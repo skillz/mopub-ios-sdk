@@ -255,6 +255,7 @@
 + (NSMutableDictionary *)defaultRewardedVideoHeaders
 {
     return [@{
+              kFormatMetadataKey: kAdTypeRewardedVideo,
               kAdTypeMetadataKey: @"custom",
               kClickthroughMetadataKey: @"http://ads.mopub.com/m/clickThroughTracker?a=1",
               kNextUrlMetadataKey: @"http://ads.mopub.com/m/failURL",
