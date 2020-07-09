@@ -20,7 +20,7 @@
     if (self.configuration.hasValidRewardFromMoPubSDK && duration <= 0) {
         duration = kDefaultRewardCountdownTimerIntervalInSeconds;
     }
-    
+
     return duration;
 }
 
@@ -31,11 +31,11 @@
     if (!self.configuration.isRewarded) {
         return;
     }
-    
+
     // Note: Do not hold back the reward if `isRewardExpected` is NO, because it's possible that
     // the rewarded is not defined in the ad response / ad configuration, but is defined after
     // the reward condition has been satisfied (for 3rd party ad SDK's).
-    
+
     if (NO == isForRewardCountdownComplete &&
         NO == (isForUserInteract && self.configuration.rewardedPlayableShouldRewardOnClick)) {
         /*
@@ -44,27 +44,27 @@
          */
         return;
     }
-    
+
     if (self.isUserRewarded) {
         return;
     }
     self.isUserRewarded = YES;
-    
+
     // Server side reward tracking:
     // The original URL comes from the value of "x-rewarded-video-completion-url" in ad response.
     NSURL *url = self.rewardedVideoCompletionUrlByAppendingClientParams;
     if (url != nil) {
         [[MPRewardedVideo sharedInstance] startRewardedVideoConnectionWithUrl:url];
     }
-    
+
     // Client side reward handling:
-    if (reward.isCurrencyTypeSpecified == NO) {
-        // Third party ad adapters do not have access to `MPAdConfiguration` and thus have no access
-        // to the selected reward. As a result, they might return an unspecified reward while the
-        // user actually selected one.
-        reward = self.configuration.selectedReward;
+    // Preference is given to the rewards from `MPAdConfiguration` if any are available.
+    // Otherwise, use the reward given to us by the adapter.
+    MPReward *mopubConfiguredReward = self.configuration.selectedReward;
+    if (mopubConfiguredReward != nil && mopubConfiguredReward.isCurrencyTypeSpecified) {
+        reward = mopubConfiguredReward;
     }
-    
+
     MPLogInfo(@"MoPub user should be rewarded: %@", reward.debugDescription);
     if ([self.adapterDelegate respondsToSelector:@selector(adShouldRewardUserForAdapter:reward:)]) {
         [self.adapterDelegate adShouldRewardUserForAdapter:self reward:reward];;

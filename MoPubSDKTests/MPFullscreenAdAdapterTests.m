@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "MPAdAdapterDelegateMock.h"
 #import "MPAdConfiguration.h"
+#import "MPAdConfigurationFactory.h"
 #import "MPFullscreenAdAdapter+Testing.h"
 #import "MPFullscreenAdAdapterMock.h"
 #import "MPFullscreenAdViewController+Private.h"
@@ -17,6 +18,7 @@
 #import "MPMockDiskLRUCache.h"
 #import "MPFullscreenAdAdapterDelegateMock.h"
 #import "MPMockVASTTracking.h"
+#import "MPRewardedFullscreenDelegateHandler.h"
 #import "XCTestCase+MPAddition.h"
 
 static const NSTimeInterval kDefaultTimeout = 10;
@@ -431,6 +433,165 @@ static const NSTimeInterval kDefaultTimeout = 10;
     [adapter fullscreenAdAdapterAdDidAppear:adapter];
     XCTAssertEqual(1, [trackerMock countOfSelectorCalls:@selector(trackImpressionForConfiguration:)]);
     adapter.hasTrackedImpression = NO;
+}
+
+#pragma mark - Rewarding
+
+- (void)testUnspecifiedSelectedRewardAndNilAdapterRewardSelection {
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = MPReward.unspecifiedReward;
+
+    MPReward *adapterReward = nil;
+
+    // Expected
+    MPReward *expectedReward = adapterReward;
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+}
+
+- (void)testUnspecifiedSelectedRewardAndUnspecifiedAdapterRewardSelection {
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = MPReward.unspecifiedReward;
+
+    MPReward *adapterReward = MPReward.unspecifiedReward;
+
+    // Expected
+    MPReward *expectedReward = adapterReward;
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNotNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+    XCTAssertFalse(handler.rewardGivenToUser.isCurrencyTypeSpecified);
+}
+
+- (void)testUnspecifiedSelectedRewardAndSpecifiedAdapterRewardSelection {
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = MPReward.unspecifiedReward;
+
+    MPReward *adapterReward = [[MPReward alloc] initWithCurrencyType:@"Adapters" amount:@(20)];
+
+    // Expected
+    MPReward *expectedReward = adapterReward;
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNotNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+    XCTAssertTrue(handler.rewardGivenToUser.isCurrencyTypeSpecified);
+    XCTAssertTrue([handler.rewardGivenToUser.currencyType isEqualToString:@"Adapters"]);
+    XCTAssertTrue(handler.rewardGivenToUser.amount.integerValue == 20);
+}
+
+- (void)testSelectedRewardAndNilAdapterRewardSelection {
+    // Expected
+    MPReward *expectedReward = [[MPReward alloc] initWithCurrencyType:@"Selected" amount:@(9)];
+
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = expectedReward;
+
+    MPReward *adapterReward = nil;
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNotNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+    XCTAssertTrue(handler.rewardGivenToUser.isCurrencyTypeSpecified);
+    XCTAssertTrue([handler.rewardGivenToUser.currencyType isEqualToString:@"Selected"]);
+    XCTAssertTrue(handler.rewardGivenToUser.amount.integerValue == 9);
+}
+
+- (void)testSelectedRewardAndUnspecifiedAdapterRewardSelection {
+    // Expected
+    MPReward *expectedReward = [[MPReward alloc] initWithCurrencyType:@"Selected" amount:@(9)];
+
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = expectedReward;
+
+    MPReward *adapterReward = MPReward.unspecifiedReward;
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNotNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+    XCTAssertTrue(handler.rewardGivenToUser.isCurrencyTypeSpecified);
+    XCTAssertTrue([handler.rewardGivenToUser.currencyType isEqualToString:@"Selected"]);
+    XCTAssertTrue(handler.rewardGivenToUser.amount.integerValue == 9);
+}
+
+- (void)testSelectedRewardAndSpecifiedAdapterRewardSelection {
+    // Expected
+    MPReward *expectedReward = [[MPReward alloc] initWithCurrencyType:@"Selected" amount:@(9)];
+
+    // Preconditions
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultRewardedVideoConfiguration];
+    configuration.selectedReward = expectedReward;
+
+    MPReward *adapterReward = [[MPReward alloc] initWithCurrencyType:@"Adapters" amount:@(20)];
+
+    // Setup the adapter
+    MPRewardedFullscreenDelegateHandler *handler = [MPRewardedFullscreenDelegateHandler new];
+    MPFullscreenAdAdapterMock *adapter = [MPFullscreenAdAdapterMock new];
+    adapter.configuration = configuration;
+    adapter.adapterDelegate = handler;
+
+    // Reward
+    [adapter provideRewardToUser:adapterReward forRewardCountdownComplete:YES forUserInteract:NO];
+
+    // Check delegate callback
+    XCTAssertNotNil(handler.rewardGivenToUser);
+    XCTAssertTrue(handler.rewardGivenToUser == expectedReward); // Intentional memory address check
+    XCTAssertTrue(handler.rewardGivenToUser.isCurrencyTypeSpecified);
+    XCTAssertTrue([handler.rewardGivenToUser.currencyType isEqualToString:@"Selected"]);
+    XCTAssertTrue(handler.rewardGivenToUser.amount.integerValue == 9);
 }
 
 @end
