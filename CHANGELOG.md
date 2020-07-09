@@ -1,3 +1,7 @@
+## Version 5.13.1 (July 9, 2020)
+- **Bug Fixes**
+  - Fixed bug with where mediated network rewards were given back instead of the selected reward.
+
 ## Version 5.13.0 (June 15, 2020)
 - **Features**
   - Remove Moat and IAS measurement SDKs.

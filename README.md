@@ -77,17 +77,8 @@ Integration instructions are available on the [wiki](https://github.com/mopub/mo
 
 Please view the [changelog](https://github.com/mopub/mopub-ios-sdk/blob/master/CHANGELOG.md) for details.
 
-- **Features**
-  - Remove Moat and IAS measurement SDKs.
-  - Consolidate interstitials and rewarded ads into one container. Third party network adapters for these formats should now extend `MPFullscreenAdAdapter` and conform to `MPThirdPartyFullscreenAdAdapter`.
-  - Upped the minimum version to iOS 10.
-
 - **Bug Fixes**
-  - Various bug fixes.
-  - Fixed multithreading crash in `MPTimer` due to null reference exception.
-  - Fixed bug where interstitial ads returning from `SKStoreProductViewController` are accidentally closed.
-  - Fixed bug where VAST companion ad clickthrough trackers were fired even when no clickthrough URL was spcified.
-  - Fixed bug where 302 redirects from https sources were not followed to the end of the redirect chain.
+  - Fixed bug with where mediated network rewards were given back instead of the selected reward.
 
 See the [Getting Started Guide](https://github.com/mopub/mopub-ios-sdk/wiki/Getting-Started#app-transport-security-settings) for instructions on setting up ATS in your app.
 
