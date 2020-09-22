@@ -543,7 +543,11 @@ static NSString * const kMacroReplaceLanguageCode = @"%%LANGUAGE%%";
     if (self.adUnitIdUsedForConsent.length == 0) {
         NSString * description = @"Warning: no ad unit available for GDPR sync. Please make sure that the SDK is initialized correctly via `initializeSdkWithConfiguration:completion:` as soon as possible after app startup.";
         MPLogInfo(@"%@", description);
-        NSAssert(NO, description); // Crash the app if this is set up incorrectly
+        /* We don't want to crash the app if there is a nil or empty ad unit ID.
+         * If there is a nil or empty ad unit ID, the GDPR sync will retry in the
+         * next timer interval.
+         */
+        // NSAssert(NO, description); // Crash the app if this is set up incorrectly
     } else {
         MPLogDebug(@"Ad unit used for GDPR sync: %@", self.adUnitIdUsedForConsent);
     }
