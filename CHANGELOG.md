@@ -1,3 +1,7 @@
+## Version 5.14.1 (October 5, 2020)
+- **Bug Fixes**
+  - Fixed a bug where delegate methods `interstitialWillDisappear:`, `interstitialDidDisappear:`, `rewardedVideoAdWillDisappearForAdUnitID:`, and `rewardedVideoAdDidDisappearForAdUnitID:` did not fire.
+
 ## Version 5.14.0 (October 1, 2020)
 - **Features**
   - Add beta support for OMSDK version 1.3.4.
