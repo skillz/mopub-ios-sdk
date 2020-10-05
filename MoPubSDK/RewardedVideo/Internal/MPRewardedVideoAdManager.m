@@ -353,6 +353,8 @@
             [self.delegate rewardedVideoWillDisappearForAdManager:self];
             break;
         case MPFullscreenAdEventDidDisappear:
+            self.ready = NO;     // This state reset was put back here to accommodate adapters using the wrong event upon dismissal
+            self.playedAd = YES; // This state reset was put back here to accommodate adapters using the wrong event upon dismissal
             MPLogAdEvent(MPLogEvent.adDidDisappear, self.adUnitId);
             [self.delegate rewardedVideoDidDisappearForAdManager:self];
             break;
@@ -372,9 +374,6 @@
             if (self.adapter != nil && isWebViewContent) {
                 [MPViewabilityManager.sharedManager scheduleAdapterForDeallocation:self.adapter];
             }
-
-            // Allow the adapter to deallocate to free up resources since they are no longer needed.
-            self.adapter = nil;
 
             // Successful playback of the rewarded video; reset the internal played state.
             self.ready = NO;

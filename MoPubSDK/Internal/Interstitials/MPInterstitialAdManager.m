@@ -238,6 +238,7 @@
             [self.delegate managerWillDismissInterstitial:self];
             break;
         case MPFullscreenAdEventDidDisappear:
+            self.ready = NO; // This state reset was put back here to accommodate adapters using the wrong event upon dismissal
             MPLogAdEvent(MPLogEvent.adDidDisappear, self.delegate.interstitialAdController.adUnitId);
             [self.delegate managerDidDismissInterstitial:self];
             break;
@@ -256,9 +257,6 @@
             if (self.adapter != nil && isWebViewContent) {
                 [MPViewabilityManager.sharedManager scheduleAdapterForDeallocation:self.adapter];
             }
-
-            // Allow the adapter to deallocate to free up resources since they are no longer needed.
-            self.adapter = nil;
 
             // Reset state
             self.ready = NO;
