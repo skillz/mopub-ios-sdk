@@ -1,7 +1,7 @@
 //
 //  NSBundle+MPAdditions.h
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -16,5 +16,10 @@
  * @returns The bundle containing the MoPubSDK resources.
  */
 + (NSBundle *)resourceBundleForClass:(Class)aClass;
+
+/**
+ The resource bundle of MoPub SDK.
+ */
++ (NSBundle *)mopubResourceBundle;
 
 @end

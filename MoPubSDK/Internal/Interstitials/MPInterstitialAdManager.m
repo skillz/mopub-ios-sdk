@@ -1,7 +1,7 @@
 //
 //  MPInterstitialAdManager.m
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -12,14 +12,16 @@
 
 #import "MPAdServerURLBuilder.h"
 #import "MPAdTargeting.h"
+#import "MPFullscreenAdAdapter+MPAdAdapter.h"
+#import "MPFullscreenAdAdapter+Private.h"
 #import "MPInterstitialAdController.h"
-#import "MPInterstitialCustomEventAdapter.h"
 #import "MPConstants.h"
 #import "MPCoreInstanceProvider.h"
 #import "MPInterstitialAdManagerDelegate.h"
 #import "MPLogging.h"
 #import "MPError.h"
 #import "MPStopwatch.h"
+#import "MPViewabilityManager.h"
 #import "NSMutableArray+MPAdditions.h"
 #import "NSDate+MPAdditions.h"
 #import "NSError+MPAdditions.h"
@@ -29,7 +31,7 @@
 
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, assign, readwrite) BOOL ready;
-@property (nonatomic, strong) MPBaseInterstitialAdapter *adapter;
+@property (nonatomic, strong) MPFullscreenAdAdapter *adapter;
 @property (nonatomic, strong) MPAdServerCommunicator *communicator;
 @property (nonatomic, strong) MPAdConfiguration *requestingConfiguration;
 @property (nonatomic, strong) NSMutableArray<MPAdConfiguration *> *remainingConfigurations;
@@ -41,7 +43,12 @@
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+
+@interface MPInterstitialAdManager (MPAdAdapterDelegate) <MPAdAdapterFullscreenEventDelegate, MPAdAdapterRewardEventDelegate>
+@end
+
+#pragma mark -
 
 @implementation MPInterstitialAdManager
 
@@ -63,14 +70,6 @@
     [self.communicator setDelegate:nil];
 
     self.adapter = nil;
-}
-
-- (void)setAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    if (self.adapter != adapter) {
-        [self.adapter unregisterDelegate];
-        _adapter = adapter;
-    }
 }
 
 #pragma mark - Public
@@ -110,17 +109,12 @@
         return;
     }
 
-    [self.adapter showInterstitialFromViewController:controller];
+    [self.adapter showFullscreenAdFromViewController:controller];
 }
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
     [self.adapter dismissInterstitialAnimated:animated];
-}
-
-- (CLLocation *)location
-{
-    return [self.delegate location];
 }
 
 - (MPInterstitialAdController *)interstitialAdController
@@ -193,14 +187,21 @@
     // Start the stopwatch for the adapter load.
     [self.loadStopwatch start];
 
-    if (configuration.customEventClass == nil) {
+    if (configuration.adapterClass == nil) {
         [self adapter:nil didFailToLoadAdWithError:nil];
         return;
     }
 
-    MPBaseInterstitialAdapter *adapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:self];
-    self.adapter = adapter;
-    [self.adapter _getAdWithConfiguration:configuration targeting:self.targeting];
+    NSObject *object = [configuration.adapterClass new];
+    if ([object isKindOfClass:MPFullscreenAdAdapter.class]) {
+        MPFullscreenAdAdapter *adapter = (MPFullscreenAdAdapter *)object;
+        self.adapter = adapter;
+        adapter.adapterDelegate = self;
+        [adapter getAdWithConfiguration:configuration targeting:self.targeting];
+    }
+    else { // unrecognized ad adapter
+        [self adapter:nil didFailToLoadAdWithError:nil];
+    }
 }
 
 - (BOOL)isFullscreenAd {
@@ -211,27 +212,76 @@
     return [self.delegate adUnitId];
 }
 
-#pragma mark - MPInterstitialAdapterDelegate
+@end
 
-- (void)adapterDidFinishLoadingAd:(MPBaseInterstitialAdapter *)adapter
-{
-    if (self.requestingConfiguration != nil) {
-        [[Skillz skillzInstance] setLoadedInterstitialCreativeId:self.requestingConfiguration.creativeId];
+#pragma mark -
+
+@implementation MPInterstitialAdManager (MPAdAdapterDelegate)
+
+- (void)adAdapter:(id<MPAdAdapter>)adapter handleFullscreenAdEvent:(MPFullscreenAdEvent)fullscreenAdEvent {
+    switch (fullscreenAdEvent) {
+        case MPFullscreenAdEventDidLoad:
+            if (self.requestingConfiguration != nil) {
+                [[Skillz skillzInstance] setLoadedInterstitialCreativeId:self.requestingConfiguration.creativeId];
+            }
+            self.remainingConfigurations = nil;
+            self.ready = YES;
+            self.loading = NO;
+
+            // Record the end of the adapter load and send off the fire and forget after-load-url tracker.
+            NSTimeInterval duration = [self.loadStopwatch stop];
+            [self.communicator sendAfterLoadUrlWithConfiguration:self.requestingConfiguration adapterLoadDuration:duration adapterLoadResult:MPAfterLoadResultAdLoaded];
+
+            MPLogAdEvent(MPLogEvent.adDidLoad, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerDidLoadInterstitial:self];
+            break;
+        case MPFullscreenAdEventDidExpire:
+            self.ready = NO;
+            MPLogAdEvent([MPLogEvent adExpiredWithTimeInterval:MPConstants.adsExpirationInterval], self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerDidExpireInterstitial:self];
+            break;
+        case MPFullscreenAdEventWillAppear:
+            MPLogAdEvent(MPLogEvent.adWillAppear, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerWillPresentInterstitial:self];
+            break;
+        case MPFullscreenAdEventDidAppear:
+            MPLogAdEvent(MPLogEvent.adDidAppear, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerDidPresentInterstitial:self];
+            break;
+        case MPFullscreenAdEventWillDisappear:
+            MPLogAdEvent(MPLogEvent.adWillDisappear, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerWillDismissInterstitial:self];
+            break;
+        case MPFullscreenAdEventDidDisappear:
+            self.ready = NO; // This state reset was put back here to accommodate adapters using the wrong event upon dismissal
+            MPLogAdEvent(MPLogEvent.adDidDisappear, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerDidDismissInterstitial:self];
+            break;
+        case MPFullscreenAdEventDidReceiveTap:
+            MPLogAdEvent(MPLogEvent.adWillPresentModal, self.delegate.interstitialAdController.adUnitId);
+            [self.delegate managerDidReceiveTapEventFromInterstitial:self];
+            break;
+        case MPFullscreenAdEventWillLeaveApplication: // no op
+            MPLogAdEvent(MPLogEvent.adWillLeaveApplication, self.delegate.interstitialAdController.adUnitId);
+            break;
+        case MPFullscreenAdEventWillDismiss: {
+            // End the Viewability session and schedule the previously onscreen adapter for
+            // deallocation if it exists since it is going offscreen. This only applies to
+            // webview-based content.
+            BOOL isWebViewContent = (self.adapter.adContentType == MPAdContentTypeWebNoMRAID || self.adapter.adContentType == MPAdContentTypeWebWithMRAID);
+            if (self.adapter != nil && isWebViewContent) {
+                [MPViewabilityManager.sharedManager scheduleAdapterForDeallocation:self.adapter];
+            }
+
+            // Reset state
+            self.ready = NO;
+            self.loading = NO;
+            break;
+        }
     }
-    self.remainingConfigurations = nil;
-    self.ready = YES;
-    self.loading = NO;
-
-    // Record the end of the adapter load and send off the fire and forget after-load-url tracker.
-    NSTimeInterval duration = [self.loadStopwatch stop];
-    [self.communicator sendAfterLoadUrlWithConfiguration:self.requestingConfiguration adapterLoadDuration:duration adapterLoadResult:MPAfterLoadResultAdLoaded];
-
-    MPLogAdEvent(MPLogEvent.adDidLoad, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerDidLoadInterstitial:self];
 }
 
-- (void)adapter:(MPBaseInterstitialAdapter *)adapter didFailToLoadAdWithError:(NSError *)error
-{
+- (void)adapter:(id<MPAdAdapter> _Nullable)adapter didFailToLoadAdWithError:(NSError *)error {
     // Record the end of the adapter load and send off the fire and forget after-load-url tracker
     // with the appropriate error code result.
     NSTimeInterval duration = [self.loadStopwatch stop];
@@ -254,65 +304,49 @@
     else {
         self.ready = NO;
         self.loading = NO;
-
+        
         MPAdConfiguration *config = self.requestingConfiguration;
         if (config != nil) {
             [[Skillz skillzInstance] setLoadedInterstitialCreativeId:config.creativeId];
         }
-
         NSError * clearResponseError = [NSError errorWithCode:MOPUBErrorNoInventory localizedDescription:[NSString stringWithFormat:kMPClearErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId]];
         MPLogAdEvent([MPLogEvent adFailedToLoadWithError:clearResponseError], self.delegate.interstitialAdController.adUnitId);
         [self.delegate manager:self didFailToLoadInterstitialWithError:clearResponseError];
     }
 }
 
-- (void)interstitialWillAppearForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    MPLogAdEvent(MPLogEvent.adWillAppear, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerWillPresentInterstitial:self];
+- (void)adapter:(id<MPAdAdapter>)adapter didFailToPlayAdWithError:(NSError *)error {
+    // no op: `MPInterstitialAdManager` only cares about `FailToLoad`
 }
 
-- (void)interstitialDidAppearForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    MPLogAdEvent(MPLogEvent.adDidAppear, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerDidPresentInterstitial:self];
-}
-
-- (void)interstitialWillDisappearForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    MPLogAdEvent(MPLogEvent.adWillDisappear, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerWillDismissInterstitial:self];
-}
-
-- (void)interstitialDidDisappearForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    self.ready = NO;
-
-    MPLogAdEvent(MPLogEvent.adDidDisappear, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerDidDismissInterstitial:self];
-}
-
-- (void)interstitialDidExpireForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    self.ready = NO;
-
-    MPLogAdEvent([MPLogEvent adExpiredWithTimeInterval:MPConstants.adsExpirationInterval], self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerDidExpireInterstitial:self];
-}
-
-- (void)interstitialDidReceiveTapEventForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    MPLogAdEvent(MPLogEvent.adWillPresentModal, self.delegate.interstitialAdController.adUnitId);
-    [self.delegate managerDidReceiveTapEventFromInterstitial:self];
-}
-
-- (void)interstitialWillLeaveApplicationForAdapter:(MPBaseInterstitialAdapter *)adapter
-{
-    MPLogAdEvent(MPLogEvent.adWillLeaveApplication, self.delegate.interstitialAdController.adUnitId);
-}
-
-- (void)interstitialDidReceiveImpressionEventForAdapter:(MPBaseInterstitialAdapter *)adapter {
+- (void)adDidReceiveImpressionEventForAdapter:(id<MPAdAdapter>)adapter {
     [self.delegate interstitialAdManager:self didReceiveImpressionEventWithImpressionData:self.requestingConfiguration.impressionData];
+}
+
+#pragma mark - Transitional MPAdAdapterRewardEventDelegate Implementation
+
+/*
+ TODO: Remove MPAdAdapterRewardEventDelegate support after ad manager consolidation.
+
+ `MPFullscreenAdAdapter.delegate` is:
+    id<MPAdAdapterFullscreenEventDelegate, MPAdAdapterRewardEventDelegate> delegate
+
+ Before ad manager consolidation happens for `MPInterstitialAdManager` and `MPRewardedVideoAdManager`,
+ both ad managers as `MPFullscreenAdAdapter.delegate` needs to support `MPAdAdapterRewardEventDelegate`,
+ although `MPInterstitialAdManager` does not have real reward related functionalities. As a result,
+ `MPInterstitialAdManager` needs to have empty implementation for `MPAdAdapterRewardEventDelegate`.
+ */
+
+- (NSString *)customerId {
+    return nil;
+}
+
+- (id<MPMediationSettingsProtocol>)instanceMediationSettingsForClass:(Class)aClass {
+    return nil;
+}
+
+- (void)adShouldRewardUserForAdapter:(id<MPAdAdapter>)adapter reward:(MPReward *)reward {
+    // no op
 }
 
 @end

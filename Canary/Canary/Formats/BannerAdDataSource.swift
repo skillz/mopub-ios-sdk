@@ -1,7 +1,7 @@
 //
 //  BannerAdDataSource.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -162,6 +162,8 @@ class BannerAdDataSource: NSObject, AdDataSource {
         adView.keywords = adUnit.keywords
         adView.userDataKeywords = adUnit.userDataKeywords
         adView.loadAd(withMaxAdSize: maxDesiredAdSize)
+        
+        SavedAdsManager.sharedInstance.addLoadedAds(adUnit: adUnit)
     }
 }
 

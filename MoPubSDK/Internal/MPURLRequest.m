@@ -1,7 +1,7 @@
 //
 //  MPURLRequest.m
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSURL * requestUrl = URL;
     if (isMoPubRequest) {
         // Move the query parameters to the POST data dictionary.
-        // NSURLQUeryItem automatically URL decodes the query parameter name and value when
+        // NSURLQueryItem automatically URL decodes the query parameter name and value when
         // using the `name` and `value` properties.
         NSURLComponents * components = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
         [components.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

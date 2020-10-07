@@ -1,7 +1,7 @@
 //
 //  AdTableViewController.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -92,10 +92,6 @@ class AdTableViewController: UIViewController, AdViewController {
         
         // Update the title
         title = dataSource.adUnit.name
-        
-        // Add split view controller collapse button if applicable
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        navigationItem.leftItemsSupplementBackButton = true
         
         // Set the background color for Dark Mode
         if #available(iOS 13.0, *) {

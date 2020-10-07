@@ -1,7 +1,7 @@
 //
 //  MPInterstitialAdControllerTests.m
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -50,7 +50,7 @@ static NSTimeInterval const kTestTimeout = 0.5;
 
     NSString * viewabilityValue = [url stringForPOSTDataKey:kViewabilityStatusKey];
     XCTAssertNotNil(viewabilityValue);
-    XCTAssertTrue([viewabilityValue isEqualToString:@"1"]);
+    XCTAssertTrue([viewabilityValue isEqualToString:@"4"]);
 }
 
 #pragma mark - Ad Sizing

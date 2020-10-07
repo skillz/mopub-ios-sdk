@@ -1,7 +1,7 @@
 //
 //  InterstitialAdDataSource.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -139,6 +139,8 @@ class InterstitialAdDataSource: NSObject, AdDataSource {
         interstitialAd.keywords = adUnit.keywords
         interstitialAd.userDataKeywords = adUnit.userDataKeywords
         interstitialAd.loadAd()
+        
+        SavedAdsManager.sharedInstance.addLoadedAds(adUnit: adUnit)
     }
     
     private func showAd() {

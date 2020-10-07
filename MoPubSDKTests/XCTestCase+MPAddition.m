@@ -1,7 +1,7 @@
 //
 //  XCTestCase+MPAddition.m
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -28,7 +28,7 @@
         [expectation fulfill];
     }];
 
-    [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
+    [self waitForExpectationsWithTimeout:2 handler:^(NSError * _Nullable error) {
         XCTAssertNil(error);
     }];
 
