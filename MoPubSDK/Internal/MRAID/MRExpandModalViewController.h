@@ -1,13 +1,13 @@
 //
 //  MRExpandModalViewController.h
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <UIKit/UIKit.h>
-#import "MPClosableView.h"
+#import "MPAdContainerView.h"
 #import "MPForceableOrientationProtocol.h"
 @protocol MRExpandModalViewControllerDelegate;
 
@@ -15,7 +15,7 @@
  * `MRExpandModalViewController` is specifically for presenting expanded MRAID ads. Its orientation can be
  * forced via the orientationMask property.
  */
-@interface MRExpandModalViewController : UIViewController <MPClosableViewDelegate, MPForceableOrientationProtocol>
+@interface MRExpandModalViewController : UIViewController <MPForceableOrientationProtocol>
 
 /**
  * Initializes the view controller with an orientation mask that defines what orientation
@@ -24,4 +24,9 @@
  */
 - (instancetype)initWithOrientationMask:(UIInterfaceOrientationMask)orientationMask;
 
+@end
+
+#pragma mark  -
+
+@interface MRExpandModalViewController (MPAdContainerViewWebAdDelegate) <MPAdContainerViewWebAdDelegate>
 @end

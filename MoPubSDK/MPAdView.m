@@ -11,7 +11,6 @@
 #import "MPAdTargeting.h"
 #import "MPBannerAdManager.h"
 #import "MPBannerAdManagerDelegate.h"
-#import "MPClosableView.h"
 #import "MPCoreInstanceProvider.h"
 #import "MPError.h"
 #import "MPGlobal.h"
@@ -107,8 +106,6 @@
     if (!self.adContentView ) {
         return CGSizeZero;
     } else if ([self.adContentView isKindOfClass:[MPAdView class]]) {
-        return [MPAdView sizeForContainer:self adSize:self.maxAdSize adUnitId:self.adUnitId];
-    } else if ([self.adContentView isKindOfClass:[MPClosableView class]]) {
         return [MPAdView sizeForContainer:self adSize:self.maxAdSize adUnitId:self.adUnitId];
     } else {
         return self.adContentView.bounds.size;

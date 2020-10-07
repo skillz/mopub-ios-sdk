@@ -1,7 +1,7 @@
 //
 //  RewardedAdDataSource.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -177,7 +177,9 @@ class RewardedAdDataSource: NSObject, AdDataSource {
         selectedReward = nil
         
         // Load the rewarded ad.
-        MPRewardedVideo.loadAd(withAdUnitID: adUnit.id, keywords: adUnit.keywords, userDataKeywords: adUnit.userDataKeywords, location: nil, mediationSettings: nil)
+        MPRewardedVideo.loadAd(withAdUnitID: adUnit.id, keywords: adUnit.keywords, userDataKeywords: adUnit.userDataKeywords, mediationSettings: nil)
+        
+        SavedAdsManager.sharedInstance.addLoadedAds(adUnit: adUnit)
     }
     
     private func showAd(sender: Any) {

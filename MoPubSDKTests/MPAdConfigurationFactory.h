@@ -1,7 +1,7 @@
 //
 //  MPAdConfigurationFactory.h
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -34,9 +34,12 @@
 + (NSMutableDictionary *)defaultInterstitialHeaders;
 + (MPAdConfiguration *)defaultInterstitialConfiguration;
 + (MPAdConfiguration *)defaultMRAIDInterstitialConfiguration;
++ (MPAdConfiguration *)defaultMRAIDInterstitialConfigurationWithAdditionalHeaders:(NSDictionary *)additionalHeaders;
 + (MPAdConfiguration *)defaultFakeInterstitialConfiguration;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithNetworkType:(NSString *)type;
 + (MPAdConfiguration *)defaultChartboostInterstitialConfigurationWithLocation:(NSString *)location;
++ (MPAdConfiguration *)defaultFullscreenConfigWithAdapterClass:(Class)class;
++ (MPAdConfiguration *)defaultFullscreenConfigWithAdapterClass:(Class)class additionalMetadata:(NSDictionary *)additionalMetadata;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName
                                                              additionalMetadata:(NSDictionary *)additionalMetadata;

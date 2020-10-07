@@ -1,3 +1,64 @@
+## Version 5.14.1 (October 5, 2020)
+- **Bug Fixes**
+  - Fixed a bug where delegate methods `interstitialWillDisappear:`, `interstitialDidDisappear:`, `rewardedVideoAdWillDisappearForAdUnitID:`, and `rewardedVideoAdDidDisappearForAdUnitID:` did not fire.
+
+## Version 5.14.0 (October 1, 2020)
+- **Features**
+  - Add beta support for OMSDK version 1.3.4.
+  - iOS14 support for `SKAdNetwork`, `ATTrackingManagerAuthorizationStatus`, and location changes.
+  - Support Pangle as a certified mediation network.
+  - Remove Mintegral as a certified mediation network.
+  - Bump minimum Xcode version to Xcode 12.
+
+- **Bug Fixes**
+  - Cleaned up the MoPub Xcode project to properly mark files as public or private.
+  - Fixed a bug where an ad may become frozen when `SKStoreProductViewController` is shown.
+  - Fixed a multithreaded crash in `MPVastModel`.
+  - Fixed a bug where videos slightly longer than 15 seconds were skippable. Videos with duration less than 16 seconds are considered unskippable.
+
+## Version 5.13.1 (July 9, 2020)
+- **Bug Fixes**
+  - Fixed bug with where mediated network rewards were given back instead of the selected reward.
+  
+## Version 5.13.0 (June 15, 2020)
+- **Features**
+  - Remove Moat and IAS measurement SDKs.
+  - Consolidate interstitials and rewarded ads into one container. Third party network adapters for these formats should now extend `MPFullscreenAdAdapter` and conform to `MPThirdPartyFullscreenAdAdapter`.
+  - Upped the minimum version to iOS 10.
+
+- **Bug Fixes**
+  - Various bug fixes.
+  - Fixed multithreading crash in `MPTimer` due to null reference exception.
+  - Fixed bug where interstitial ads returning from `SKStoreProductViewController` are accidentally closed.
+  - Fixed bug where VAST companion ad clickthrough trackers were fired even when no clickthrough URL was spcified.
+  - Fixed bug where 302 redirects from https sources were not followed to the end of the redirect chain.
+
+## Version 5.12.1 (April 16, 2020)
+- **Bug Fixes**
+  - Fixed banner click trackers not firing for mediated networks that do not use MoPub's auto click tracking.
+
+## Version 5.12.0 (April 6, 2020)
+- **Features**
+  - Location setters for all formats are marked deprecated and will be removed in a future release.
+  - Added Mintegral as a supported network.
+  - A new field `appVersion` has been added to `MPImpressionData`.
+  - Update the Sample app to 64-bit architectures only.
+  - Added ad load history to the Saved Ads section in the Sample app.
+
+- **Bug Fixes**
+  - Fixed potential multithreading crash in `MPAdServerURLBuilder`.
+
+## Version 5.11.0 (February 4, 2020)
+- **Features**
+  - Update GDPR logic to allow MoPub to reacquire consent for new vendors.
+  - Update our support for OpenRTB Native Ads to version 1.2 and add an optional `sponsored` text field for native ads.
+  - Removed deprecated custom event method `requestAdWithSize:customEventInfo:` in `MPBannerCustomEvent`, `requestInterstitialWithCustomEventInfo:` in `MPInterstitialCustomEvent`, `requestRewardedVideoWithCustomEventInfo:` in `MPRewardedVideoCustomEvent`, and `requestAdWithCustomEventInfo:` in `MPNativeCustomEvent`.
+
+- **Bug Fixes**
+  - Fixed non-native SDK target compilation error.
+  - Fixed potential deadlock in `MPConsentManager` when scheduling `MPTimer`. 
+  - Fixed potential crash in `MPTableViewAdPlacer` and `MPCollectionViewAdPlacer`.
+
 ## Version 5.10.0 (October 30, 2019)
 - **Features**
   - Added support for the Verizon native ad renderer.

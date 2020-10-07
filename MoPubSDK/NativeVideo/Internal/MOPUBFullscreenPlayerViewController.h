@@ -1,13 +1,14 @@
 //
 //  MOPUBFullscreenPlayerViewController.h
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
 
 #import <UIKit/UIKit.h>
 
+@class MPAdConfiguration;
 @class MOPUBPlayerViewController;
 @class MOPUBPlayerView;
 @class MOPUBFullscreenPlayerViewController;
@@ -17,6 +18,8 @@
 - (void)playerDidProgressToTime:(NSTimeInterval)playbackTime;
 - (void)ctaTapped:(MOPUBFullscreenPlayerViewController *)viewController;
 - (void)fullscreenPlayerWillLeaveApplication:(MOPUBFullscreenPlayerViewController *)viewController;
+
+- (MPAdConfiguration *)adConfiguration;
 
 @end
 

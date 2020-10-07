@@ -1,7 +1,7 @@
 //
 //  NativeAdRendererManager.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -10,7 +10,7 @@ import Foundation
 import MoPub
 import MoPub_AdMob_Adapters
 import MoPub_FacebookAudienceNetwork_Adapters
-import MoPub_Flurry_Adapters
+import MoPub_Pangle_Adapters
 import MoPub_Verizon_Adapters
 
 final class NativeAdRendererManager {
@@ -130,16 +130,14 @@ private extension NativeAdRendererManager {
         
         renderers.append(FacebookNativeAdRenderer.rendererConfiguration(with: mopubRendererSettings))
         
-        // OPTIONAL: Flurry native video renderer
-        if let flurryConfig = FlurryNativeVideoAdRenderer.rendererConfiguration(with: mopubVideoRendererSettings) {
-            renderers.append(flurryConfig)
-        }
-        
         // OPTIONAL: Verizon native video renderer
         if let verizonConfig = MPVerizonNativeAdRenderer.rendererConfiguration(with: mopubVideoRendererSettings) {
             renderers.append(verizonConfig)
         }
         
+        // OPTIONAL: Pangle native video renderer
+        renderers.append(PangleNativeAdRenderer.rendererConfiguration(with: mopubVideoRendererSettings))
+
         return renderers
     }
 }

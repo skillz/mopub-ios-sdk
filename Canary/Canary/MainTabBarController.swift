@@ -1,7 +1,7 @@
 //
 //  MainTabBarController.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -22,15 +22,15 @@ class MainTabBarController: UITabBarController {
     private var notificationButton: UIButton = UIButton(type: .custom)
     
     /**
-     The view controller of the second tab "Saved Ads", which is a `UISplitViewController`.
+     The navigation controller of the "Saved Ads" tab, which is a `UINavigationController`.
      */
-    var savedAdSplitViewController: UISplitViewController {
-        guard let savedAdSplitViewController = viewControllers?.first(where: {
+    var savedAdsNavigationController: UINavigationController {
+        guard let savedAdsController = viewControllers?.first(where: {
             $0.tabBarItem.title == "Saved Ads"
-        }) as? UISplitViewController else {
+        }) as? UINavigationController else {
             fatalError()
         }
-        return savedAdSplitViewController
+        return savedAdsController
     }
     
     // MARK: - View Lifecycle

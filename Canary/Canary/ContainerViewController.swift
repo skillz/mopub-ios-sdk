@@ -1,7 +1,7 @@
 //
 //  ContainerViewController.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -45,11 +45,11 @@ class ContainerViewController: UIViewController {
      */
     private(set) var menuViewController: MenuViewController? = nil
     
-    var savedAdSplitViewController: UISplitViewController {
+    var savedAdsNavigationController: UINavigationController {
         guard let mainTabBarController = mainTabBarController else {
             fatalError()
         }
-        return mainTabBarController.savedAdSplitViewController
+        return mainTabBarController.savedAdsNavigationController
     }
     
     // MARK: - Forced Traits

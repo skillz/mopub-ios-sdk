@@ -1,7 +1,7 @@
 //
 //  NativeAdCollectionDataSource.swift
 //
-//  Copyright 2018-2019 Twitter, Inc.
+//  Copyright 2018-2020 Twitter, Inc.
 //  Licensed under the MoPub SDK License Agreement
 //  http://www.mopub.com/legal/sdk-license-agreement/
 //
@@ -31,8 +31,8 @@ class NativeAdCollectionDataSource: BaseNativeAdDataSource {
     lazy var data: [(name: String, tweet: String, color: UIColor)] = {
         var data: [(name: String, tweet: String, color: UIColor)] = []
         for index in 1...100 {
-            let name = LoremIpsum.name()!
-            let tweet = LoremIpsum.tweet()!
+            let name = LoremIpsum.name
+            let tweet = LoremIpsum.tweet
             let color = UIColor.random
             data.append((name: name, tweet: tweet, color: color))
         }
@@ -58,7 +58,7 @@ class NativeAdCollectionDataSource: BaseNativeAdDataSource {
      */
     var targeting: MPNativeAdRequestTargeting {
         let target: MPNativeAdRequestTargeting = MPNativeAdRequestTargeting()
-        target.desiredAssets = Set(arrayLiteral: kAdTitleKey, kAdTextKey, kAdCTATextKey, kAdIconImageKey, kAdMainImageKey, kAdStarRatingKey, kAdIconImageViewKey, kAdMainMediaViewKey)
+        target.desiredAssets = Set(arrayLiteral: kAdTitleKey, kAdTextKey, kAdSponsoredByCompanyKey, kAdCTATextKey, kAdIconImageKey, kAdMainImageKey, kAdStarRatingKey, kAdIconImageViewKey, kAdMainMediaViewKey)
         target.keywords = adUnit.keywords
         target.userDataKeywords = adUnit.userDataKeywords
         
