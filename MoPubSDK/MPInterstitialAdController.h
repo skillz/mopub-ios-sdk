@@ -127,11 +127,6 @@
  */
 - (void)showFromViewController:(UIViewController *)controller;
 
-/**
- * Dismiss the interstitial ad if it's showing.
- */
-- (void)dismissInterstitialAnimated:(BOOL)animated;
-
 /** @name Disposing of an Interstitial Ad */
 
 /**

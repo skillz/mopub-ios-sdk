@@ -153,11 +153,15 @@
 }
 
 - (void)adActionDidFinish:(MPWebView *)ad {
-    [self dismiss];
+    //NOOP: the landing page is going away, but not the interstitial.
 }
 
 - (void)adWebViewAgentDidReceiveTap:(MPAdWebViewAgent *)aAdWebViewAgent {
     [self.webAdDelegate fullscreenWebAdDidReceiveTap:self];
+}
+
+- (void)dismissInterstitial {
+    [self dismiss];
 }
 
 @end

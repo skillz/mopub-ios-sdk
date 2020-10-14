@@ -20,5 +20,5 @@
 
 - (void)loadInterstitialWithAdUnitID:(NSString *)ID targeting:(MPAdTargeting *)targeting;
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
-- (void)dismissInterstitialAnimated:(BOOL)animated;
+
 @end
