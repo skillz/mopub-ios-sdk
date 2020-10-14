@@ -25,6 +25,7 @@
 #import "NSMutableArray+MPAdditions.h"
 #import "NSDate+MPAdditions.h"
 #import "NSError+MPAdditions.h"
+#import "Skillz+MoPub.h"
 
 @interface MPInterstitialAdManager ()
 
@@ -145,6 +146,7 @@
     if (configuration.adUnitWarmingUp) {
         MPLogInfo(kMPWarmingUpErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId);
         self.loading = NO;
+        [[Skillz skillzInstance] setLoadedInterstitialCreativeId:configuration.creativeId];
         [self.delegate manager:self didFailToLoadInterstitialWithError:[NSError errorWithCode:MOPUBErrorAdUnitWarmingUp]];
         return;
     }
@@ -152,6 +154,7 @@
     if ([configuration.adType isEqualToString:kAdTypeClear]) {
         MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId);
         self.loading = NO;
+        [[Skillz skillzInstance] setLoadedInterstitialCreativeId:configuration.creativeId];
         [self.delegate manager:self didFailToLoadInterstitialWithError:[NSError errorWithCode:MOPUBErrorNoInventory]];
         return;
     }
@@ -164,6 +167,10 @@
     self.ready = NO;
     self.loading = NO;
 
+    MPAdConfiguration *config = self.requestingConfiguration;
+    if (config != nil) {
+        [[Skillz skillzInstance] setLoadedInterstitialCreativeId:config.creativeId];
+    }
     [self.delegate manager:self didFailToLoadInterstitialWithError:error];
 }
 
@@ -209,6 +216,9 @@
 - (void)adAdapter:(id<MPAdAdapter>)adapter handleFullscreenAdEvent:(MPFullscreenAdEvent)fullscreenAdEvent {
     switch (fullscreenAdEvent) {
         case MPFullscreenAdEventDidLoad:
+            if (self.requestingConfiguration != nil) {
+                [[Skillz skillzInstance] setLoadedInterstitialCreativeId:self.requestingConfiguration.creativeId];
+            }
             self.remainingConfigurations = nil;
             self.ready = YES;
             self.loading = NO;
@@ -289,7 +299,11 @@
     else {
         self.ready = NO;
         self.loading = NO;
-
+        
+        MPAdConfiguration *config = self.requestingConfiguration;
+        if (config != nil) {
+            [[Skillz skillzInstance] setLoadedInterstitialCreativeId:config.creativeId];
+        }
         NSError * clearResponseError = [NSError errorWithCode:MOPUBErrorNoInventory localizedDescription:[NSString stringWithFormat:kMPClearErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId]];
         MPLogAdEvent([MPLogEvent adFailedToLoadWithError:clearResponseError], self.delegate.interstitialAdController.adUnitId);
         [self.delegate manager:self didFailToLoadInterstitialWithError:clearResponseError];
