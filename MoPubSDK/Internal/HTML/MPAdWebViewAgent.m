@@ -241,6 +241,7 @@
     NSURL *URL = [request URL];
     if ([URL.scheme isEqualToString:SKZ_DEEP_LINK_SCHEME]) {
         [[Skillz skillzInstance] openDeepLinkingURLFromMoPub:URL];
+        [self.delegate dismissInterstitial];
     }
     
     // Web view request handling has been disabled. Ignore this load.

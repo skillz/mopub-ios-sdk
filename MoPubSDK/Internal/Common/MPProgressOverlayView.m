@@ -52,7 +52,6 @@
             button.hidden = YES;    // Set to hidden to participate in autoresizing, but not capture user input
 
             [button addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-
             [button setImage:[UIImage imageForAsset:kMPImageAssetCloseButton] forState:UIControlStateNormal];
             [button sizeToFit];
             button;

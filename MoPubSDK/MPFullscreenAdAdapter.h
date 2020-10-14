@@ -127,18 +127,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleDidInvalidateAd;
 
 /**
- * Called when the interstitial should be forced to dismiss.
- */
-- (void)dismissInterstitialAnimated:(BOOL)animated;
-
-/**
  * The @c delegate object to send events to as they occur.
  *
  * @c MPFullscreenAdAdapterDelegate defines several methods that you should call in
  * order to inform MoPub of the state of your adapter.
  */
 @property (nonatomic, weak, readonly) id<MPFullscreenAdAdapterDelegate> delegate;
-
 
 @end
 

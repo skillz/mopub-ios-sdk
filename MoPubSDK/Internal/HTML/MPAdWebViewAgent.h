@@ -110,6 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)adActionWillLeaveApplication:(MPWebView *)ad;
 - (void)adActionDidFinish:(MPWebView *)ad;
 - (void)adWebViewAgentDidReceiveTap:(MPAdWebViewAgent *)aAdWebViewAgent;
+- (void)dismissInterstitial;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -399,11 +399,6 @@ static const NSUInteger kExcessiveCustomDataLength = 8196;
     }
 }
 
-- (void)dismissInterstitialAnimated:(BOOL)animated
-{
-    [self.viewController dismiss];
-}
-
 - (void)handleDidInvalidateAd {
     // Subclasses may override this method to handle when the adapter is no longer needed.
 }

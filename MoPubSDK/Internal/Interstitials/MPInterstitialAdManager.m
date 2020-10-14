@@ -112,11 +112,6 @@
     [self.adapter showFullscreenAdFromViewController:controller];
 }
 
-- (void)dismissInterstitialAnimated:(BOOL)animated
-{
-    [self.adapter dismissInterstitialAnimated:animated];
-}
-
 - (MPInterstitialAdController *)interstitialAdController
 {
     return [self.delegate interstitialAdController];
